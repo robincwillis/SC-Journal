@@ -37,6 +37,10 @@ define('DB_CHARSET', 'utf8');
 /** The Database Collate type. Don't change this if in doubt. */
 define('DB_COLLATE', '');
 
+/** Disallow file edits. */
+$file_edit = getenv('DISALLOW_FILE_EDIT') ? getenv('DISALLOW_FILE_EDIT')  :  false;
+define( 'DISALLOW_FILE_EDIT', $file_edit );
+
 /**#@+
  * Authentication Unique Keys and Salts.
  *
