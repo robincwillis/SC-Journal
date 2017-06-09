@@ -1,0 +1,123 @@
+.article-page {
+	.article-header {
+		.container {
+			padding: .5rem 0 0;
+			@include respond($md) {
+				padding: 2rem 0 0;
+			}
+		}
+		.category {
+			@include tiny-caps();
+			margin-top: 0;
+		}
+		.article-title {
+			font-family: $secondary-font;
+			line-height: 1.1em;
+			max-width: 10em;
+			margin-left: auto;
+			margin-right: auto;
+			margin-bottom: 0;
+		}
+	}
+}
+
+.col-4 {
+	.journal-thumb {
+		display: block;
+		.col {
+			width: 100%;
+		}
+	}
+}
+
+section.share {
+	.more-cta {
+		padding-bottom: .5rem;
+	}
+	.share-wrap {
+		display: inline-block;
+		position: relative;
+		width: 300px;
+		padding: 15px 0;
+		&:hover {
+			.underlined-link {
+				transform: translate3d(0, -20px, 0);
+				opacity: 0;
+			}
+			.share-links {
+				transform: translate3d(0, 0, 0);
+				opacity: 1;
+			}
+		}
+		.share-links {
+			transition: transform $md-speed $ease, opacity $md-speed $ease;
+			transform: translate3d(0, 20px, 0);
+			opacity: 0;
+			position: absolute;
+			width: 100%;
+			top: 2px;
+			left: 0;
+			right: 0;
+			font-size: 0;
+			li {
+				display: inline-block;
+				vertical-align: middle;
+				a {
+					display: block;
+					padding: 15px;
+					color: $light-text-color;
+					&:hover {
+						color: $text-color;
+					}
+					svg {
+						max-width: 12px;
+					}
+				}
+			}
+		}
+	}
+}
+
+.recipe-block {
+	margin-bottom: 0;
+	@include respond-smaller-than($lg) {
+		.col-8 {
+			margin-bottom: 1.5rem;
+		}
+	}
+}
+
+.recipe-directions {
+	li p,
+	li .p {
+		margin: 0 0 1em;
+		max-width: none;
+		+ p {
+			// margin: 1em 0;
+		}
+	}
+	.recipe-header {
+		@include all-caps();
+	}
+	ol {
+		li {
+			.small-caps {
+				font-weight: $bold;
+			}
+			border-top: 1px solid $hr-color;
+			padding-top: $base-line-height;
+			&:first-child {
+				border: none;
+				padding-top: 0;
+			}
+			margin: 0 0 2rem;
+		}
+	}
+	ul {
+		&.lg-list {
+			li {
+				margin-bottom: .5rem;
+			}
+		}
+	}
+}

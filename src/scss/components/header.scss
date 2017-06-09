@@ -1,0 +1,148 @@
+header {
+	position: fixed;
+	left: 0;
+	right: 0;
+	top: 0;
+	z-index: 8;
+	height: 60px;
+	background: $bg-color;
+	transition: color $md-speed $ease, background $md-speed $ease, box-shadow $md-speed $ease;
+	&.solid {
+		@include respond-smaller-than($lg) {
+			background: $bg-color;
+			box-shadow: 0 1px 0 rgba($text-color, .05);
+			color: $text-color;
+			z-index: 98;
+		}
+	}
+	@include respond($lg) {
+		box-shadow: none;
+		position: absolute;
+		height: $header-height;
+		background: transparent;
+		z-index: 6;
+	}
+	&.white {
+		color: $bg-color;
+		a {
+			color: $bg-color;
+		}
+		@include respond-smaller-than($lg) {
+			background: transparent;
+			box-shadow: none;
+		}
+	}
+	&.inverted {
+		color: #fff;
+		mix-blend-mode: difference;
+		a {
+			color: currentcolor;
+		}
+	}
+	a {
+		color: currentcolor;
+	}
+	.container {
+		padding: 0;
+		height: 100%;
+		.logo {
+			margin: 0 auto;
+			text-align: center;
+			height: 100%;
+			width: 100%;
+			display: flex;
+			align-items: center;
+			justify-content: center;
+			.wordmark {
+				@include all-caps();
+				@include respond($lg) {
+					font-size: 1em;
+					line-height: 1.5em;
+					span {
+						display: block;
+						text-align: center;
+					}
+				}
+				.italic {
+					text-transform: none;
+					font-family: $main-font;
+					letter-spacing: .02em;
+					font-size: 1.1em;
+					font-weight: $normal;
+				}
+			}
+			a {
+				display: block;
+			}
+			@include respond-smaller-than($md) {
+				display: none;
+			}
+			@include respond-smaller-than($lg) {
+				svg {
+					height: 16px;
+					width: 98px;
+				}
+			}
+		}
+		
+		.hang-left {
+			width: auto;
+			height: 100%;
+			left: 0;
+			text-align: center;
+			position: absolute;
+			z-index: 1;
+			top: 0;
+			@include respond($lg) {
+				width: $margin;
+				left: -$margin;
+			}
+			div {
+				display: flex;
+				align-items: center;
+				height: 100%;
+				@include respond-smaller-than($lg) {
+					svg {
+						height: 30px;
+						width: 26px;
+					}
+				}
+				@include respond($lg) {
+					position: fixed;
+					z-index: 5;
+					width: $margin;
+					height: $margin;
+					top: 0;
+					justify-content: center;
+				}
+			}
+		}
+		.hang-right {
+			width: auto;
+			height: 100%;
+			right: 0;
+			text-align: center;
+			position: absolute;
+			z-index: 1;
+			top: 0;
+			@include respond($lg) {
+				width: $margin;
+				right: -$margin;
+			}
+			div {
+				display: flex;
+				align-items: center;
+				height: 100%;
+				@include respond($lg) {
+					position: fixed;
+					z-index: 5;
+					width: $margin;
+					height: $margin;
+					top: 0;
+					justify-content: center;
+				}
+			}
+		}
+
+	}
+}

@@ -1,0 +1,112 @@
+{% extends "base.twig" %}
+{% set body_class = 'article-page' %}
+
+{% block content %}
+
+{% include 'components/top-area.twig' with {
+	'contentType' : 'video',
+	'contentColor' : 'white',
+	'smallText' : 'Photo Essay',
+	'author' : 'Dayyan Armstrong',
+	'introText' : 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Negat esse eam, inquit, propter se expetendam. Terram, mihi crede, ea lanx et maria deprimet. Bonum negas esse divitias, praeposìtum esse dicis? At quicum ioca seria, ut dicitur, quicum arcana, quicum occulta omnia? Idem iste, inquam, de voluptate quid sentit? A quibus propter disce',
+	'textOverlay' : 'The Most Beautiful place in the world'
+} %}
+
+{% include 'components/flexible-content/large-text.twig' with {'content' : 'Section Title', 'content': 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Negat esse eam, inquit, propter se expetendam. Terram, mihi crede, ea lanx et maria deprimet. Bonum negas esse divitias, praeposìtum esse dicis? At quicum ioca seria, ut dicitur, quicum arcana' } %}
+
+{% include 'components/flexible-content/wide-image.twig' %}
+
+{% include 'components/flexible-content/two-up-images.twig' %}
+
+{% include 'components/flexible-content/two-up-text.twig' with {'content': 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Negat esse eam, inquit, propter se expetendam. Terram, mihi crede, ea lanx et maria deprimet. Bonum negas esse divitias, praeposìtum esse dicis? At quicum ioca seria, ut dicitur, quicum arcana, quicum occulta omnia? Idem iste, inquam, de voluptate quid sentit? A quibus propter disce'} %}
+
+{% include 'components/flexible-content/full-width-image.twig' %}
+
+{% include 'components/flexible-content/large-text.twig' with {'content' : 'Section Title', 'content': 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Negat esse eam, inquit, propter se expetendam. Terram, mihi crede, ea lanx et maria deprimet. Bonum negas esse divitias, praeposìtum esse dicis? At quicum ioca seria, ut dicitur, quicum arcana'} %}
+
+{% include 'components/flexible-content/two-up-images.twig' %}
+
+<div class="container very-narrow">
+	{% include 'components/flexible-content/rich-text.twig' %}
+</div>
+
+{% include 'components/flexible-content/wide-image.twig' %}
+
+{% include 'components/flexible-content/two-up-text.twig' with {'title' : 'Section Title', 'content': 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Negat esse eam, inquit, propter se expetendam. Terram, mihi crede, ea lanx et maria deprimet. Bonum negas esse divitias, praeposìtum esse dicis? At quicum ioca seria, ut dicitur, quicum arcana, quicum occulta omnia? Idem iste, inquam, de voluptate quid sentit? A quibus propter disce'} %}
+
+{% include 'components/flexible-content/two-up-images.twig' %}
+
+<section class="margined share">
+	<div class="more-cta">
+		<div class="container">
+			<div class="share-wrap">
+				<div class="underlined-link">Share</div>
+				<ul class="share-links">
+					<li><a href="#">{% include 'icons/facebook.svg' %}</a></li>
+					<li><a href="#">{% include 'icons/twitter.svg' %}</a></li>
+					<li><a href="#">{% include 'icons/pinterest.svg' %}</a></li>
+					<li><a href="#">{% include 'icons/email.svg' %}</a></li>
+				</ul>
+			</div>
+		</div>
+	</div>
+</section>
+
+<section class="full-height clipped-section">
+	<div class="clip">
+		{% include 'partials/header.twig' with {'style' : 'white', 'logo' : 'false'} only %}
+	</div>
+	<div class="container flex-center very-narrow bg-color cta-image-block">
+		<div>
+			<div class="icon">{% include 'icons/sc-mark.svg' %}</div>
+			<h4 class="h1">Come with us next time</h4>
+			<p class="md">Explore where we are going next and start your jouney</p>
+			{% include 'components/button.twig' 
+				with {
+					'buttonClass': 'large secondary transition-link',
+					'buttonText': 'Learn More',
+					'buttonLink': 'http://sailingcollective.com/'
+				} only
+			%}
+		</div>
+	</div>
+	<div class="cover-area shaded">
+		<img class="cover" src="{{ td }}/assets/images/2000-1500.jpg">
+	</div>
+</section>
+
+<section class="grey no-top-space no-bottom-space">
+	<div class="section-header">
+		<div class="container">
+			<h3>More Photo Essays</h3>
+		</div>
+	</div>
+	<div class="container narrow no-top-space">
+		<div class="inline-grid">
+			{% for item in 1..6 %}
+				<div class="col-6 right">
+					{% include 'components/article-list-thumb.twig' with {
+							'size' : '1200-800.jpg',
+							'category' : 'Category',
+							'title' : 'Article Title',
+							'author' : 'Dayyan Armstrong'
+						} only
+					%}
+				</div>
+			{% endfor %}
+		</div>
+	</div>
+	<div class="more-cta after-list">
+		<div class="container">
+			{% include 'components/button.twig' 
+				with {
+					'buttonClass': 'large transition-link',
+					'buttonText': 'More Photo Essays',
+					'buttonLink': globals.path ~ '/photo-essays'
+				} only
+			%}
+		</div>
+	</div>
+</section>
+
+{% endblock %}{# end content #}

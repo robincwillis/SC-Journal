@@ -1,0 +1,14 @@
+.sc-loader {
+	position: fixed;
+	border-radius: 50%;
+	width: 50px;
+	height: 50px;
+	z-index: 999999;
+	top: 50%;
+	left: 50%;
+	margin: -25px 0 0 -25px;
+	border: 2px solid lighten($text-color, 70%);
+	border-top-color: $main-color;
+	border-right-color: $main-color;
+	animation: rotate 1s linear infinite;
+}

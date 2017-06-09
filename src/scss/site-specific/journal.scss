@@ -1,0 +1,42 @@
+.journal-page {
+	section {
+		&:first-child {
+			margin-top: 0;
+			padding-top: 60px;
+			@include respond($md) {
+				padding-top: $margin;
+			}
+		}
+	}
+}
+
+.journal-thumb {
+	display: block;
+	.col {
+		margin-bottom: 0;
+		@include respond($md) {
+			width: 50%;
+		}
+	}
+	@include respond-smaller-than($md) {
+		padding-bottom: 1rem;
+	}
+	img {
+		margin-bottom: 1.5rem;
+	}
+	.article-info {
+		max-width: 20rem;
+		.category {
+			@include tiny-caps();
+			margin: 0;
+		}
+		.article-title {
+			font-family: $secondary-font;
+			font-size: 2rem;
+			margin: .5rem 0 .75rem;
+		}
+	}
+	p {
+		margin: 0;
+	}
+}

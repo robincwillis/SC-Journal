@@ -1,0 +1,37 @@
+<button
+  {% if buttonClass %}
+    class="button {{ buttonClass }}"
+  {% else %}
+    class="button"
+  {% endif %}
+  {% if buttonLink %}
+    href="{{ buttonLink }}"
+  {% endif %}
+  {% if tooltipText %}
+  	data-tooltip-text="{{ tooltipText }}"
+  {% endif %}
+  {% if tooltipText %}
+	  data-tooltip-position="{{ tooltipPosition }}"
+  {% endif %}
+>
+  <div class="state-icon loader">
+    <div class="spinner"><div class="spinner"></div></div>
+  </div>
+  <div class="state-icon success">
+    <div class="css-icon-check"></div>
+  </div>
+  <div class="state-icon error">
+    <div class="css-icon-x"></div>
+  </div>
+  <div class="button-content">
+    {% if leftIcon %}
+      <span class="icon">{% include 'icons/' ~ leftIcon ~ '.svg' %}</span>
+    {% endif %}
+    {% if buttonText %}
+      <span class="label">{{ buttonText }}</span>
+    {% endif %}
+    {% if rightIcon %}
+      <span class="icon">{% include 'icons/' ~ rightIcon ~ '.svg' %}</span>
+    {% endif %}
+  </div>
+</button>

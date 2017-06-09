@@ -29,7 +29,7 @@ define('DB_USER', getenv('DB_USER'));
 define('DB_PASSWORD',getenv('DB_PASSWORD'));
 
 /** MySQL hostname */
-define('DB_HOST', getenv('DB_HOST') . ":" . getenv('DB_PORT'));
+define('DB_HOST', getenv('DB_HOST'));
 
 /** Database Charset to use in creating database tables. */
 define('DB_CHARSET', 'utf8');
@@ -82,6 +82,19 @@ $table_prefix  = 'wp_';
  * @link https://codex.wordpress.org/Debugging_in_WordPress
  */
 define('WP_DEBUG', false);
+
+/* Disable Post Revisions */
+define('AUTOSAVE_INTERVAL', 300); // seconds
+define('WP_POST_REVISIONS', false);
+
+/* Amazon AWS Keys for S3 */
+if (getenv('DBI_AWS_ACCESS_KEY_ID') && getenv('DBI_AWS_SECRET_ACCESS_KEY')){
+	define( 'DBI_AWS_ACCESS_KEY_ID', getenv('DBI_AWS_ACCESS_KEY_ID') );
+	define( 'DBI_AWS_SECRET_ACCESS_KEY', getenv('DBI_AWS_SECRET_ACCESS_KEY') );
+}
+if (getenv('AS3CF_BUCKET')){
+	define( 'AS3CF_BUCKET', getenv('AS3CF_BUCKET'));
+}
 
 /* That's all, stop editing! Happy blogging. */
 

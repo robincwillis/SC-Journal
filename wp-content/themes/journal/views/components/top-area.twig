@@ -1,0 +1,35 @@
+<section class="featured-content top-area {% if fullHeight == true %}full-height{% else %}three-quarters-height{% endif %} mid-grey{% if white %} clipped-section{% endif %}">
+	{% if white %}
+		<div class="clip">
+			{% include 'partials/header.twig' with { 'style': 'white' } %}
+		</div>
+	{% endif %}
+	<div class="container{% if overlayPosition == false %} very-narrow{% endif %} flex-{% if overlayPosition %}{{ overlayPosition }}{% else %}center{% endif %}{% if white %} bg-color{% endif %}">
+		<div>
+			{% if smallText %}
+				<p class="small-caps">New Digs for Dig Inn</p>
+			{% endif %}
+			{% if textOverlay %}
+				<h2 class="h1">New Digs for Dig Inn</h2>
+			{% endif %}
+			{% if author %}
+				<p><span class="italic">By</span> {{ author }}</p>
+			{% endif %}
+			{% if introText %}
+				<p>{{ introText }}</p>
+			{% endif %}
+			{% if linkText and linkUrl %}
+				<a class="underlined-link">View Case Study</a>
+			{% endif %}
+		</div>
+	</div>
+	<div class="cover-area{% if white %} shaded{% endif %}">
+		{% if video %}
+	    <video class="cover" data-object-fit="cover" autoplay loop muted playsinline>
+	      <source src="{{ video_url }}" type="video/mp4">
+	    </video>
+    {% else %}
+    	<img class="cover" data-object-fit="cover" src="{{ image.src | resize(1000, 600) }}" srcset="{{ image.src | resize(2000,1200) }} 1000w">
+    {% endif %}
+	</div>
+</section>

@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html>
+  {% include 'partials/head.twig' %}
+  <body class="{{ body_class }}">
+    <div class="animsition">
+      {% include 'partials/header.twig' %}
+      
+      <div id="page">
+        {% block page %}
+          {% include 'partials/menu.twig' %}
+          <div id="content">
+            {% block content %}
+              
+            {% endblock %}{# end content #}
+          </div>
+        {% endblock %}{# end page #}
+      </div><!-- #page -->
+
+      {% if footer != 'false' %}
+        {% include 'partials/footer.twig' %}
+      {% endif %}
+    </div>
+    {% include 'partials/foot.twig' %}
+  </body>
+</html>

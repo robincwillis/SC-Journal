@@ -1,0 +1,162 @@
+{% extends "base.twig" %}
+{% set body_class = 'info-page' %}
+
+{% block content %}
+
+	{% include 'components/top-area.twig' with {
+		'contentColor' : 'white'
+	} %}
+
+	<section>
+		<div class="container extra-spaced flex-center narrow">
+			<div class="large align-center">
+				<h1>The most wonderful design studio in the world</h1>
+				<a class="underlined-link">Contact Us</a>
+			</div>
+		</div>
+	</section>
+
+	<section>
+		<div class="container no-top-space">
+			<div class="float-grid wide-gutter">
+				<div class="col-6 left">
+					<h3 class="h2 info-section-title light-text-color">Profile</h3>
+				</div>
+				<div class="col-6 right">
+					<img src="{{ td }}/assets/images/1000-1000.jpg">
+				</div>
+				<div class="col-6 left">
+					<div class="lg">
+						<p>High Tide, based in Dumbo, is led by creative director Danny Miller and managing director Jill Cole.</p>
+					</div>
+					<p>Spanning creative, technological, strategic and management fields, the High Tide team provides an eclectic balance of right and left-brains. Coming from various professional backgrounds in branding, fine art, design, and fashion, we share a passion for creating beautiful and evocative brands that impact today and shape tomorrow.</p>
+				</div>
+			</div>
+		</div>
+	</section>
+
+	<section class="disciplines mid-grey">
+		<div class="container">
+			<div class="float-grid wide-gutter">
+				<div class="col-6">
+					<h3 class="h2 info-section-title light-text-color">Disciplines</h3>
+				</div>
+				<div class="col-6">
+					<ul class="two-col-list">
+						<li>Branding</li>
+						<li>Brand Strategy</li>
+						<li>Visual Identity</li>
+						<li>Print</li>
+						<li>Packaging Design</li>
+						<li>Print Production</li>
+						<li>Editorial</li>
+						<li>Storytelling</li>
+						<li>Art Direction</li>
+						<li>UX/UI Design</li>
+						<li>Website Design</li>
+						<li>Mobile Design</li>
+						<li>Front and Backend Development</li>
+						<li>Envioronmental</li>
+						<li>Interiors</li>
+						<li>Signage</li>
+					</ul>
+				</div>
+			</div>
+		</div>
+	</section>
+
+	<section>
+		<div class="container">
+			<div class="float-grid wide-gutter">
+				<div class="col-6 right">
+					<h3 class="h2 info-section-title light-text-color">Mission</h3>
+				</div>
+				<div class="col-6 left">
+					<img src="{{ td }}/assets/images/1000-1000.jpg">
+				</div>
+				<div class="col-6 right">
+					<div class="lg">
+						<p>For us, inspiring people everyday means challenging ourselves and our clients beyond the comfort zone.</p>
+					</div>
+					<p>It means continuously broadening and deepening the sources of our inspiration and allowing them to find expression in nuance and detail. It means immersing ourselves in contemporary culture and new technologies. Creativity is our way of life and we believe people deserve a world infused with originality and inspiration.</p>
+				</div>
+			</div>
+		</div>
+	</section>
+
+	<section class="disciplines mid-grey">
+		<div class="container">
+			<div class="float-grid wide-gutter">
+				<div class="col-6">
+					<h3 class="h2 info-section-title light-text-color">Selected Clients</h3>
+				</div>
+				<div class="col-6">
+					<ul class="two-col-list">
+						{% for item in 1..4 %}
+							<li>Warby Parker</li>
+							<li>Onto</li>
+							<li>Sweet Whistle</li>
+							<li>Honor</li>
+						{% endfor %}
+					</ul>
+				</div>
+			</div>
+		</div>
+	</section>
+
+	<section>
+		<div class="container extra-spaced flex-center narrow">
+			<div class="large align-center">
+				<h3 class="h1">We prioritizes quality, clarity and authenticity, values that speak to the world today.</h3>
+			</div>
+		</div>
+	</section>
+
+	<section>
+		<div class="container no-top-space">
+			<div class="float-grid wide-gutter">
+				<div class="col-6 left">
+					<h3 class="h2 info-section-title light-text-color">Profile</h3>
+				</div>
+				<div class="col-6 right">
+					<img src="{{ td }}/assets/images/1000-1000.jpg">
+				</div>
+				<div class="col-6 left">
+					<div class="lg">
+						<p>High Tide, based in Dumbo, is led by creative director Danny Miller and managing director Jill Cole.</p>
+					</div>
+					<p>Spanning creative, technological, strategic and management fields, the High Tide team provides an eclectic balance of right and left-brains. Coming from various professional backgrounds in branding, fine art, design, and fashion, we share a passion for creating beautiful and evocative brands that impact today and shape tomorrow.</p>
+				</div>
+			</div>
+		</div>
+	</section>
+
+	<section class="disciplines mid-grey">
+		<div class="container">
+			<div class="float-grid wide-gutter">
+				<div class="col-6">
+					<h3 class="h2 info-section-title light-text-color">Selected Clients</h3>
+				</div>
+				<div class="col-6">
+					<ul class="large-list">
+						<li><a href="#" target="_blank">Communication Arts <span class="icon">{% include 'icons/ht-arrow-right-stem.svg' %}</span></a></li>
+						<li>It's Nice That</li>
+						<li><a href="#" target="_blank">Site Inspire <span class="icon">{% include 'icons/ht-arrow-right-stem.svg' %}</span></a></li>
+						<li>The Best Designs</li>
+					</ul>
+				</div>
+			</div>
+		</div>
+	</section>
+
+	<section>
+		<div class="container extra-spaced flex-center narrow">
+			<div class="large align-center">
+				<h3 class="h1">Lets work together. Contact use if you need help with a project.</h3>
+				<a class="underlined-link">Contact Us</a>
+			</div>
+		</div>
+	</section>
+
+
+{% endblock %}{# end content #}

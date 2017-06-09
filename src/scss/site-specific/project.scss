@@ -1,0 +1,45 @@
+.project-page {
+	.large-text-block {
+		> .container {
+			max-width: 40rem;
+			p {
+				a {
+					border-bottom: 1px solid rgba($text-color, .15);
+					&:hover {
+						border-color: currentcolor;
+					}
+				}
+			}
+		}
+	}
+	.caption {
+		margin-bottom: 0;
+	}
+	.small-section-title {
+		margin-bottom: 0;
+	}
+	.more-projects {
+		.col {
+			// padding-bottom: $mobile-margin;
+			&:last-child {
+				margin-bottom: 0;
+			}
+			@include respond($md) {
+				width: 50%;
+				padding-bottom: $gutter;
+				&:nth-child(n+5) {
+					padding-bottom: 0;
+				}
+			}
+			@include respond($lg) {
+				width: 33.333%;
+				&:nth-child(n+4) {
+					padding-bottom: 0;
+				}
+			}
+			.project-thumb {
+				margin-bottom: 0;
+			}
+		}
+	}
+}

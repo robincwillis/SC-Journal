@@ -1,0 +1,73 @@
+{% extends "base.twig" %}
+{% set body_class = 'push-down food-page' %}
+{% set footer = 'false' %}
+
+{% block content %}
+
+	<section class="grey no-top-space no-bottom-space">
+		<div class="section-header">
+			<div class="container">
+				<div class="flex-grid baseline">
+					<div class="col-3 align-left">
+						<a class="prev-link" href="#">Previous Cat</a>
+					</div>
+					<div class="col-6">
+						<h1 class="h3 large-title">Food</h1>
+					</div>
+					<div class="col-3 align-right">
+						<a class="next-link" href="#">Next Cat</a>
+					</div>
+				</div>
+			</div>
+		</div>
+		<div class="container no-bottom-space">
+			<div class="inline-grid recipe-list project-grid">
+				{% for item in 1..4 %}
+					<div class="col-12 right">
+						{% include 'components/recipe-thumb.twig' with {
+								'size' : '1200-800.jpg',
+								'category' : 'Category',
+								'title' : 'Article Title',
+								'author' : 'Dayyan Armstrong',
+								'desc' : 'Erisquas ma nonsed et optibus et aut que plam que nam, se et qui omnihic ieniment offictumque si vollaccus dolore plabo. Temperion eos minti a is volori sitatiore, quam rem voluptatius nonet voluptu',
+								'recipeServings' : '8 Servings',
+								'recipeTime' : '1:25 hrs, Plus Cooling'
+							} only
+						%}
+					</div>
+				{% endfor %}
+			</div>
+			<div class="inline-grid project-grid">
+				{% for item in 1..9 %}
+					<div class="col-4 right">
+						{% include 'components/article-thumb.twig' with {
+								'size' : '1200-800.jpg',
+								'category' : 'Category',
+								'title' : 'Article Title',
+								'author' : 'Dayyan Armstrong',
+								'desc' : 'Erisquas ma nonsed et optibus et aut que plam que nam, se et qui omnihic ieniment offictumque si vollaccus dolore plabo. Temperion eos minti a is volori sitatiore, quam rem voluptatius nonet voluptu',
+								'recipeServings' : '8 Servings',
+								'recipeTime' : '1:25 hrs, Plus Cooling'
+							} only
+						%}
+					</div>
+				{% endfor %}
+			</div>
+			<div class="more-cta">
+			<div class="container">
+				{% include 'components/button.twig' 
+					with {
+						'buttonClass': 'large transition-link',
+						'buttonText': 'More Food',
+						'buttonLink': globals.path ~ '/#'
+					} only
+				%}
+			</div>
+		</div>
+		</div>
+	</section>
+
+	{% include 'partials/super-footer.twig' %}
+
+
+{% endblock %}{# end content #}

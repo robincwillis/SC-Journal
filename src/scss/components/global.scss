@@ -1,0 +1,455 @@
+* {
+	box-sizing-border: box;
+	outline: none;
+}
+
+html,
+body {
+	background-color: $bg-color;
+	&.push-down {
+		#content {
+			padding-top: 60px;
+			@include respond($lg) {
+				padding-top: $header-height;
+			}
+		}
+	}
+}
+
+img,
+video {
+	max-width: 100%;
+	display: block;
+}
+
+svg {
+	color: currentcolor;
+	* {
+		transition: fill $md-speed $ease;
+		fill: currentcolor;
+	}
+}
+
+a {
+	color: $main-color;
+	text-decoration: none;
+	cursor: pointer;
+	transition: color $md-speed $ease, border $md-speed $ease, background $md-speed $ease, opacity $md-speed $ease;
+	&:hover {
+		color: $main-color;
+	}
+	&.thumb {
+		&:not(.no-hover):hover {
+			opacity: .8;
+			color: inherit;
+		}
+	}
+}
+
+.thumb {
+	display: block;
+	color: inherit;
+	margin-bottom: $gutter;
+	@include respond($md) {
+		margin-bottom: $margin;
+	}
+	&.list-thumb {
+		@include respond($md) {
+			margin-bottom: 2rem;
+		}
+		.col,
+		*[class^="col-"] {
+			margin-bottom: 0;
+		}
+		.thumb-info {	
+			padding-top: 0rem;
+			@include respond-smaller-than($md) {
+				.description {
+					display: none;
+				}
+			}
+		}
+	}
+	&.recipe-thumb {
+		.block-image {
+			margin-bottom: 0;
+			@include respond($md) {
+				width: 50%;
+			}
+			@include respond($lg + 200) {
+				width: 66.666%;
+			}		
+		}
+		&:hover {
+			color: $text-color;
+		}
+		.block-info {
+			margin-bottom: 0;
+			.thumb-info {	
+				@include respond($md) {
+					padding-top: 0rem;
+					h6 {
+						margin-top: 0;
+					}
+				}
+			}
+			@include respond($md) {
+				width: 50%;
+			}
+			@include respond($lg + 200) {
+				width: 33.333%;
+			}						
+		}
+	}
+	.thumb-info {
+		max-width: 27rem;
+		padding-top: 1rem;
+		h6 {
+			@include tiny-caps();
+			border-bottom: 1px solid $main-color;
+			display: inline-block;
+			padding-bottom: .25em;
+			margin-bottom: .3em;
+			vertical-align: top;
+		}
+		.thumb-title {
+			margin-bottom: 0;
+			margin-top: .1em;
+			&.h4 {
+				margin-bottom: .095em;
+			}
+		}
+		.author {
+			margin-top: 0;
+		}
+		.description {
+			// margin-bottom: 0;
+		}
+		+ button,
+		+ .button {
+			margin-top: .5rem;
+			@include respond-smaller-than($lg) {
+				display: none;
+			}
+		}
+	}
+}
+
+.container {
+  position: relative;
+  z-index: 1;
+  margin: 0 auto;
+  width: $site-width;
+  max-width: $max-site-width;
+  &.very-narrow {
+  	max-width: 33rem;
+  }
+  &.narrow {
+  	max-width: 1000px;
+  	h1,
+  	.h1 {
+  		max-width: 10em;
+  		margin-left: auto;
+  		margin-right: auto;
+  	}
+  }
+  @include respond($lg) {
+    width: calc(100% - #{$margin} * 2);
+  }
+}
+
+.top-area {
+	min-height: 300px;
+	@include respond($md) {
+		min-height: 450px;
+	}
+	&.full-height {
+		height: 100vh;
+	}
+	.small-caps {
+		margin-bottom: 1.5rem;
+	}
+	p {
+		max-width: none;
+	}
+	> .container {
+		padding-top: $header-height / 2.5;
+	}
+}
+
+.cover-area {
+	position: absolute;
+	top: 0;
+	left: 0;
+	right: 0;
+	bottom: 0;
+	overflow: hidden;
+	&.shaded {
+		background: $black;
+		img,
+		video {
+			opacity: .85;
+		}
+	}
+	img.cover,
+	video.cover {
+		width: 100%;
+    height: 100%;
+    object-fit: cover;
+    object-position: center;
+	}
+}
+
+section {
+	position: relative;
+	padding: $mobile-margin 0;
+	&.no-top-space {
+		padding-top: 0;
+	}
+	&.no-bottom-space {
+		padding-bottom: 0;
+	}
+	@include respond($lg) {
+		padding: $margin 0;
+	}
+	.section-header {
+		.next-link,
+		.prev-link {
+			color: $light-text-color;
+			@include small-caps();
+			display: none;
+			@include respond($lg) {
+				display: inline-block;
+			}
+			&:hover {
+				color: $main-color;
+			}
+		}
+		p {
+			max-width: none;
+		}
+		.prev-link {
+			&:before {
+				content: '';
+				display: inline-block;
+				width: 5px;
+				height: 5px;
+				border-bottom: 2px solid currentcolor;
+				border-right: 2px solid currentcolor;
+				transform: rotate(135deg);
+				transition: border $md-speed $ease;
+				vertical-align: middle;
+				margin-top: -5px;
+				margin-right: .5rem;
+			}
+		}
+		.next-link {
+			&:after {
+				content: '';
+				display: inline-block;
+				width: 5px;
+				height: 5px;
+				border-bottom: 2px solid currentcolor;
+				border-right: 2px solid currentcolor;
+				transform: rotate(-45deg);
+				transition: border $md-speed $ease;
+				vertical-align: middle;
+				margin-top: -5px;
+				margin-left: .5rem;
+			}
+		}
+		.container {
+			text-align: center;
+			padding: 2.5rem 0;
+			@include respond($md) {
+				padding: 4.5rem 0;
+			}
+			h1, h2, h3, h4, h5, h6 {
+				margin: .15rem 0 0 0;
+				font-weight: normal;
+				letter-spacing: $tracked-out;
+				text-transform: uppercase;
+				font-size: 1rem;
+				font-family: $secondary-font;
+				font-weight: $medium;
+				@include respond($md) {
+					font-size: 1.25rem;
+				}
+				&.large-title {
+					font-family: $main-font;
+					letter-spacing: 0;
+					text-transform: none;
+					font-weight: normal;
+					font-size: 2rem;
+					@include respond($md) {
+						font-size: 3rem;
+					}
+				}
+			}
+		}
+	}
+	&.clipped-section {
+		&.top-area {
+			z-index: 9;
+			.clip {
+				display: block;
+			}
+		}
+		@include respond($lg) {
+			z-index: 9;
+		}
+		.clip {
+			position: absolute;
+			top: 0;
+			right: 0;
+			bottom: 0;
+			left: 0;
+			clip: rect(0, auto, auto, 0);
+			@include respond-smaller-than($lg) {
+				display: none;
+			}
+		}
+	}
+	&.full-height {
+		height: 100vh;
+	}
+	&.three-quarters-height {
+		height: 75vh;
+	}
+	.more-cta {
+		padding: 1rem 0 6rem;
+		@include respond($md) {
+			padding-top: 0;
+			padding-bottom: $margin;
+			margin-top: 0;
+			&.after-list {
+				padding-top: $margin;
+				margin-top: -2rem;
+			}
+		}
+		.container {
+			text-align: center;
+		}
+	}
+	> .container {
+		
+		&.extra-spaced {
+			padding: 5rem 0;
+			@include respond($md) {
+				padding: 8rem 0;
+			}
+			@include respond($lg) {
+				padding: 10rem 0;
+			}
+		}
+	}
+	&.margined {
+		margin: $mobile-margin 0;
+		padding: 0;
+		@include respond($md) {
+			margin: $margin 0;
+		}
+		.container {
+			padding: 0;
+			&.extra-spaced {
+				padding: 2rem 0;
+			}
+		}
+	}
+	&.light {
+		background: $white;
+	}
+	&.grey {
+		background: $light-grey;
+	}
+	&.dark {
+		background: $black;
+		color: rgba($bg-color, .6);
+		@include font-smooth();
+		a {
+			color: rgba($bg-color, .6);
+			&:hover {
+				color: $bg-color;
+			}
+		}
+		h1, h2, h3, h4, h5, h6 {
+			color: $bg-color;
+		}
+	}
+}
+
+a.thumbnail {
+	display: block;
+}
+
+.flex-center {
+	height: 100%;
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	text-align: center;
+}
+
+.flex-left-center {
+	height: 100%;
+	display: flex;
+	align-items: center;
+	justify-content: flex-start;
+	text-align: left;
+}
+
+.flex-right-center {
+	height: 100%;
+	display: flex;
+	align-items: center;
+	justify-content: flex-end;
+	text-align: right;
+}
+
+.flex-center-bottom {
+	height: 100%;
+	display: flex;
+	align-items: flex-end;
+	justify-content: center;
+	text-align: center;
+}
+
+.flex-left-bottom {
+	height: 100%;
+	display: flex;
+	align-items: flex-end;
+	justify-content: flex-start;
+	text-align: left;
+}
+
+.flex-right-bottom {
+	height: 100%;
+	display: flex;
+	align-items: flex-end;
+	justify-content: flex-end;
+	text-align: right;
+}
+
+// Grid Adjustment
+.inline-grid {
+	@include respond-smaller-than($md) {
+		*[class^="col-"],
+		.col {
+			margin-bottom: $mobile-margin;
+		}
+	}
+}
+
+.cta-image-block {
+	.icon {
+		margin-top: 0;
+		margin-bottom: .85rem;
+	}
+	.h1 {
+		margin-bottom: .5rem;
+	}
+	p {
+		margin-top: 0;
+		margin-bottom: 1.5rem;
+	}
+}

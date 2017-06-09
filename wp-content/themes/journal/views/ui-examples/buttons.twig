@@ -1,0 +1,344 @@
+<section id="buttons">
+	<div class="section-info">
+		<div class="container">
+			<div class="float-grid">
+				<div class="col-6">
+					<h3>Buttons</h3>
+				</div>
+				<div class="col-6 rich-text">
+					<p>Buttons act the same whether they are <code>button</code> elements, <code>a.button</code>, or just have a class of <code>.button</code></p>
+				</div>
+			</div>
+		</div>
+	</div>
+	<div class="container">
+		<div class="inline-grid">
+			<div class="col-12">
+				<hr>
+				<h5>Button Size</h5>
+			</div>
+			<div class="col-3">
+				<div class="kit-block">
+					{% include 'components/button.twig' 
+						with {
+							'leftIcon': 'box',
+							'buttonClass': 'large',
+							'buttonText': 'Large'
+						} only
+					%}
+				</div>
+				<div class="kit-desc small-text">
+					<code>.large</code>
+				</div>
+			</div>
+			
+			<div class="col-3">
+				<div class="kit-block">
+					{% include 'components/button.twig' 
+						with {
+							'buttonText': 'Default'
+						} only
+					%}
+				</div>
+				<div class="kit-desc small-text">
+					<code>button or .button</code>
+				</div>
+			</div>
+			
+			<div class="col-3">
+				<div class="kit-block">
+					{% include 'components/button.twig' 
+						with {
+							'buttonClass': 'small',
+							'buttonText': 'Small'
+						} only
+					%}
+				</div>
+				<div class="kit-desc small-text">
+					<code>.small</code>
+				</div>
+			</div>
+			
+			<div class="col-3">
+				<div class="kit-block">
+					{% include 'components/button.twig' 
+						with {
+							'buttonClass': 'tiny',
+							'buttonText': 'Tiny'
+						} only
+					%}
+				</div>
+				<div class="kit-desc small-text">
+					<code>.tiny</code>
+				</div>
+			</div>
+			
+			<div class="col-12">
+				<hr>
+				<h5>Button States</h5>
+			</div>
+			<div class="col-3">
+				<div class="kit-block">
+					{% include 'components/button.twig' 
+						with {
+							'buttonClass': 'loading', 
+							'buttonText': '.loading'
+						} only
+					%}
+				</div>
+				<div class="kit-desc small-text">
+					<code>.loading</code>
+				</div>
+			</div>
+			
+			<div class="col-3">
+				<div class="kit-block">
+					{% include 'components/button.twig' 
+						with {
+							'buttonClass': 'error', 
+							'buttonText': 'Error'
+						} only
+					%}
+				</div>
+				<div class="kit-desc small-text">
+					<code>.error</code>
+				</div>
+			</div>
+
+			<div class="col-3">
+				<div class="kit-block">
+					{% include 'components/button.twig' 
+						with {
+							'buttonClass': 'success', 
+							'buttonText': 'Success'
+						} only
+					%}
+				</div>
+				<div class="kit-desc small-text">
+					<code>.success</code>
+				</div>
+			</div>
+
+			<div class="col-3">
+				<div class="kit-block">
+					{% include 'components/button.twig' 
+						with {
+							'buttonClass': 'disabled', 
+							'buttonText': 'Disabled'
+						} only
+					%}
+				</div>
+				<div class="kit-desc small-text">
+					<code>.disabled</code>
+				</div>
+			</div>
+
+
+			<div class="col-12">
+				<hr>
+				<h5>Secondary Buttons</h5>
+			</div>
+			<div class="col-4">
+				<div class="kit-block">
+					{% include 'components/button.twig' 
+						with {
+							'buttonText': 'Default'
+						} only
+					%}
+				</div>
+				<div class="kit-desc small-text">
+					<code>default</code>
+				</div>
+			</div>
+
+			<div class="col-4">
+				<div class="kit-block">
+					{% include 'components/button.twig' 
+						with {
+							'buttonClass': 'secondary', 
+							'buttonText': 'Secondary'
+						} only
+					%}
+				</div>
+				<div class="kit-desc small-text">
+					<code>.secondary</code>
+				</div>
+			</div>
+
+			<div class="col-4">
+				<div class="kit-block">
+					{% include 'components/button.twig' 
+						with {
+							'buttonClass': 'tertiary', 
+							'buttonText': 'tertiary'
+						} only
+					%}
+				</div>
+				<div class="kit-desc small-text">
+					<code>.tertiary</code>
+				</div>
+			</div>
+
+			<div class="col-4">
+				<div class="kit-block">
+					{% include 'components/button.twig' 
+						with {
+							'buttonClass': 'alert-btn', 
+							'buttonText': 'tertiary'
+						} only
+					%}
+				</div>
+				<div class="kit-desc small-text">
+					<code>.tertiary</code>
+				</div>
+			</div>
+
+			<div class="col-4">
+				<div class="kit-block">
+					{% include 'components/button.twig' 
+						with {
+							'buttonClass': 'success-btn', 
+							'buttonText': 'tertiary'
+						} only
+					%}
+				</div>
+				<div class="kit-desc small-text">
+					<code>.tertiary</code>
+				</div>
+			</div>
+
+			<div class="col-4">
+				<div class="kit-block">
+					{% include 'components/button.twig' 
+						with {
+							'buttonClass': 'notify-btn', 
+							'buttonText': 'tertiary'
+						} only
+					%}
+				</div>
+				<div class="kit-desc small-text">
+					<code>.tertiary</code>
+				</div>
+			</div>
+
+			<div class="col-12">
+				<hr>
+				<h5>Button Shapes</h5>
+			</div>
+			<div class="col-3">
+				<div class="kit-block">
+					{% include 'components/button.twig' 
+						with {
+							'buttonClass': 'circle', 
+							'buttonText': 'A',
+							'icon': 'plus'
+						} only
+					%}
+				</div>
+				<div class="kit-desc small-text">
+					<code>.circle</code>
+				</div>
+			</div>
+
+			<div class="col-3">
+				<div class="kit-block">
+					{% include 'components/button.twig' 
+						with {
+							'buttonClass': 'circle loading', 
+							'buttonText': 'circle'
+						} only
+					%}
+				</div>
+				<div class="kit-desc small-text">
+					<code>.circle.loading</code>
+				</div>
+			</div>
+
+			<div class="col-3">
+				<div class="kit-block">
+					{% include 'components/button.twig' 
+						with {
+							'buttonClass': 'circle error', 
+							'buttonText': 'circle'
+						} only
+					%}
+				</div>
+				<div class="kit-desc small-text">
+					<code>.circle.error</code>
+				</div>
+			</div>
+
+			<div class="col-3">
+				<div class="kit-block">
+					{% include 'components/button.twig' 
+						with {
+							'buttonClass': 'circle success', 
+							'buttonText': 'tertiary'
+						} only
+					%}
+				</div>
+				<div class="kit-desc small-text">
+					<code>.circle.success</code>
+				</div>
+			</div>
+
+			<div class="col-3">
+				<div class="kit-block">
+					{% include 'components/button.twig' 
+						with {
+							'buttonClass': 'square', 
+							'buttonText': 'A',
+							'icon': 'plus'
+						} only
+					%}
+				</div>
+				<div class="kit-desc small-text">
+					<code>.square</code>
+				</div>
+			</div>
+
+			<div class="col-3">
+				<div class="kit-block">
+					{% include 'components/button.twig' 
+						with {
+							'buttonClass': 'square loading', 
+							'buttonText': 'square'
+						} only
+					%}
+				</div>
+				<div class="kit-desc small-text">
+					<code>.square.loading</code>
+				</div>
+			</div>
+
+			<div class="col-3">
+				<div class="kit-block">
+					{% include 'components/button.twig' 
+						with {
+							'buttonClass': 'square error', 
+							'buttonText': 'square'
+						} only
+					%}
+				</div>
+				<div class="kit-desc small-text">
+					<code>.square.error</code>
+				</div>
+			</div>
+
+			<div class="col-3">
+				<div class="kit-block">
+					{% include 'components/button.twig' 
+						with {
+							'buttonClass': 'square success', 
+							'buttonText': 'square'
+						} only
+					%}
+				</div>
+				<div class="kit-desc small-text">
+					<code>.square.success</code>
+				</div>
+			</div>
+
+		</div>
+	</div>
+</section>

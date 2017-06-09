@@ -1,0 +1,17 @@
+{% extends "base.twig" %}
+{% set body_class = 'ui-kit' %}
+
+{% block content %}
+
+	{{ globals.name }}
+
+	{% include 'ui-examples/inputs.twig' %}
+
+	<div class="container"><hr class="text-color"><h3>Grids</h3></div>
+	{% include 'ui-examples/float-grid.twig' %}
+	{% include 'ui-examples/inline-grid.twig' %}
+	{% include 'ui-examples/flex-grid.twig' %}
+
+	{% include 'ui-examples/buttons.twig' %}
+
+{% endblock %}{# end content #}

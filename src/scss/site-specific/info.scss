@@ -1,0 +1,47 @@
+.info-page {
+	.info-section-title {
+		margin-top: 0;
+		@include respond($md) {
+			margin: 0;
+		}
+	}
+	.col-6 {
+		img {
+			@include respond-smaller-than($md) {
+				margin-bottom: 1.8rem;
+			}
+		}
+	}
+	ul{
+		&.two-col-list {
+			@include respond($sm) {
+				columns: 2;
+				column-gap: $gutter;
+			}
+		}
+		&.large-list {
+			font-size: 1.75rem;
+			font-weight: $light;
+			line-height: $short-line-height;
+			@include respond($lg) {
+				font-size: 1.875rem;
+			}
+			a {
+				position: relative;
+				&:hover {
+					.icon {
+						opacity: 1;
+					}
+				}
+				.icon {
+					position: absolute;
+					left: 100%;
+					padding-left: .5rem;
+					top: .4rem;
+					opacity: .4;
+					transition: opacity $md-speed $ease;
+				}
+			}
+		}
+	}
+}

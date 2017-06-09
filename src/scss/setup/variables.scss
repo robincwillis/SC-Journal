@@ -1,0 +1,159 @@
+$margin: 6.25rem;
+$mobile-margin: 7.5%;
+$max-site-width: 1500px;
+// $max-site-width: 900px;
+$site-width : 85%;
+
+// Grid Settings
+$columns: 12;
+$gutter: 3%;
+$wide-gutter: $margin;
+$tight-gutter: 20px;
+
+// General UI Varibales
+$base-border-radius : 0px;
+$header-height : $margin * 1.5;
+
+// Colors
+$bg-color : #fff;
+$main-color: #00abc7;
+$black : #000;
+$white : #fff;
+$alert : #DF693D;
+$notify : #FFD780;
+$success : #50B87F;
+$text-color : #323c46;
+$light-grey : lighten($text-color, 74%);
+$light-text-color : rgba($text-color, .4);
+$hr-color : lighten($text-color, 70%);
+$hr-styles : 1px solid $hr-color;
+
+// Links
+$link-color : $light-text-color;
+$link-hover-color : $main-color;
+
+// Typography
+$main-font: 'Portrait', serif;
+$secondary-font: 'Futura', sans-serif;
+$base-line-height : 1.4em;
+$base-letter-spacing : 0;
+$short-line-height : 1.333em;
+$tracked-out : .25em;
+	// General Text Sizes
+	$base-font-size : 16px;
+	$md-font-size : .875rem;
+	$sm-font-size : 10px;
+	// Font Weights
+	$normal : 400;
+	$thin : 400;
+	$light : 400;
+	$medium : 600;
+	$bold : 700;
+
+// Text Highlights
+$highlight-bg : $light-text-color;
+$highlight-color : $bg-color;
+
+// Text Inputs
+$input-font: $main-font;
+$input-bg : $white;
+$input-color : $text-color;
+$input-border : none;
+$input-border-radius : $base-border-radius;
+$input-hover-bg : $input-bg;
+$input-hover-color : $text-color;
+$input-hover-border : none;
+$input-focus-bg : $input-bg;
+$input-focus-color : $text-color;
+$input-focus-border : none;
+$placeholder-color : rgba($text-color, .4);
+$placeholder-focus-color : transparent;
+$input-padding: .35em 14px 0px;
+$input-line-height: 30px; // $btn-medium-height
+$input-large-height: 60px;
+$input-large-font-size: 1.25rem;
+$input-small-height: 30px;
+$input-small-font-size: .875rem;
+$input-tiny-height: 24px;
+$input-tiny-font-size: $input-small-font-size;
+
+// Select Fields
+$select-border : $input-border;
+$select-bg : transparent;
+$select-color : $light-text-color;
+
+// Button Variables
+$btn-radius: $base-border-radius;
+$btn-padding: 0 1.5rem 1px;
+$btn-text-transform: uppercase;
+$btn-letter-spacing: $tracked-out;
+$btn-weight: $medium;
+
+// Button Sizes
+$btn-height: 40px;
+	$btn-small-height: 30px;
+		$btn-tiny-height: 24px;
+			$btn-large-height: 60px;
+$btn-font-size: $sm-font-size;
+	$btn-small-font-size: calc(#{$btn-font-size} - 1px);
+		$btn-tiny-font-size: $btn-small-font-size;
+			$btn-large-font-size: $btn-font-size;
+
+	// Default
+	$btn-font: $secondary-font;
+	$btn-bg: transparent;
+	$btn-border: 1px solid $text-color;
+	$btn-color: $text-color;
+		$btn-hover-bg: transparent;
+		$btn-hover-border: 1px solid $main-color;
+		$btn-hover-color: $main-color;
+	
+	// Secondary
+	$btn-secondary-bg: $white;
+	$btn-secondary-border: 1px solid transparent;
+	$btn-secondary-color: $text-color;
+		$btn-secondary-hover-bg: rgba($white, .8);
+		$btn-secondary-hover-border: 1px solid transparent;
+		$btn-secondary-hover-color: $text-color;
+
+	// Tertiary
+	$btn-tertiary-bg: lighten($text-color, 60%);
+	$btn-tertiary-border: none;
+	$btn-tertiary-color: lighten($text-color, 10%);
+		$btn-tertiary-hover-bg: lighten($text-color, 65%);
+		$btn-tertiary-hover-border: none;
+		$btn-tertiary-hover-color: $text-color;
+
+	// Alert
+	$btn-alert-color: $bg-color;
+	// Notify
+	$btn-notify-color: $text-color;
+	// success
+	$btn-success-color: $bg-color;
+
+// Tables
+$vertical-cell-padding: .75rem;
+$horizontal-cell-padding: .75rem;
+
+// Tooltips
+$nipple-size: 4px;
+$tooltip-offset: 6px;
+$tooltip-text-transform: none;
+$tooltip-letter-spacing: .02em;
+$tooltip-font-size: .75rem;
+$tooltip-font-weight: $normal;
+$tooltip-padding: 5px 8px;
+$tooltip-height: 26px;
+
+// Breakpoints
+$sm : 450;
+$md : 600;
+$lg : 850;
+$xlg : 1050;
+$huge : 1500;
+
+// Transitions
+$fast-speed : .1s;
+$slow-speed : .5s;
+$md-speed : .2s;
+$ease : ease-in-out;

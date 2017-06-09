@@ -1,0 +1,16 @@
+.recipe-list {
+	.col-12 {
+		&:nth-child(even) {
+			.block-image {
+				@include respond($md) {
+					float: right !important;
+				}
+			}
+			.block-info {
+				@include respond($md) {
+					float: left !important;
+				}
+			}
+		}
+	}
+}

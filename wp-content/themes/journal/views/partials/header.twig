@@ -1,0 +1,25 @@
+<header {% if style %}class="{{ style }}"{% endif %}>
+	<div class="container">
+		<a href="./" class="transition-link icon hang-left" title="{{ globals.siteTitle }}">
+			<div>{% include 'icons/sc-mark.svg' %}</div>
+		</a>
+		
+		{% if logo == 'false' %}
+		{% else %}
+			<div class="logo">
+				<a href="./" class="transition-link" title="{{ globals.siteTitle }}">
+					<div class="wordmark">
+						<span>Sailing</span>
+						<span>Collective</span>
+						<span class="italic">Journal</span>
+					</div>
+				</a>
+			</div>
+		{% endif %}
+		
+		<a class="hang-right" title="Menu">
+			<div>{% include 'icons/sc-menu.svg' %}</div>
+		</a>
+	</div>
+
+</header>

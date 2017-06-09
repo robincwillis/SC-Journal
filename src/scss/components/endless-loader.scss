@@ -1,0 +1,17 @@
+.endless-loader {
+	position: fixed;
+	bottom: 0;
+	left: 0;
+	height: 8px;
+	width: 100%;
+	z-index: 1;
+	transition: transform $slow-speed $ease;
+	&.hidden {
+		transform: translate3d(0, 100%, 0);
+	}
+	span {
+		background: $black;
+		height: 100%;
+		display: block;
+	}
+}

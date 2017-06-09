@@ -1,0 +1,25 @@
+{% set category =  item.categories.0.title %}
+{% set title =  item.title %}
+{% set author =  item.author.name %}
+{% set desc =  item.post_excerpt %}
+{% set video = item.video_background %}
+{% set video_url = item.get_field('splash_video') %}
+{% set image =  item.thumbnail %}
+
+<a class="thumb transition-link" href="{{ item.link }}">
+  {% if video %}
+    <video class="cover" autoplay loop muted playsinline>
+      <source src="{{ video_url }}" type="video/mp4">
+    </video>
+  {% else %}
+    <img src="{{ image.src | resize(800, 533) }}" srcset="{{ image.src | resize(1200, 800) }} 1000w">
+  {% endif %}
+	<div class="thumb-info">
+		<h6>{{ category }}</h6>
+		<h3 class="thumb-title h3">{{ title }}</h3>
+		<p class="author smalll italic light-text-color">By {{ author }}</p>
+		{% if desc %}
+		  <p class="smalll description">{{ desc }}</p>
+		{% endif %}
+	</div>
+</a>

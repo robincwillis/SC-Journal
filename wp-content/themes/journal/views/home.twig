@@ -1,0 +1,152 @@
+{% extends "base.twig" %}
+{% set body_class = 'home-page' %}
+{% set footer = 'false' %}
+
+{% block content %}
+
+	{% include 'components/top-area.twig' with {
+		'video' : post.splash_video_background,
+		'image' : post.thumbnail,
+		'video_url' : post.get_field('splash_video'),
+		'white' : post.splash_white_text,
+		'textOverlay' : post.splash_title,
+		'smallText' : post.splash_subtext,
+		'overlayPosition' : post.splash_text_position ~ '-center',
+		'linkText' : post.splash_link_text,
+		'linkUrl' : post.splash_link,
+		'fullHeight' : true
+	} %}
+
+	{% if post.get_field("features") %}
+		<section>
+			<div class="container">
+				<div class="float-grid featured-grid">
+					{% for item in post.get_field("features") %}
+						{% if loop.index == 1 %}
+							<div class="col large-thumb">
+								{% include 'components/article-thumb.twig' %}
+							</div>
+						{% else %}
+							<div class="col small-thumb">
+								{% include 'components/article-thumb.twig' %}
+							</div>
+						{% endif %}
+
+					{% endfor %}
+				</div>
+			</div>
+		</section>
+	{% endif %}
+
+	{% if post.get_field("featured_travel") %}
+		<section class="grey no-top-space no-bottom-space">
+			<div class="section-header">
+				<div class="container">
+					<h4 class="h3">Travel</h4>
+				</div>
+			</div>
+			<div class="container">
+				<div class="inline-grid">
+					{% for item in post.get_field("featured_travel") %}
+						{% if loop.index == 1 or loop.index == 2 %}
+							<div class="col-6 right">
+								{% include 'components/article-thumb.twig' %}
+							</div>
+						{% else %}
+							<div class="col-4 right">
+								{% include 'components/article-thumb.twig' %}
+							</div>
+						{% endif %}
+
+					{% endfor %}
+				</div>
+			</div>
+			<div class="more-cta">
+				<div class="container">
+					{% include 'components/button.twig' 
+						with {
+							'buttonClass': 'large transition-link',
+							'buttonText': 'More Travel',
+							'buttonLink': '/categories//travel'
+						} only
+					%}
+				</div>
+			</div>
+		</section>
+	{% endif %}
+
+	{% if post.get_field("featured_photo_essays") %}
+		<section class="no-top-space no-bottom-space">
+			<div class="section-header">
+				<div class="container">
+					<h4 class="h3">Photo Essays</h4>
+				</div>
+			</div>
+			<div class="container narrow">
+				<div class="inline-grid break-md">
+					{% for item in post.get_field("featured_photo_essays") %}
+						<div class="col-6 right">
+							{% include 'components/article-list-thumb.twig'	%}
+						</div>
+					{% endfor %}
+				</div>
+			</div>
+			<div class="more-cta after-list">
+				<div class="container">
+					{% include 'components/button.twig' 
+						with {
+							'buttonClass': 'large transition-link',
+							'buttonText': 'More Photo Essays',
+							'buttonLink': 'categories/photo-essays'
+						} only
+					%}
+				</div>
+			</div>
+		</section>
+	{% endif %}
+
+	{% if post.get_field("featured_food") %}
+		<section class="grey no-top-space no-bottom-space">
+			<div class="section-header">
+				<div class="container">
+					<h4 class="h3">Food</h4>
+				</div>
+			</div>
+			<div class="container">
+				<div class="inline-grid recipe-list">
+					{% for item in post.get_field("featured_food") %}
+						<div class="col-12 right">
+							{% include 'components/recipe-thumb.twig'	%}
+						</div>
+					{% endfor %}
+				</div>
+			</div>
+			<div class="more-cta">
+				<div class="container">
+					{% include 'components/button.twig' 
+						with {
+							'buttonClass': 'large transition-link',
+							'buttonText': 'More Food',
+							'buttonLink': '/categories/food'
+						} only
+					%}
+				</div>
+			</div>
+		</section>
+	{% endif %}
+
+	{% include 'partials/super-footer.twig' 
+		with {
+			'video' : post.splash_video_background,
+			'image' : post.callout_background_image,
+			'video_url' : post.get_field('callout_background_video'),
+			'title' : post.callout_title,
+			'text' : post.callout_text,
+			'buttonText' : post.callout_link_text,
+			'buttonExternal' : post.callout_external_link_type,
+			'buttonLink' : post.callout_link,
+			'buttonExternalLink' : post.callout_external_link
+		} only
+	%}
+
+{% endblock %}{# end content #}

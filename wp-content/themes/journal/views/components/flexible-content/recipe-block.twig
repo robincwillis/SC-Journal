@@ -1,0 +1,29 @@
+<div class="recipe-block" href="./recipe.php">
+	<div class="float-grid break-lg">
+		<div class="col-8 block-image right">
+		  {% if video == true %}
+		    <video class="cover" autoplay loop muted playsinline>
+		      <source src="{{ td }}/assets/images/meadow.mp4" type="video/mp4">
+		    </video>
+		  {% else %}
+		    <img src="{{ td }}/assets/images/{{ size }}">
+		  {% endif %}
+		</div>
+		<div class="col-4 block-info left">
+			<div class="thumb-info">
+				{% if content %}
+				  <p class="md no-spacing description">{{ content }}</p>
+				{% endif %}
+				{% if recipeServings and recipeTime %}
+				  <p class="light-text-color">{{ recipeServings }} | {{ recipeTime }}</p>
+				{% elseif recipeServings %}
+					<p class="light-text-color">{{ recipeServings }}</p>
+				{% elseif recipeTime %}
+					<p class="light-text-color">{{ recipeTime }}</p>
+				{% endif %}
+				<p><a href="#">Latin</a>, <a href="#">Burrito</a>, <a href="#">Food</a>, <a href="#">Meat Tornado</a>, <a href="#">Food wrapped in things</a></p>
+			</div>
+		</div>
+
+	</div>
+</div>

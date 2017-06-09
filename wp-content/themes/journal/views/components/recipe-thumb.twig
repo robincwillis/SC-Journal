@@ -1,0 +1,43 @@
+{% set category =  item.categories.0.title %}
+{% set title =  item.title %}
+{% set author =  item.author.name %}
+{% set desc =  item.post_excerpt %}
+{% set video = item.video_background %}
+{% set video_url = item.get_field('splash_video') %}
+{% set image =  item.thumbnail %}
+{% set recipeServings = item.servings_time %}
+
+<a class="thumb no-hover recipe-thumb transition-link" href="{{ item.link }}">
+	<div class="float-grid">
+		<div class="col block-image">
+		  {% if video%}
+		    <video class="cover" autoplay loop muted playsinline>
+		      <source src="{{ video_url }}" type="video/mp4">
+		    </video>
+		  {% else %}
+		    <img src="{{ image.src | resize(800, 533) }}" srcset="{{ image.src | resize(1200, 800) }} 1000w">
+		  {% endif %}
+		</div>
+		<div class="col block-info">
+			<div class="thumb-info">
+				<h6>{{ category }}</h6>
+				<h3 class="thumb-title h3 lg">{{ title }}</h3>
+				<p class="author smalll italic light-text-color">By {{ author }}</p>
+				{% if desc %}
+				  <p class="smalll description">{{ desc }}</p>
+				{% endif %}
+				{% if recipeServings %}
+				  <p class="smalll light-text-color description">{{ recipeServings }}</p>
+				{% endif %}
+			</div>
+			{% include 'components/button.twig' 
+				with {
+					'buttonClass': 'transition-link',
+					'buttonText': 'View Recipe',
+					'buttonLink': item.link
+				} only
+			%}
+		</div>
+
+	</div>
+</a>
