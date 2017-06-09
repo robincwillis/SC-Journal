@@ -1,8 +1,9 @@
+{% set wide_image =  TimberImage(block.image) %}
 <section class="margined">
 	<div class="container">
-		<img src="{{ td }}/assets/images/2000-1200.jpg">
-		{% if caption %}
-			<p class="caption">Subtle patterned paper to create a cohesive experience and a striking first impression uppon opening the gift.</p>
+			<img src="{{ wide_image.src | resize(1000,600)}}" srcset="{{ wide_image.src | resize(2000,1200)}} 1000w" alt="{{ block.image | alt}}">
+		{% if wide_image.post_excerpt %}
+			<p class="caption">{{ wide_image.post_excerpt }}</p>
 		{% endif %}
 	</div>
 </section>

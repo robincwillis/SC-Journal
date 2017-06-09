@@ -22,52 +22,50 @@
 		</div>
 		<div class="container no-bottom-space">
 			<div class="inline-grid recipe-list project-grid">
-				{% for item in 1..4 %}
+				{% for item in posts | slice(0, 4) %}
 					<div class="col-12 right">
-						{% include 'components/recipe-thumb.twig' with {
-								'size' : '1200-800.jpg',
-								'category' : 'Category',
-								'title' : 'Article Title',
-								'author' : 'Dayyan Armstrong',
-								'desc' : 'Erisquas ma nonsed et optibus et aut que plam que nam, se et qui omnihic ieniment offictumque si vollaccus dolore plabo. Temperion eos minti a is volori sitatiore, quam rem voluptatius nonet voluptu',
-								'recipeServings' : '8 Servings',
-								'recipeTime' : '1:25 hrs, Plus Cooling'
-							} only
-						%}
+						{% include 'components/recipe-thumb.twig' %}
 					</div>
 				{% endfor %}
 			</div>
 			<div class="inline-grid project-grid">
-				{% for item in 1..9 %}
+				{% for item in posts | slice(4, 10) %}
 					<div class="col-4 right">
-						{% include 'components/article-thumb.twig' with {
-								'size' : '1200-800.jpg',
-								'category' : 'Category',
-								'title' : 'Article Title',
-								'author' : 'Dayyan Armstrong',
-								'desc' : 'Erisquas ma nonsed et optibus et aut que plam que nam, se et qui omnihic ieniment offictumque si vollaccus dolore plabo. Temperion eos minti a is volori sitatiore, quam rem voluptatius nonet voluptu',
-								'recipeServings' : '8 Servings',
-								'recipeTime' : '1:25 hrs, Plus Cooling'
-							} only
-						%}
+						{% include 'components/article-thumb.twig' %}
 					</div>
 				{% endfor %}
 			</div>
-			<div class="more-cta">
-			<div class="container">
-				{% include 'components/button.twig' 
-					with {
-						'buttonClass': 'large transition-link',
-						'buttonText': 'More Food',
-						'buttonLink': globals.path ~ '/#'
-					} only
-				%}
-			</div>
-		</div>
+			{% set remaining_posts = posts | slice(4, 10) %}
+			{% if remaining_posts.length %}
+				<div class="more-cta">
+					<div class="container">
+						{% include 'components/button.twig' 
+							with {
+								'buttonClass': 'large transition-link',
+								'buttonText': 'More Food',
+								'buttonLink': globals.path ~ '/#'
+							} only
+						%}
+					</div>
+				</div>
+			{% endif %}
+
 		</div>
 	</section>
 
-	{% include 'partials/super-footer.twig' %}
+	{% include 'partials/super-footer.twig' 
+		with {
+			'video' : options.callout_video_background,
+			'image' : options.callout_background_image,
+			'video_url' : get_field('callout_background_video', 'options'),
+			'title' : options.callout_title,
+			'text' : options.callout_text,
+			'buttonText' : options.callout_link_text,
+			'buttonExternal' : options.callout_external_link_type,
+			'buttonLink' : options.callout_link,
+			'buttonExternalLink' : options.callout_external_link
+		} only
+	%}
 
 
 {% endblock %}{# end content #}

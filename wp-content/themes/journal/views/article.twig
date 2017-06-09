@@ -1,40 +1,63 @@
 {% extends "base.twig" %}
-{% set body_class = 'article-page' %}
+{% set body_class = (post.splash_layout == 'recipe') ? 'article-page push-down' : 'article-page'  %}
 
 {% block content %}
 
-{% include 'components/top-area.twig' with {
-	'contentType' : 'video',
-	'contentColor' : 'white',
-	'smallText' : 'Photo Essay',
-	'author' : 'Dayyan Armstrong',
-	'introText' : 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Negat esse eam, inquit, propter se expetendam. Terram, mihi crede, ea lanx et maria deprimet. Bonum negas esse divitias, praeposìtum esse dicis? At quicum ioca seria, ut dicitur, quicum arcana, quicum occulta omnia? Idem iste, inquam, de voluptate quid sentit? A quibus propter disce',
-	'textOverlay' : 'The Most Beautiful place in the world'
-} %}
+{% if post.splash_layout == 'recipe' %}
+	{% include 'components/recipe-top.twig' with {
+			'video' : post.splash_video_background,
+			'image' : post.splash_image,
+			'video_url' : post.get_field('splash_video'),
+			'white' : post.splash_white_text,
+			'textOverlay' : post.title,
+			'smallText' : post.categories.0.name,
+			'overlayPosition' : post.splash_text_position ~ '-center',
+			'author' : post.author.name,
+			'introText' : post.post_excerpt,
+			'splash Layout' : post.splash_layout,
+			'recipeServings' : post.servings_time
+	} %}
+{% else %}
+	{% include 'components/top-area.twig' with {
+			'video' : post.splash_video_background,
+			'image' : post.splash_image,
+			'video_url' : post.get_field('splash_video'),
+			'white' : post.splash_white_text,
+			'textOverlay' : post.title,
+			'smallText' : post.categories.0.name,
+			'overlayPosition' : post.splash_text_position ~ '-center',
+			'author' : post.author.name,
+			'introText' : post.post_excerpt,
+			'splash Layout' : post.splash_layout
+	} %}
+{% endif %}	
 
-{% include 'components/flexible-content/large-text.twig' with {'content' : 'Section Title', 'content': 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Negat esse eam, inquit, propter se expetendam. Terram, mihi crede, ea lanx et maria deprimet. Bonum negas esse divitias, praeposìtum esse dicis? At quicum ioca seria, ut dicitur, quicum arcana' } %}
+{% for block in post.get_field('blocks') %}
+	{% if block.acf_fc_layout == 'large_text_area' %}
+		{% include 'components/flexible-content/large-text.twig' %}
 
-{% include 'components/flexible-content/wide-image.twig' %}
+	{% elseif block.acf_fc_layout == 'large_image' %}
+		
+		{% if block.full_width %}
+			{% include 'components/flexible-content/full-width-image.twig' %}
+		{% else %}
+			{% include 'components/flexible-content/wide-image.twig' %}
+		{% endif %}
 
-{% include 'components/flexible-content/two-up-images.twig' %}
+	{% elseif block.acf_fc_layout == 'two_up_images' %}
+		{% include 'components/flexible-content/two-up-images.twig' %}
 
-{% include 'components/flexible-content/two-up-text.twig' with {'content': 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Negat esse eam, inquit, propter se expetendam. Terram, mihi crede, ea lanx et maria deprimet. Bonum negas esse divitias, praeposìtum esse dicis? At quicum ioca seria, ut dicitur, quicum arcana, quicum occulta omnia? Idem iste, inquam, de voluptate quid sentit? A quibus propter disce'} %}
+	{% elseif block.acf_fc_layout == 'right_text' %}
+		{% include 'components/flexible-content/two-up-text.twig' %}
 
-{% include 'components/flexible-content/full-width-image.twig' %}
+	{% elseif block.acf_fc_layout == 'recipe' %}
+		{% include 'components/flexible-content/recipe-block.twig' %}
 
-{% include 'components/flexible-content/large-text.twig' with {'content' : 'Section Title', 'content': 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Negat esse eam, inquit, propter se expetendam. Terram, mihi crede, ea lanx et maria deprimet. Bonum negas esse divitias, praeposìtum esse dicis? At quicum ioca seria, ut dicitur, quicum arcana'} %}
 
-{% include 'components/flexible-content/two-up-images.twig' %}
-
-<div class="container very-narrow">
-	{% include 'components/flexible-content/rich-text.twig' %}
-</div>
-
-{% include 'components/flexible-content/wide-image.twig' %}
-
-{% include 'components/flexible-content/two-up-text.twig' with {'title' : 'Section Title', 'content': 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Negat esse eam, inquit, propter se expetendam. Terram, mihi crede, ea lanx et maria deprimet. Bonum negas esse divitias, praeposìtum esse dicis? At quicum ioca seria, ut dicitur, quicum arcana, quicum occulta omnia? Idem iste, inquam, de voluptate quid sentit? A quibus propter disce'} %}
-
-{% include 'components/flexible-content/two-up-images.twig' %}
+	{% elseif block.acf_fc_layout == 'rich_text' %}
+		{% include 'components/flexible-content/rich-text.twig' %}
+	{% endif %}
+{% endfor %}
 
 <section class="margined share">
 	<div class="more-cta">
@@ -42,71 +65,58 @@
 			<div class="share-wrap">
 				<div class="underlined-link">Share</div>
 				<ul class="share-links">
-					<li><a href="#">{% include 'icons/facebook.svg' %}</a></li>
-					<li><a href="#">{% include 'icons/twitter.svg' %}</a></li>
-					<li><a href="#">{% include 'icons/pinterest.svg' %}</a></li>
-					<li><a href="#">{% include 'icons/email.svg' %}</a></li>
+					<li><a target="_blank" onclick="window.open(this.href, 'mywin', 'left=20,top=20,width=700,height=700,toolbar=1,resizable=0'); return false;" href="https://www.facebook.com/sharer.php?u={{ post.link }}"><span class="icon">{% include 'icons/facebook.svg' %}</span></a></li>
+					<li><a target="_blank" onclick="window.open(this.href, 'mywin', 'left=20,top=20,width=600,height=600,toolbar=1,resizable=0'); return false;" href="https://twitter.com/intent/tweet?url={{ post.link }}&text={{ post.title }}"><span class="icon">{% include 'icons/twitter.svg' %}</span></a></li>
+					<li><a target="_blank" onclick="window.open(this.href, 'mywin', 'left=20,top=20,width=600,height=600,toolbar=1,resizable=0'); return false;" href="http://pinterest.com/pin/create/button/?url={{ post.link }}&media={{ post.thumbnail.src }}">{% include 'icons/pinterest.svg' %}</a></li>
+					<li><a target="_blank" href="mailto:?subject={{ post.title }}={{ post.title }} from Sailing Collective&body=Check out {{ post.title }} from Sailing Collective. <br/> {{ post.link}}" title="Share by Email"><span class="icon">{% include 'icons/email.svg' %}</span></a></li>
 				</ul>
 			</div>
 		</div>
 	</div>
 </section>
 
-<section class="full-height clipped-section">
-	<div class="clip">
-		{% include 'partials/header.twig' with {'style' : 'white', 'logo' : 'false'} only %}
-	</div>
-	<div class="container flex-center very-narrow bg-color cta-image-block">
-		<div>
-			<div class="icon">{% include 'icons/sc-mark.svg' %}</div>
-			<h4 class="h1">Come with us next time</h4>
-			<p class="md">Explore where we are going next and start your jouney</p>
-			{% include 'components/button.twig' 
-				with {
-					'buttonClass': 'large secondary transition-link',
-					'buttonText': 'Learn More',
-					'buttonLink': 'http://sailingcollective.com/'
-				} only
-			%}
-		</div>
-	</div>
-	<div class="cover-area shaded">
-		<img class="cover" src="{{ td }}/assets/images/2000-1500.jpg">
-	</div>
-</section>
+{% include 'partials/article-callout.twig' 
+		with {
+			'video' : options.callout_video_background,
+			'image' : options.callout_background_image,
+			'video_url' : get_field('callout_background_video', 'options'),
+			'title' : options.callout_title,
+			'text' : options.callout_text,
+			'buttonText' : options.callout_link_text,
+			'buttonExternal' : options.callout_external_link_type,
+			'buttonLink' : options.callout_link,
+			'buttonExternalLink' : options.callout_external_link
+		} only
+%}
 
-<section class="grey no-top-space no-bottom-space">
-	<div class="section-header">
-		<div class="container">
-			<h3>More Photo Essays</h3>
+{% if related %}
+	<section class="grey no-top-space no-bottom-space">
+		<div class="section-header">
+			<div class="container">
+				<h3>More {{ post.categories.0.name }}</h3>
+			</div>
 		</div>
-	</div>
-	<div class="container narrow no-top-space">
-		<div class="inline-grid">
-			{% for item in 1..6 %}
-				<div class="col-6 right">
-					{% include 'components/article-list-thumb.twig' with {
-							'size' : '1200-800.jpg',
-							'category' : 'Category',
-							'title' : 'Article Title',
-							'author' : 'Dayyan Armstrong'
-						} only
-					%}
-				</div>
-			{% endfor %}
+		<div class="container narrow no-top-space">
+			<div class="inline-grid">
+				{% for item in related %}
+					<div class="col-6 right">
+						{% include 'components/article-list-thumb.twig' %}
+					</div>
+				{% endfor %}
+			</div>
 		</div>
-	</div>
-	<div class="more-cta after-list">
-		<div class="container">
-			{% include 'components/button.twig' 
-				with {
-					'buttonClass': 'large transition-link',
-					'buttonText': 'More Photo Essays',
-					'buttonLink': globals.path ~ '/photo-essays'
-				} only
-			%}
+		<div class="more-cta after-list">
+			<div class="container">
+				{% include 'components/button.twig' 
+					with {
+						'buttonClass': 'large transition-link',
+						'buttonText': 'More ' ~ post.categories.0.name,
+						'buttonLink': post.categories.0.link
+					} only
+				%}
+			</div>
 		</div>
-	</div>
-</section>
+	</section>
+{% endif %}
 
 {% endblock %}{# end content #}

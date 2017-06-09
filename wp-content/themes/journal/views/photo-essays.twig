@@ -22,15 +22,9 @@
 		</div>
 		<div class="container no-bottom-space">
 			<div class="inline-grid project-grid">
-				{% for item in 1..12 %}
+				{% for item in posts %}
 					<div class="col-4 right">
-						{% include 'components/article-list-thumb.twig' with {
-								'size' : '1200-800.jpg',
-								'category' : 'Category',
-								'title' : 'Article Title',
-								'author' : 'Dayyan Armstrong'
-							} only
-						%}
+						{% include 'components/article-list-thumb.twig' %}
 					</div>
 				{% endfor %}
 			</div>
@@ -48,7 +42,18 @@
 		</div>
 	</section>
 
-	{% include 'partials/super-footer.twig' %}
-
+	{% include 'partials/super-footer.twig' 
+		with {
+			'video' : options.callout_video_background,
+			'image' : options.callout_background_image,
+			'video_url' : get_field('callout_background_video', 'options'),
+			'title' : options.callout_title,
+			'text' : options.callout_text,
+			'buttonText' : options.callout_link_text,
+			'buttonExternal' : options.callout_external_link_type,
+			'buttonLink' : options.callout_link,
+			'buttonExternalLink' : options.callout_external_link
+		} only
+	%}
 
 {% endblock %}{# end content #}

@@ -49,6 +49,7 @@ class Colvard extends TimberSite
   function add_to_twig($twig)
   {
     $twig->addGlobal('td', get_template_directory_uri());
+    $twig->addGlobal('footer_menu' , new TimberMenu('footer-menu'));
     $get_field = new Twig_SimpleFunction('get_field', 
       function ($field_name, $page_name = false) 
       {

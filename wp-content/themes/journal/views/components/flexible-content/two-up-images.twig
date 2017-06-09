@@ -1,11 +1,17 @@
 <section class="margined">
 	<div class="container">
-		<div class="inline-grid middle">
+		<div class="inline-grid">
 			<div class="col-6">
-				<img src="{{ td }}/assets/images/1200-800.jpg">
+				<img src="{{ TimberImage(block.image_1).src | resize(800,533)}}" alt="{{ block.image_1 | alt}}">
+				{% if TimberImage(block.image_1).post_excerpt %}
+					<p class="caption">{{ TimberImage(block.image_1).post_excerpt }}</p>
+				{% endif %}
 			</div>
 			<div class="col-6">
-				<img src="{{ td }}/assets/images/1200-800.jpg">
+				<img src="{{ TimberImage(block.image_2).src | resize(800,533)}}" alt="{{ block.image_2 | alt}}">
+				{% if TimberImage(block.image_2).post_excerpt %}
+					<p class="caption">{{ TimberImage(block.image_2).post_excerpt }}</p>
+				{% endif %}
 			</div>
 		</div>
 	</div>

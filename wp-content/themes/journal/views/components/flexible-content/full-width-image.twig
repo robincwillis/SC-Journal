@@ -1,6 +1,13 @@
+{% set full_width_image = TimberImage(block.image) %}
+
 <section class="clipped-section no-top-space no-bottom-space">
 	<div class="clip">
 		{% include 'partials/header.twig' with { 'logo': 'false', 'style': 'inverted' } %}
 	</div>
-	<img src="{{ td }}/assets/images/2000-1200.jpg">
+	<img src="{{ full_width_image.src | resize(1000,600)}}" srcset="{{ full_width_image.src | resize(2000,1200)}} 1000w" alt="{{ block.image | alt}}">
+	<div class="container">
+		{% if full_width_image.post_excerpt %}
+			<p class="caption">{{ full_width_image.post_excerpt }}</p>
+		{% endif %}
+	</div>
 </section>

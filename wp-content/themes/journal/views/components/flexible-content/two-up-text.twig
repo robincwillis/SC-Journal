@@ -2,10 +2,10 @@
 	<div class="container">
 		<div class="inline-grid break-lg">
 			<div class="col-6 small-section-title">
-				{% if title %}<h3 class="p light-text-color">{{ title }}</h3>{% endif %}
+				{% if block.title %}<h3 class="p light-text-color">{{ block.title }}</h3>{% endif %}
 			</div>
 			<div class="col-6">
-				{% if content %}<p>{{ content }}</p>{% endif %}
+				{% if block.text %}{{ block.text }}{% endif %}
 			</div>
 		</div>
 	</div>

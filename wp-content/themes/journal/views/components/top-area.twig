@@ -1,16 +1,16 @@
-<section class="featured-content top-area {% if fullHeight == true %}full-height{% else %}three-quarters-height{% endif %} mid-grey{% if white %} clipped-section{% endif %}">
+<section class="featured-content top-area {% if fullHeight == true %}full-height{% else %}three-quarters-height{% endif %} mid-grey{% if white %} clipped-section{% endif %} {{ splash_layout }}">
 	{% if white %}
 		<div class="clip">
 			{% include 'partials/header.twig' with { 'style': 'white' } %}
 		</div>
 	{% endif %}
-	<div class="container{% if overlayPosition == false %} very-narrow{% endif %} flex-{% if overlayPosition %}{{ overlayPosition }}{% else %}center{% endif %}{% if white %} bg-color{% endif %}">
+	<div class="container{% if overlayPosition == 'center-center' %} very-narrow{% endif %} flex-{% if overlayPosition %}{{ overlayPosition }}{% else %}center{% endif %}{% if white %} bg-color{% endif %}">
 		<div>
 			{% if smallText %}
-				<p class="small-caps">New Digs for Dig Inn</p>
+				<p class="small-caps">{{ smallText }}</p>
 			{% endif %}
 			{% if textOverlay %}
-				<h2 class="h1">New Digs for Dig Inn</h2>
+				<h2 class="h1">{{ textOverlay }}</h2>
 			{% endif %}
 			{% if author %}
 				<p><span class="italic">By</span> {{ author }}</p>
@@ -19,7 +19,7 @@
 				<p>{{ introText }}</p>
 			{% endif %}
 			{% if linkText and linkUrl %}
-				<a class="underlined-link">View Case Study</a>
+				<a href="{{ linkUrl }}" class="underlined-link">{{ linkText }}</a>
 			{% endif %}
 		</div>
 	</div>
@@ -29,7 +29,7 @@
 	      <source src="{{ video_url }}" type="video/mp4">
 	    </video>
     {% else %}
-    	<img class="cover" data-object-fit="cover" src="{{ image.src | resize(1000, 600) }}" srcset="{{ image.src | resize(2000,1200) }} 1000w">
+    	<img class="cover" data-object-fit="cover" src="{{ TimberImage(image).src | resize(1000, 600) }}" srcset="{{ TimberImage(image).src | resize(2000,1200) }} 1000w">
     {% endif %}
 	</div>
 </section>

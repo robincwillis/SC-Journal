@@ -2,11 +2,11 @@
 	<section class="dark{% if style %} {{ style }}{% endif %}">
 		<div class="container">
 			<ul>
-				<li><a href="{{ globals.facebookUrl }}">Facebook</a></li>
-				<li><a href="{{ globals.instagramUrl }}">Instagram</a></li>
-				<li><a href="{{ globals.twitterUrl }}">Twitter</a></li>
-				<li><a href="mailto:{{ globals.generalEmail }}">Contact</a></li>
-				<li><a href="http://sailingcollective.com/journeys" target="_blank">Journys</a></li>
+				{% for item in footer_menu.items %}
+					<li class="{{ item.classes | join(' ') }}">
+						<a href="{{ item.link }}" class="transition-link" title="{{ item.title }}">{{ item.title }}</a>
+					</li>
+				{% endfor %}
 			</ul>
 		</div>
 	</section>

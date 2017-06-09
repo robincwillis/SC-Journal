@@ -1,29 +1,33 @@
-<div class="recipe-block" href="./recipe.php">
-	<div class="float-grid break-lg">
-		<div class="col-8 block-image right">
-		  {% if video == true %}
-		    <video class="cover" autoplay loop muted playsinline>
-		      <source src="{{ td }}/assets/images/meadow.mp4" type="video/mp4">
-		    </video>
-		  {% else %}
-		    <img src="{{ td }}/assets/images/{{ size }}">
-		  {% endif %}
-		</div>
-		<div class="col-4 block-info left">
-			<div class="thumb-info">
-				{% if content %}
-				  <p class="md no-spacing description">{{ content }}</p>
-				{% endif %}
-				{% if recipeServings and recipeTime %}
-				  <p class="light-text-color">{{ recipeServings }} | {{ recipeTime }}</p>
-				{% elseif recipeServings %}
-					<p class="light-text-color">{{ recipeServings }}</p>
-				{% elseif recipeTime %}
-					<p class="light-text-color">{{ recipeTime }}</p>
-				{% endif %}
-				<p><a href="#">Latin</a>, <a href="#">Burrito</a>, <a href="#">Food</a>, <a href="#">Meat Tornado</a>, <a href="#">Food wrapped in things</a></p>
+<section class="recipe-directions">
+	<div class="container">
+		<div class="float-grid">
+			<div class="col-4">
+				<h4 class="h3 recipe-header">Ingredients</h4>
+				<hr/>
+				<ul class="lg-list">
+					{% for ingredient in block.ingredients %}
+						<li><p>{{ ingredient.text }}</p></li>
+					{% endfor %}
+				</ul>
+			</div>
+			<div class="col-8">
+				<h4 class="h3 recipe-header">Preparation</h4>
+				<hr/>
+				<ol>
+					{% for step in block.steps %}
+					<li>
+						<div class="float-grid break-lg">
+							<div class="col-3">
+								<h5 class="p bold light-text-color">Step {{ loop.index }}</h5>
+							</div>
+							<div class="col-9">
+								<p>{{ step.text }}</p>
+							</div>
+						</div>
+					</li>
+					{% endfor %}
+				</ol>
 			</div>
 		</div>
-
 	</div>
-</div>
+</section>

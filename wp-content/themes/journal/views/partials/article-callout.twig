@@ -1,17 +1,7 @@
-<section class="full-height super-footer clipped-section">
+<section class="full-height clipped-section">
 	<div class="clip">
 		{% include 'partials/header.twig' with {'style' : 'white', 'logo' : 'false'} only %}
 	</div>
-	<div class="cover-area shaded">
-		{% if video %}
-	    <video class="cover" data-object-fit="cover" autoplay loop muted playsinline>
-	      <source src="{{ video_url }}" type="video/mp4">
-	    </video>
-    {% else %}
-    	<img class="cover" data-object-fit="cover" src="{{ TimberImage(image).src | resize(1000, 600) }}" srcset="{{ TimberImage(image).src | resize(2000,1200) }} 1000w">
-    {% endif %}
-	</div>
-
 	<div class="container flex-center very-narrow bg-color cta-image-block">
 		<div>
 			<div class="icon">{% include 'icons/sc-mark.svg' %}</div>
@@ -27,5 +17,13 @@
 			%}
 		</div>
 	</div>
-	{% include 'partials/footer.twig' with {'style' : 'transparent-white'} %}
+	<div class="cover-area shaded">
+		{% if video %}
+	    <video class="cover" data-object-fit="cover" autoplay loop muted playsinline>
+	      <source src="{{ video_url }}" type="video/mp4">
+	    </video>
+    {% else %}
+    	<img class="cover" data-object-fit="cover" src="{{ TimberImage(image).src | resize(1000, 600) }}" srcset="{{ TimberImage(image).src | resize(2000,1200) }} 1000w">
+    {% endif %}
+	</div>
 </section>

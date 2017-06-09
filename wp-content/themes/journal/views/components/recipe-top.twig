@@ -1,0 +1,38 @@
+<section class="grey no-top-space">
+	<div class="section-header">
+		<div class="container">
+			<h1 class="h3 large-title">{{ post.title }}</h1>
+			<p class="md light-text-color no-spacing"><span class="italic">By</span> {{ post.author.name }}</p>
+		</div>
+	</div>
+	<div class="container">
+		<div class="recipe-block">
+			<div class="float-grid break-lg">
+				<div class="col-8 block-image right">
+					{% if video %}
+				    <video class="cover" data-object-fit="cover" autoplay loop muted playsinline>
+				      <source src="{{ video_url }}" type="video/mp4">
+				    </video>
+			    {% else %}
+			    	<img src="{{ TimberImage(image).src | resize(1000, 600) }}" srcset="{{ TimberImage(image).src | resize(2000,1200) }} 1000w">
+			    {% endif %}
+				</div>
+				<div class="col-4 block-info left">
+					<div class="thumb-info">
+						{% if introText %}
+						  <p class="md no-spacing description">{{ introText }}</p>
+						{% endif %}
+						{% if recipeServings %}
+						  <p class="light-text-color">{{ recipeServings }}</p>
+						{% endif %}
+						<p>{% for term in post.terms('tags') %}
+							<a href="{{term.link}}">{{term.name}}</a>
+						{% endfor %}
+					</p>
+					</div>
+				</div>
+
+			</div>
+		</div>
+	</div>
+</section>

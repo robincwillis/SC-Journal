@@ -4,38 +4,19 @@
 	</div>
 	<div class="menu">
 		<ul class="nav">
-			<li>
-				<a
-					href="./features.php"
-					class="transition-link"
-				>Features</a></li>
-			<li>
-				<a
-					href="./travel.php"
-					class="transition-link"
-				>Travel</a></li>
-			<li>
-				<a
-					href="./food.php"
-					class="transition-link"
-				>Food</a></li>
-			<li>
-				<a
-					href="./photo-essays.php"
-					class="transition-link"
-				>Photo Essays</a></li>
-			<li>
-				<a
-					href="http://sailingcollective.com/journeys"
-					target="_blank"
-				>Journeys</a></li>
+			{% for item in header_menu.items %}
+				<li class="{{ item.classes | join(' ') }}">
+					<a href="{{ item.link }}" class="transition-link" title="{{ item.title }}">{{ item.title }}</a>
+				</li>
+			{% endfor %}
 		</ul>
 		<div class="contact-info">
 			<ul>
-				<li><a href="{{ globals.facebookUrl }}">Facebook</a></li>
-				<li><a href="{{ globals.instagramUrl }}">Instagram</a></li>
-				<li><a href="{{ globals.twitterUrl }}">Twitter</a></li>
-				<li><a href="mailto:{{ globals.generalEmail }}">Contact</a></li>
+				{% for item in footer_menu.items %}
+				<li class="{{ item.classes | join(' ') }}">
+					<a href="{{ item.link }}" class="transition-link" title="{{ item.title }}">{{ item.title }}</a>
+				</li>
+			{% endfor %}
 			</ul>
 		</div>
 	</div>
