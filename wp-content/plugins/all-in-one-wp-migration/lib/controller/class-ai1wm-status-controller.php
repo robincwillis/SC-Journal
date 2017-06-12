@@ -42,10 +42,7 @@ class Ai1wm_Status_Controller {
 			// Ensure that unauthorized people cannot access status action
 			ai1wm_verify_secret_key( $secret_key );
 		} catch ( Ai1wm_Not_Valid_Secret_Key_Exception $e ) {
-			echo json_encode( array(
-				'type'    => 'error',
-				'message' => $e->getMessage(),
-			) );
+			Ai1wm_Log::error( $e->getMessage() );
 			exit;
 		}
 
