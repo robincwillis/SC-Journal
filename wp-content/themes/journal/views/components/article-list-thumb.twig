@@ -10,9 +10,11 @@
 	<div class="inline-grid tight-gutter middle no-break">
 		<div class="col-6">
 		  {% if video %}
-		    <video class="cover" autoplay loop muted playsinline>
-		      <source src="{{ video_url }}" type="video/mp4">
-		    </video>
+		  	<div class="ratio-wrap">
+			    <video class="cover" autoplay loop muted playsinline>
+			      <source src="{{ video_url }}" type="video/mp4">
+			    </video>
+		    </div>
 		  {% else %}
 		    <img src="{{ image.src | resize(800, 533) }}" srcset="{{ image.src | resize(1200, 800) }} 1000w">
 		  {% endif %}
