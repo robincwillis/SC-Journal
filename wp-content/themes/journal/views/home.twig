@@ -18,7 +18,36 @@
 	} %}
 
 	{% if post.get_field("features") %}
-		<section>
+		<section class="no-top-space clipped-section">
+			<div class="clip">
+				<div class="left-margin">
+					<div class="content-wrap">
+						<div class="center">
+							<span class="vertical-text tiny-caps">Features</span>
+						</div>
+					</div>	
+				</div>
+			</div>
+			<div class="right-margin">
+				<div class="content-wrap">
+					<div class="center">
+						<span class="vertical-text share">
+							<span class="tiny-caps text">Share</span>
+							<ul class="share-links">
+								<li><a target="_blank" onclick="window.open(this.href, 'mywin', 'left=20,top=20,width=700,height=700,toolbar=1,resizable=0'); return false;" href="https://www.facebook.com/sharer.php?u={{ post.link }}"><span class="icon">{% include 'icons/facebook.svg' %}</span></a></li>
+								<li><a target="_blank" onclick="window.open(this.href, 'mywin', 'left=20,top=20,width=600,height=600,toolbar=1,resizable=0'); return false;" href="https://twitter.com/intent/tweet?url={{ post.link }}&text={{ post.title }}"><span class="icon">{% include 'icons/twitter.svg' %}</span></a></li>
+								<li><a target="_blank" onclick="window.open(this.href, 'mywin', 'left=20,top=20,width=600,height=600,toolbar=1,resizable=0'); return false;" href="http://pinterest.com/pin/create/button/?url={{ post.link }}&media={{ post.thumbnail.src }}"><span class="icon">{% include 'icons/pinterest.svg' %}</span></a></li>
+								<li><a target="_blank" href="mailto:?subject={{ post.title }}={{ post.title }} from Sailing Collective&body=Check out {{ post.title }} from Sailing Collective. <br/> {{ post.link}}" title="Share by Email"><span class="icon">{% include 'icons/email.svg' %}</span></a></li>
+							</ul>
+						</span>
+					</div>
+				</div>
+			</div>
+			<div class="section-header">
+				<div class="container">
+					<h4 class="h3">Features</h4>
+				</div>
+			</div>
 			<div class="container">
 				<div class="float-grid featured-grid">
 					{% for item in post.get_field("features") %}
@@ -39,7 +68,16 @@
 	{% endif %}
 
 	{% if post.get_field("featured_travel") %}
-		<section class="grey no-top-space no-bottom-space">
+		<section class="grey no-top-space no-bottom-space clipped-section">
+			<div class="clip">
+				<div class="left-margin">
+					<div class="content-wrap">
+						<div class="center">
+							<span class="vertical-text tiny-caps">Travel</span>
+						</div>
+					</div>	
+				</div>
+			</div>
 			<div class="section-header">
 				<div class="container">
 					<h4 class="h3">Travel</h4>
@@ -76,7 +114,16 @@
 	{% endif %}
 
 	{% if post.get_field("featured_photo_essays") %}
-		<section class="no-top-space no-bottom-space">
+		<section class="no-top-space no-bottom-space clipped-section">
+			<div class="clip">
+				<div class="left-margin">
+					<div class="content-wrap">
+						<div class="center">
+							<span class="vertical-text tiny-caps">Photo Essays</span>
+						</div>
+					</div>	
+				</div>
+			</div>
 			<div class="section-header">
 				<div class="container">
 					<h4 class="h3">Photo Essays</h4>
@@ -106,7 +153,16 @@
 	{% endif %}
 
 	{% if post.get_field("featured_food") %}
-		<section class="grey no-top-space no-bottom-space">
+		<section class="grey no-top-space no-bottom-space clipped-section">
+			<div class="clip">
+				<div class="left-margin">
+					<div class="content-wrap">
+						<div class="center">
+							<span class="vertical-text tiny-caps">Food</span>
+						</div>
+					</div>	
+				</div>
+			</div>
 			<div class="section-header">
 				<div class="container">
 					<h4 class="h3">Food</h4>

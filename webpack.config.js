@@ -23,7 +23,7 @@ const config = {
     loaders: [
       {
         test: /\.(otf|eot|ttf|woff|woff2)$/,
-        loader: 'file-loader?name=/wp-content/themes/journal/assets/fonts/[name].[ext]'
+        loader: 'file-loader?name=wp-content/themes/journal/assets/fonts/[name].[ext]'
       },
       {
         test: /\.(png|jpg|gif|ico)$/,
