@@ -30,7 +30,7 @@ var global = {
       loading: true,
       loadingParentElement: 'body', //animsition wrapper element
       loadingClass: 'page-loading',
-      loadingInner: '<div class="sc-loader"></div>', // e.g '<img src="loading.svg" />'
+      loadingInner: '', // e.g '<img src="loading.svg" />'
       timeout: true,
       timeoutCountdown: 50000,
       onLoadEvent: true,

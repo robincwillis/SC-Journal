@@ -11,4 +11,10 @@
 	border-top-color: $main-color;
 	border-right-color: $main-color;
 	animation: rotate 1s linear infinite;
+	z-index: 1;
+}
+
+.animsition {
+	z-index: 2;
+	background: $bg-color;
 }

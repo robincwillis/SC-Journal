@@ -49,6 +49,9 @@ section.super-footer {
 	color: $white;
 	min-height: 100vh;
 	height: auto;
+	&.clipped-section {
+		z-index: 12;
+	}
 	> .container {
 		flex-grow: 1;
 		.flex-center {

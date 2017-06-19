@@ -15,7 +15,8 @@
 			'author' : post.author.name,
 			'introText' : post.post_excerpt,
 			'splash Layout' : post.splash_layout,
-			'recipeServings' : post.servings_time
+			'recipeServings' : post.servings_time,
+			'shareLinks' : post.shareable
 	} %}
 {% else %}
 	{% include 'components/top-area.twig' with {
@@ -28,7 +29,8 @@
 			'overlayPosition' : post.splash_text_position ~ '-center',
 			'author' : post.author.name,
 			'introText' : post.post_excerpt,
-			'splash Layout' : post.splash_layout
+			'splash Layout' : post.splash_layout,
+			'shareLinks' : post.shareable
 	} %}
 {% endif %}	
 
