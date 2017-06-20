@@ -149,12 +149,17 @@ table {
   .float-grid:not(.no-break):not(.break-lg):not(.break-xlg):not(.break-sm),
   .inline-grid:not(.no-break):not(.break-lg):not(.break-xlg):not(.break-sm),
   .flex-grid:not(.no-break):not(.break-lg):not(.break-xlg):not(.break-sm) {
-    display: block;
     margin-left: -1.5%;
     margin-right: -1.5%;
     /*	Use .push classes to move columsn over
 			Gernerally better to do this manually and breakpoints
 	*/
+  }
+
+  .float-grid:not(.no-break):not(.break-lg):not(.break-xlg):not(.break-sm):not(.flex-grid),
+  .inline-grid:not(.no-break):not(.break-lg):not(.break-xlg):not(.break-sm):not(.flex-grid),
+  .flex-grid:not(.no-break):not(.break-lg):not(.break-xlg):not(.break-sm):not(.flex-grid) {
+    display: block;
   }
 
   .float-grid:not(.no-break):not(.break-lg):not(.break-xlg):not(.break-sm) > *[class^="col"],
@@ -179,6 +184,30 @@ table {
     -webkit-box-align: start;
         -ms-flex-align: start;
             align-items: flex-start;
+  }
+
+  .float-grid:not(.no-break):not(.break-lg):not(.break-xlg):not(.break-sm) > *[class^="col"].grow,
+  .float-grid:not(.no-break):not(.break-lg):not(.break-xlg):not(.break-sm) > .col.grow,
+  .inline-grid:not(.no-break):not(.break-lg):not(.break-xlg):not(.break-sm) > *[class^="col"].grow,
+  .inline-grid:not(.no-break):not(.break-lg):not(.break-xlg):not(.break-sm) > .col.grow,
+  .flex-grid:not(.no-break):not(.break-lg):not(.break-xlg):not(.break-sm) > *[class^="col"].grow,
+  .flex-grid:not(.no-break):not(.break-lg):not(.break-xlg):not(.break-sm) > .col.grow {
+    -webkit-box-flex: 1;
+        -ms-flex-positive: 1;
+            flex-grow: 1;
+  }
+
+  .float-grid:not(.no-break):not(.break-lg):not(.break-xlg):not(.break-sm) > *[class^="col"].no-grow,
+  .float-grid:not(.no-break):not(.break-lg):not(.break-xlg):not(.break-sm) > .col.no-grow,
+  .inline-grid:not(.no-break):not(.break-lg):not(.break-xlg):not(.break-sm) > *[class^="col"].no-grow,
+  .inline-grid:not(.no-break):not(.break-lg):not(.break-xlg):not(.break-sm) > .col.no-grow,
+  .flex-grid:not(.no-break):not(.break-lg):not(.break-xlg):not(.break-sm) > *[class^="col"].no-grow,
+  .flex-grid:not(.no-break):not(.break-lg):not(.break-xlg):not(.break-sm) > .col.no-grow {
+    -webkit-box-flex: 0;
+        -ms-flex-positive: 0;
+            flex-grow: 0;
+    -ms-flex-negative: 0;
+        flex-shrink: 0;
   }
 
   .float-grid:not(.no-break):not(.break-lg):not(.break-xlg):not(.break-sm) > .col-12,
@@ -400,9 +429,14 @@ table {
   .float-grid:not(.no-break):not(.break-lg):not(.break-xlg):not(.break-sm).tight-gutter,
   .inline-grid:not(.no-break):not(.break-lg):not(.break-xlg):not(.break-sm).tight-gutter,
   .flex-grid:not(.no-break):not(.break-lg):not(.break-xlg):not(.break-sm).tight-gutter {
+    margin-left: -0.5rem;
+    margin-right: -0.5rem;
+  }
+
+  .float-grid:not(.no-break):not(.break-lg):not(.break-xlg):not(.break-sm).tight-gutter:not(.flex-grid),
+  .inline-grid:not(.no-break):not(.break-lg):not(.break-xlg):not(.break-sm).tight-gutter:not(.flex-grid),
+  .flex-grid:not(.no-break):not(.break-lg):not(.break-xlg):not(.break-sm).tight-gutter:not(.flex-grid) {
     display: block;
-    margin-left: -10px;
-    margin-right: -10px;
   }
 
   .float-grid:not(.no-break):not(.break-lg):not(.break-xlg):not(.break-sm).tight-gutter > *[class^="col"],
@@ -411,8 +445,8 @@ table {
   .inline-grid:not(.no-break):not(.break-lg):not(.break-xlg):not(.break-sm).tight-gutter > .col,
   .flex-grid:not(.no-break):not(.break-lg):not(.break-xlg):not(.break-sm).tight-gutter > *[class^="col"],
   .flex-grid:not(.no-break):not(.break-lg):not(.break-xlg):not(.break-sm).tight-gutter > .col {
-    padding-left: 10px;
-    padding-right: 10px;
+    padding-left: 0.5rem;
+    padding-right: 0.5rem;
   }
 }
 
@@ -420,9 +454,14 @@ table {
   .float-grid:not(.no-break):not(.break-lg):not(.break-xlg):not(.break-sm).wide-gutter,
   .inline-grid:not(.no-break):not(.break-lg):not(.break-xlg):not(.break-sm).wide-gutter,
   .flex-grid:not(.no-break):not(.break-lg):not(.break-xlg):not(.break-sm).wide-gutter {
-    display: block;
     margin-left: -3.125rem;
     margin-right: -3.125rem;
+  }
+
+  .float-grid:not(.no-break):not(.break-lg):not(.break-xlg):not(.break-sm).wide-gutter:not(.flex-grid),
+  .inline-grid:not(.no-break):not(.break-lg):not(.break-xlg):not(.break-sm).wide-gutter:not(.flex-grid),
+  .flex-grid:not(.no-break):not(.break-lg):not(.break-xlg):not(.break-sm).wide-gutter:not(.flex-grid) {
+    display: block;
   }
 
   .float-grid:not(.no-break):not(.break-lg):not(.break-xlg):not(.break-sm).wide-gutter > *[class^="col"],
@@ -439,12 +478,17 @@ table {
 .float-grid.no-break,
 .inline-grid.no-break,
 .flex-grid.no-break {
-  display: block;
   margin-left: -1.5%;
   margin-right: -1.5%;
   /*	Use .push classes to move columsn over
 			Gernerally better to do this manually and breakpoints
 	*/
+}
+
+.float-grid.no-break:not(.flex-grid),
+.inline-grid.no-break:not(.flex-grid),
+.flex-grid.no-break:not(.flex-grid) {
+  display: block;
 }
 
 .float-grid.no-break > *[class^="col"],
@@ -469,6 +513,30 @@ table {
   -webkit-box-align: start;
       -ms-flex-align: start;
           align-items: flex-start;
+}
+
+.float-grid.no-break > *[class^="col"].grow,
+.float-grid.no-break > .col.grow,
+.inline-grid.no-break > *[class^="col"].grow,
+.inline-grid.no-break > .col.grow,
+.flex-grid.no-break > *[class^="col"].grow,
+.flex-grid.no-break > .col.grow {
+  -webkit-box-flex: 1;
+      -ms-flex-positive: 1;
+          flex-grow: 1;
+}
+
+.float-grid.no-break > *[class^="col"].no-grow,
+.float-grid.no-break > .col.no-grow,
+.inline-grid.no-break > *[class^="col"].no-grow,
+.inline-grid.no-break > .col.no-grow,
+.flex-grid.no-break > *[class^="col"].no-grow,
+.flex-grid.no-break > .col.no-grow {
+  -webkit-box-flex: 0;
+      -ms-flex-positive: 0;
+          flex-grow: 0;
+  -ms-flex-negative: 0;
+      flex-shrink: 0;
 }
 
 .float-grid.no-break > .col-12,
@@ -690,9 +758,14 @@ table {
 .float-grid.no-break.tight-gutter,
 .inline-grid.no-break.tight-gutter,
 .flex-grid.no-break.tight-gutter {
+  margin-left: -0.5rem;
+  margin-right: -0.5rem;
+}
+
+.float-grid.no-break.tight-gutter:not(.flex-grid),
+.inline-grid.no-break.tight-gutter:not(.flex-grid),
+.flex-grid.no-break.tight-gutter:not(.flex-grid) {
   display: block;
-  margin-left: -10px;
-  margin-right: -10px;
 }
 
 .float-grid.no-break.tight-gutter > *[class^="col"],
@@ -701,17 +774,22 @@ table {
 .inline-grid.no-break.tight-gutter > .col,
 .flex-grid.no-break.tight-gutter > *[class^="col"],
 .flex-grid.no-break.tight-gutter > .col {
-  padding-left: 10px;
-  padding-right: 10px;
+  padding-left: 0.5rem;
+  padding-right: 0.5rem;
 }
 
 @media only screen and (min-width: 850px) {
   .float-grid.no-break.wide-gutter,
   .inline-grid.no-break.wide-gutter,
   .flex-grid.no-break.wide-gutter {
-    display: block;
     margin-left: -3.125rem;
     margin-right: -3.125rem;
+  }
+
+  .float-grid.no-break.wide-gutter:not(.flex-grid),
+  .inline-grid.no-break.wide-gutter:not(.flex-grid),
+  .flex-grid.no-break.wide-gutter:not(.flex-grid) {
+    display: block;
   }
 
   .float-grid.no-break.wide-gutter > *[class^="col"],
@@ -729,12 +807,17 @@ table {
   .float-grid.break-sm,
   .inline-grid.break-sm,
   .flex-grid.break-sm {
-    display: block;
     margin-left: -1.5%;
     margin-right: -1.5%;
     /*	Use .push classes to move columsn over
 			Gernerally better to do this manually and breakpoints
 	*/
+  }
+
+  .float-grid.break-sm:not(.flex-grid),
+  .inline-grid.break-sm:not(.flex-grid),
+  .flex-grid.break-sm:not(.flex-grid) {
+    display: block;
   }
 
   .float-grid.break-sm > *[class^="col"],
@@ -759,6 +842,30 @@ table {
     -webkit-box-align: start;
         -ms-flex-align: start;
             align-items: flex-start;
+  }
+
+  .float-grid.break-sm > *[class^="col"].grow,
+  .float-grid.break-sm > .col.grow,
+  .inline-grid.break-sm > *[class^="col"].grow,
+  .inline-grid.break-sm > .col.grow,
+  .flex-grid.break-sm > *[class^="col"].grow,
+  .flex-grid.break-sm > .col.grow {
+    -webkit-box-flex: 1;
+        -ms-flex-positive: 1;
+            flex-grow: 1;
+  }
+
+  .float-grid.break-sm > *[class^="col"].no-grow,
+  .float-grid.break-sm > .col.no-grow,
+  .inline-grid.break-sm > *[class^="col"].no-grow,
+  .inline-grid.break-sm > .col.no-grow,
+  .flex-grid.break-sm > *[class^="col"].no-grow,
+  .flex-grid.break-sm > .col.no-grow {
+    -webkit-box-flex: 0;
+        -ms-flex-positive: 0;
+            flex-grow: 0;
+    -ms-flex-negative: 0;
+        flex-shrink: 0;
   }
 
   .float-grid.break-sm > .col-12,
@@ -980,9 +1087,14 @@ table {
   .float-grid.break-sm.tight-gutter,
   .inline-grid.break-sm.tight-gutter,
   .flex-grid.break-sm.tight-gutter {
+    margin-left: -0.5rem;
+    margin-right: -0.5rem;
+  }
+
+  .float-grid.break-sm.tight-gutter:not(.flex-grid),
+  .inline-grid.break-sm.tight-gutter:not(.flex-grid),
+  .flex-grid.break-sm.tight-gutter:not(.flex-grid) {
     display: block;
-    margin-left: -10px;
-    margin-right: -10px;
   }
 
   .float-grid.break-sm.tight-gutter > *[class^="col"],
@@ -991,8 +1103,8 @@ table {
   .inline-grid.break-sm.tight-gutter > .col,
   .flex-grid.break-sm.tight-gutter > *[class^="col"],
   .flex-grid.break-sm.tight-gutter > .col {
-    padding-left: 10px;
-    padding-right: 10px;
+    padding-left: 0.5rem;
+    padding-right: 0.5rem;
   }
 }
 
@@ -1000,9 +1112,14 @@ table {
   .float-grid.break-sm.wide-gutter,
   .inline-grid.break-sm.wide-gutter,
   .flex-grid.break-sm.wide-gutter {
-    display: block;
     margin-left: -3.125rem;
     margin-right: -3.125rem;
+  }
+
+  .float-grid.break-sm.wide-gutter:not(.flex-grid),
+  .inline-grid.break-sm.wide-gutter:not(.flex-grid),
+  .flex-grid.break-sm.wide-gutter:not(.flex-grid) {
+    display: block;
   }
 
   .float-grid.break-sm.wide-gutter > *[class^="col"],
@@ -1020,12 +1137,17 @@ table {
   .float-grid.break-lg,
   .inline-grid.break-lg,
   .flex-grid.break-lg {
-    display: block;
     margin-left: -1.5%;
     margin-right: -1.5%;
     /*	Use .push classes to move columsn over
 			Gernerally better to do this manually and breakpoints
 	*/
+  }
+
+  .float-grid.break-lg:not(.flex-grid),
+  .inline-grid.break-lg:not(.flex-grid),
+  .flex-grid.break-lg:not(.flex-grid) {
+    display: block;
   }
 
   .float-grid.break-lg > *[class^="col"],
@@ -1050,6 +1172,30 @@ table {
     -webkit-box-align: start;
         -ms-flex-align: start;
             align-items: flex-start;
+  }
+
+  .float-grid.break-lg > *[class^="col"].grow,
+  .float-grid.break-lg > .col.grow,
+  .inline-grid.break-lg > *[class^="col"].grow,
+  .inline-grid.break-lg > .col.grow,
+  .flex-grid.break-lg > *[class^="col"].grow,
+  .flex-grid.break-lg > .col.grow {
+    -webkit-box-flex: 1;
+        -ms-flex-positive: 1;
+            flex-grow: 1;
+  }
+
+  .float-grid.break-lg > *[class^="col"].no-grow,
+  .float-grid.break-lg > .col.no-grow,
+  .inline-grid.break-lg > *[class^="col"].no-grow,
+  .inline-grid.break-lg > .col.no-grow,
+  .flex-grid.break-lg > *[class^="col"].no-grow,
+  .flex-grid.break-lg > .col.no-grow {
+    -webkit-box-flex: 0;
+        -ms-flex-positive: 0;
+            flex-grow: 0;
+    -ms-flex-negative: 0;
+        flex-shrink: 0;
   }
 
   .float-grid.break-lg > .col-12,
@@ -1271,9 +1417,14 @@ table {
   .float-grid.break-lg.tight-gutter,
   .inline-grid.break-lg.tight-gutter,
   .flex-grid.break-lg.tight-gutter {
+    margin-left: -0.5rem;
+    margin-right: -0.5rem;
+  }
+
+  .float-grid.break-lg.tight-gutter:not(.flex-grid),
+  .inline-grid.break-lg.tight-gutter:not(.flex-grid),
+  .flex-grid.break-lg.tight-gutter:not(.flex-grid) {
     display: block;
-    margin-left: -10px;
-    margin-right: -10px;
   }
 
   .float-grid.break-lg.tight-gutter > *[class^="col"],
@@ -1282,8 +1433,8 @@ table {
   .inline-grid.break-lg.tight-gutter > .col,
   .flex-grid.break-lg.tight-gutter > *[class^="col"],
   .flex-grid.break-lg.tight-gutter > .col {
-    padding-left: 10px;
-    padding-right: 10px;
+    padding-left: 0.5rem;
+    padding-right: 0.5rem;
   }
 }
 
@@ -1291,9 +1442,14 @@ table {
   .float-grid.break-lg.wide-gutter,
   .inline-grid.break-lg.wide-gutter,
   .flex-grid.break-lg.wide-gutter {
-    display: block;
     margin-left: -3.125rem;
     margin-right: -3.125rem;
+  }
+
+  .float-grid.break-lg.wide-gutter:not(.flex-grid),
+  .inline-grid.break-lg.wide-gutter:not(.flex-grid),
+  .flex-grid.break-lg.wide-gutter:not(.flex-grid) {
+    display: block;
   }
 
   .float-grid.break-lg.wide-gutter > *[class^="col"],
@@ -1311,12 +1467,17 @@ table {
   .float-grid.break-xlg,
   .inline-grid.break-xlg,
   .flex-grid.break-xlg {
-    display: block;
     margin-left: -1.5%;
     margin-right: -1.5%;
     /*	Use .push classes to move columsn over
 			Gernerally better to do this manually and breakpoints
 	*/
+  }
+
+  .float-grid.break-xlg:not(.flex-grid),
+  .inline-grid.break-xlg:not(.flex-grid),
+  .flex-grid.break-xlg:not(.flex-grid) {
+    display: block;
   }
 
   .float-grid.break-xlg > *[class^="col"],
@@ -1341,6 +1502,30 @@ table {
     -webkit-box-align: start;
         -ms-flex-align: start;
             align-items: flex-start;
+  }
+
+  .float-grid.break-xlg > *[class^="col"].grow,
+  .float-grid.break-xlg > .col.grow,
+  .inline-grid.break-xlg > *[class^="col"].grow,
+  .inline-grid.break-xlg > .col.grow,
+  .flex-grid.break-xlg > *[class^="col"].grow,
+  .flex-grid.break-xlg > .col.grow {
+    -webkit-box-flex: 1;
+        -ms-flex-positive: 1;
+            flex-grow: 1;
+  }
+
+  .float-grid.break-xlg > *[class^="col"].no-grow,
+  .float-grid.break-xlg > .col.no-grow,
+  .inline-grid.break-xlg > *[class^="col"].no-grow,
+  .inline-grid.break-xlg > .col.no-grow,
+  .flex-grid.break-xlg > *[class^="col"].no-grow,
+  .flex-grid.break-xlg > .col.no-grow {
+    -webkit-box-flex: 0;
+        -ms-flex-positive: 0;
+            flex-grow: 0;
+    -ms-flex-negative: 0;
+        flex-shrink: 0;
   }
 
   .float-grid.break-xlg > .col-12,
@@ -1562,9 +1747,14 @@ table {
   .float-grid.break-xlg.tight-gutter,
   .inline-grid.break-xlg.tight-gutter,
   .flex-grid.break-xlg.tight-gutter {
+    margin-left: -0.5rem;
+    margin-right: -0.5rem;
+  }
+
+  .float-grid.break-xlg.tight-gutter:not(.flex-grid),
+  .inline-grid.break-xlg.tight-gutter:not(.flex-grid),
+  .flex-grid.break-xlg.tight-gutter:not(.flex-grid) {
     display: block;
-    margin-left: -10px;
-    margin-right: -10px;
   }
 
   .float-grid.break-xlg.tight-gutter > *[class^="col"],
@@ -1573,8 +1763,8 @@ table {
   .inline-grid.break-xlg.tight-gutter > .col,
   .flex-grid.break-xlg.tight-gutter > *[class^="col"],
   .flex-grid.break-xlg.tight-gutter > .col {
-    padding-left: 10px;
-    padding-right: 10px;
+    padding-left: 0.5rem;
+    padding-right: 0.5rem;
   }
 }
 
@@ -1582,9 +1772,14 @@ table {
   .float-grid.break-xlg.wide-gutter,
   .inline-grid.break-xlg.wide-gutter,
   .flex-grid.break-xlg.wide-gutter {
-    display: block;
     margin-left: -3.125rem;
     margin-right: -3.125rem;
+  }
+
+  .float-grid.break-xlg.wide-gutter:not(.flex-grid),
+  .inline-grid.break-xlg.wide-gutter:not(.flex-grid),
+  .flex-grid.break-xlg.wide-gutter:not(.flex-grid) {
+    display: block;
   }
 
   .float-grid.break-xlg.wide-gutter > *[class^="col"],
@@ -2829,7 +3024,7 @@ a.thumb:not(.no-hover):hover {
   position: fixed;
   top: 0;
   bottom: 0;
-  z-index: 10;
+  z-index: 12;
   width: 7.5%;
 }
 
@@ -2863,35 +3058,129 @@ a.thumb:not(.no-hover):hover {
   line-height: 3em;
 }
 
-.left-margin .vertical-text.share,
-.right-margin .vertical-text.share {
+.left-margin .vertical-text .article-link,
+.right-margin .vertical-text .article-link {
+  z-index: 2;
   position: relative;
+  cursor: pointer;
+  pointer-events: hover;
+}
+
+.left-margin .vertical-text.share,
+.left-margin .vertical-text.article-link,
+.right-margin .vertical-text.share,
+.right-margin .vertical-text.article-link {
+  cursor: pointer;
+  pointer-events: hover;
 }
 
 .left-margin .vertical-text.share:hover .text,
-.right-margin .vertical-text.share:hover .text {
+.left-margin .vertical-text.article-link:hover .text,
+.right-margin .vertical-text.share:hover .text,
+.right-margin .vertical-text.article-link:hover .text {
   -webkit-transform: translate3d(0, 20px, 0);
           transform: translate3d(0, 20px, 0);
   opacity: 0;
 }
 
 .left-margin .vertical-text.share:hover .share-links,
-.right-margin .vertical-text.share:hover .share-links {
+.left-margin .vertical-text.article-link:hover .share-links,
+.right-margin .vertical-text.share:hover .share-links,
+.right-margin .vertical-text.article-link:hover .share-links {
   -webkit-transform: translate3d(0, 0, 0);
           transform: translate3d(0, 0, 0);
   opacity: 1;
 }
 
+.left-margin .vertical-text.share:hover + .article-card,
+.left-margin .vertical-text.share:hover.prev + .article-card,
+.left-margin .vertical-text.article-link:hover + .article-card,
+.left-margin .vertical-text.article-link:hover.prev + .article-card,
+.right-margin .vertical-text.share:hover + .article-card,
+.right-margin .vertical-text.share:hover.prev + .article-card,
+.right-margin .vertical-text.article-link:hover + .article-card,
+.right-margin .vertical-text.article-link:hover.prev + .article-card {
+  -webkit-transform: translate3d(0, -50%, 0);
+          transform: translate3d(0, -50%, 0);
+  opacity: 1;
+}
+
 .left-margin .vertical-text.share .text,
-.right-margin .vertical-text.share .text {
+.left-margin .vertical-text.article-link .text,
+.right-margin .vertical-text.share .text,
+.right-margin .vertical-text.article-link .text {
   transition: opacity 0.2s ease-in-out, -webkit-transform 0.2s ease-in-out;
   transition: opacity 0.2s ease-in-out, transform 0.2s ease-in-out;
   transition: opacity 0.2s ease-in-out, transform 0.2s ease-in-out, -webkit-transform 0.2s ease-in-out;
   display: block;
 }
 
+.left-margin .vertical-text.share.prev + .article-card,
+.left-margin .vertical-text.article-link.prev + .article-card,
+.right-margin .vertical-text.share.prev + .article-card,
+.right-margin .vertical-text.article-link.prev + .article-card {
+  left: 70px;
+  right: auto;
+  -webkit-transform: translate3d(-20px, -50%, 0);
+          transform: translate3d(-20px, -50%, 0);
+}
+
+@media only screen and (min-width: 850px) {
+  .left-margin .vertical-text.share.prev + .article-card,
+  .left-margin .vertical-text.article-link.prev + .article-card,
+  .right-margin .vertical-text.share.prev + .article-card,
+  .right-margin .vertical-text.article-link.prev + .article-card {
+    left: calc(100px - 3.125rem);
+  }
+}
+
+.left-margin .vertical-text.share + .article-card,
+.left-margin .vertical-text.article-link + .article-card,
+.right-margin .vertical-text.share + .article-card,
+.right-margin .vertical-text.article-link + .article-card {
+  z-index: 1;
+  pointer-events: none;
+  transition: opacity 0.2s ease-in-out, -webkit-transform 0.2s ease-in-out;
+  transition: opacity 0.2s ease-in-out, transform 0.2s ease-in-out;
+  transition: opacity 0.2s ease-in-out, transform 0.2s ease-in-out, -webkit-transform 0.2s ease-in-out;
+  position: absolute;
+  top: 50%;
+  width: 100%;
+  height: auto;
+  right: 70px;
+  -webkit-transform: translate3d(20px, -50%, 0);
+          transform: translate3d(20px, -50%, 0);
+  opacity: 0;
+  background: #e9ecef;
+  width: 16rem;
+  padding: 1rem;
+}
+
+@media only screen and (min-width: 850px) {
+  .left-margin .vertical-text.share + .article-card,
+  .left-margin .vertical-text.article-link + .article-card,
+  .right-margin .vertical-text.share + .article-card,
+  .right-margin .vertical-text.article-link + .article-card {
+    right: calc(100px - 3.125rem);
+  }
+}
+
+.left-margin .vertical-text.share + .article-card img,
+.left-margin .vertical-text.share + .article-card video,
+.left-margin .vertical-text.article-link + .article-card img,
+.left-margin .vertical-text.article-link + .article-card video,
+.right-margin .vertical-text.share + .article-card img,
+.right-margin .vertical-text.share + .article-card video,
+.right-margin .vertical-text.article-link + .article-card img,
+.right-margin .vertical-text.article-link + .article-card video {
+  max-width: 100%;
+  display: block;
+}
+
 .left-margin .vertical-text.share .share-links,
-.right-margin .vertical-text.share .share-links {
+.left-margin .vertical-text.article-link .share-links,
+.right-margin .vertical-text.share .share-links,
+.right-margin .vertical-text.article-link .share-links {
   transition: opacity 0.2s ease-in-out, -webkit-transform 0.2s ease-in-out;
   transition: opacity 0.2s ease-in-out, transform 0.2s ease-in-out;
   transition: opacity 0.2s ease-in-out, transform 0.2s ease-in-out, -webkit-transform 0.2s ease-in-out;
@@ -2906,13 +3195,17 @@ a.thumb:not(.no-hover):hover {
 }
 
 .left-margin .vertical-text.share .share-links li,
-.right-margin .vertical-text.share .share-links li {
+.left-margin .vertical-text.article-link .share-links li,
+.right-margin .vertical-text.share .share-links li,
+.right-margin .vertical-text.article-link .share-links li {
   display: inline-block;
   vertical-align: middle;
 }
 
 .left-margin .vertical-text.share .share-links li a,
-.right-margin .vertical-text.share .share-links li a {
+.left-margin .vertical-text.article-link .share-links li a,
+.right-margin .vertical-text.share .share-links li a,
+.right-margin .vertical-text.article-link .share-links li a {
   padding: 12px;
   display: block;
   color: rgba(50, 60, 70, .4);
@@ -2921,18 +3214,24 @@ a.thumb:not(.no-hover):hover {
 }
 
 .left-margin .vertical-text.share .share-links li a:hover,
-.right-margin .vertical-text.share .share-links li a:hover {
+.left-margin .vertical-text.article-link .share-links li a:hover,
+.right-margin .vertical-text.share .share-links li a:hover,
+.right-margin .vertical-text.article-link .share-links li a:hover {
   color: #323c46;
 }
 
 .left-margin .vertical-text.share .share-links li a .icon,
-.right-margin .vertical-text.share .share-links li a .icon {
+.left-margin .vertical-text.article-link .share-links li a .icon,
+.right-margin .vertical-text.share .share-links li a .icon,
+.right-margin .vertical-text.article-link .share-links li a .icon {
   display: inline-block;
   vertical-align: middle;
 }
 
 .left-margin .vertical-text.share .share-links li a .icon svg,
-.right-margin .vertical-text.share .share-links li a .icon svg {
+.left-margin .vertical-text.article-link .share-links li a .icon svg,
+.right-margin .vertical-text.share .share-links li a .icon svg,
+.right-margin .vertical-text.article-link .share-links li a .icon svg {
   max-width: 12px;
 }
 
@@ -3131,7 +3430,7 @@ a.thumb:not(.no-hover):hover {
 }
 
 .top-area.clipped-section {
-  z-index: 12;
+  z-index: 14;
 }
 
 .top-area.clipped-section .clip {
@@ -3330,7 +3629,11 @@ section .section-header .container h6.large-title {
 @media only screen and (min-width: 850px) {
   section.clipped-section {
     z-index: 9;
-    z-index: 12;
+    z-index: 11;
+  }
+
+  section.clipped-section.full-width-block {
+    z-index: 13;
   }
 }
 
@@ -3599,13 +3902,13 @@ header {
     position: absolute;
     height: 9.375rem;
     background: transparent;
-    z-index: 12;
+    z-index: 13;
   }
 }
 
 header.white {
   color: #fff;
-  z-index: 12;
+  z-index: 13;
 }
 
 header.white a {
@@ -3997,7 +4300,7 @@ section.super-footer {
 }
 
 section.super-footer.clipped-section {
-  z-index: 12;
+  z-index: 14;
 }
 
 section.super-footer > .container {

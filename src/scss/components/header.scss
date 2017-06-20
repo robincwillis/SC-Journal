@@ -20,11 +20,11 @@ header {
 		position: absolute;
 		height: $header-height;
 		background: transparent;
-		z-index: 12;
+		z-index: 13;
 	}
 	&.white {
 		color: $bg-color;
-		z-index: 12;
+		z-index: 13;
 		a {
 			color: $bg-color;
 		}

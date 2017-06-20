@@ -1,19 +1,25 @@
 $col: calc(100% / 12);
 
 @mixin grid-setup() {
-	display: block;
+	&:not(.flex-grid) {
+		display: block;
+	}
 	margin-left: calc(#{$gutter} * -.5);
 	margin-right: calc(#{$gutter} * -.5);
 }
 
 @mixin wide-gutter-grid-setup() {
-	display: block;
+	&:not(.flex-grid) {
+		display: block;
+	}
 	margin-left: calc(#{$wide-gutter} * -.5);
 	margin-right: calc(#{$wide-gutter} * -.5);
 }
 
 @mixin tight-gutter-grid-setup() {
-	display: block;
+	&:not(.flex-grid) {
+		display: block;
+	}
 	margin-left: calc(#{$tight-gutter} * -.5);
 	margin-right: calc(#{$tight-gutter} * -.5);
 }
@@ -29,6 +35,13 @@ $col: calc(100% / 12);
 		flex-direction: column;
 		justify-content: flex-start;
 		align-items: flex-start;
+		&.grow {
+			flex-grow: 1;
+		}
+		&.no-grow {
+			flex-grow: 0;
+			flex-shrink: 0;
+		}
 	}
 
 	> .col-12 {

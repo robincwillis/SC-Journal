@@ -1,8 +1,10 @@
-<section class="featured-content top-area {% if fullHeight == true %}full-height{% else %}three-quarters-height{% endif %} mid-grey{% if white %} clipped-section{% endif %} {{ splash_layout }}">
+<section class="featured-content top-area full-width-block {% if fullHeight == true %}full-height{% else %}three-quarters-height{% endif %} mid-grey clipped-section {{ splash_layout }}">
 	{% if white %}
 		<div class="clip">
 			{% include 'partials/header.twig' with { 'style': 'white' } %}
 		</div>
+	{% else %}
+		{% include 'partials/header.twig' with { 'style': 'dark' } %}
 	{% endif %}
 	<div class="container{% if overlayPosition == 'center-center' %} very-narrow{% endif %} flex-{% if overlayPosition %}{{ overlayPosition }}{% else %}center{% endif %}{% if white %} bg-color{% endif %}">
 		<div>

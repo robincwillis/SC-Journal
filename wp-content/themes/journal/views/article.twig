@@ -61,6 +61,74 @@
 	{% endif %}
 {% endfor %}
 
+{% if post.prev.link %}
+<div class="left-margin hide-md">
+	<div class="content-wrap">
+		<div class="center">
+			<a href="{{ post.prev.link }}" class="transition-link text-color vertical-text article-link prev">
+				<span class="tiny-caps text">Prev Article</span>
+			</a>
+			<a class="article-card article-link transition-link" href="{{ post.prev.link }}">
+				<div class="inline-grid no-break tight-gutter middle">
+					<div class="col-4">
+						{% if post.prev.get_field('splash_video') %}
+						<div class="col-4">
+					  	<div class="ratio-wrap">
+						    <video class="cover" autoplay loop muted playsinline>
+						      <source src="{{ post.prev.get_field('splash_video') }}" type="video/mp4">
+						    </video>
+					    </div>
+				    </div>
+				  {% else %}
+				  	<div class="col-4">
+					    <img src="{{ post.prev.thumbnail | resize(800, 533) }}" srcset="{{ post.prev.thumbnail | resize(1200, 800) }} 1000w">
+				    </div>
+				  {% endif %}
+					</div>
+					<div class="col-8">
+						<p class="sm no-spacing text-color ellipsis">{{ post.prev.title }}</p>
+						<p class="sm light-text-color italic no-spacing">by {{ post.prev.author.name }}</p>
+					</div>
+				</div>
+			</a>
+		</div>
+	</div>
+</div>
+{% endif %}
+
+{% if post.next.link %}
+<div class="right-margin hide-md">
+	<div class="content-wrap">
+		<div class="center">
+			<a href="{{ post.next.link }}" class="transition-link text-color vertical-text article-link">
+				<span class="tiny-caps text">Next Article</span>
+			</a>
+			<a class="article-card article-link transition-link" href="{{ post.next.link }}">
+				<div class="inline-grid no-break tight-gutter middle">
+					{% if post.next.get_field('splash_video') %}
+						<div class="col-4">
+					  	<div class="ratio-wrap">
+						    <video class="cover" autoplay loop muted playsinline>
+						      <source src="{{ post.next.get_field('splash_video') }}" type="video/mp4">
+						    </video>
+					    </div>
+				    </div>
+				  {% else %}
+				  	<div class="col-4">
+					    <img src="{{ post.next.thumbnail | resize(800, 533) }}" srcset="{{ post.next.thumbnail | resize(1200, 800) }} 1000w">
+				    </div>
+				  {% endif %}
+					<div class="col-8">
+						<p class="sm no-spacing text-color ellipsis">{{ post.next.title }}</p>
+						<p class="sm light-text-color italic no-spacing">by {{ post.next.author.name }}</p>
+					</div>
+				</div>
+			</a>
+		</div>
+	</div>
+</div>
+{% endif %}
+
 <section class="margined share">
 	<div class="more-cta">
 		<div class="container">

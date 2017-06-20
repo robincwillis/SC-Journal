@@ -74,7 +74,7 @@ a {
 		position: fixed;
 		top: 0;
 		bottom: 0;
-		z-index: 10;
+		z-index: 12;
 		width: $mobile-margin;
 		@include respond($lg) {
 			width: $margin;
@@ -91,8 +91,16 @@ a {
 		@include tiny-caps();
 		width: 200px;
 		line-height: 3em;
-		&.share {
+		.article-link {
+			z-index: 2;
 			position: relative;
+			cursor: pointer;
+			pointer-events: hover;
+		}
+		&.share,
+		&.article-link {
+			cursor: pointer;
+			pointer-events: hover;
 			&:hover {
 				.text {
 					transform: translate3d(0, 20px, 0);
@@ -102,10 +110,48 @@ a {
 					transform: translate3d(0, 0, 0);
 					opacity: 1;
 				}
+				+ .article-card,
+				&.prev + .article-card {
+					transform: translate3d(0, -50%, 0);
+					opacity: 1;
+				}
 			}
 			.text {
 				transition: opacity $md-speed $ease, transform $md-speed $ease;
 				display: block;
+			}
+			&.prev {
+				+ .article-card {
+					left: 70px;
+					right: auto;
+					transform: translate3d(-20px, -50%, 0);
+					@include respond($lg) {
+			    	left: calc(100px - (#{$margin}/2));
+			    }
+				}
+			}
+			+ .article-card {
+				z-index: 1;
+				pointer-events: none;
+				transition: opacity $md-speed $ease, transform $md-speed $ease;
+				position: absolute;
+		    top: 50%;
+		    width: 100%;
+		    height: auto;
+		    right: 70px;
+		    transform: translate3d(20px, -50%, 0);
+		    opacity: 0;
+		    background: darken($light-grey, 5%);
+		    width: 16rem;
+		    padding: $tight-gutter;
+		    @include respond($lg) {
+		    	right: calc(100px - (#{$margin}/2));
+		    }
+		    img,
+		    video {
+		    	max-width: 100%;
+		    	display: block;
+		    }
 			}
 			.share-links {
 				transition: opacity $md-speed $ease, transform $md-speed $ease;
@@ -290,7 +336,7 @@ a {
 	z-index: 11;
 	position: relative;
 	&.clipped-section {
-		z-index: 12;
+		z-index: 14;
 		.clip {
 			display: block;
 		}
@@ -426,7 +472,10 @@ section {
 	&.clipped-section {
 		@include respond($lg) {
 			z-index: 9;
-			z-index: 12;
+			z-index: 11;
+			&.full-width-block {
+				z-index: 13;
+			}
 		}
 		.clip {
 			position: absolute;
