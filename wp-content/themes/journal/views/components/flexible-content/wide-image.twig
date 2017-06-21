@@ -1,9 +1,14 @@
 {% set wide_image =  TimberImage(block.image) %}
 <section class="margined">
 	<div class="container">
-			<img src="{{ wide_image.src | resize(1000,600)}}" srcset="{{ wide_image.src | resize(2000,1200)}} 1000w" alt="{{ block.image | alt}}">
-		{% if wide_image.post_excerpt %}
-			<p class="caption">{{ wide_image.post_excerpt }}</p>
-		{% endif %}
+		<img src="{{ wide_image.src | resize(1000,600)}}" srcset="{{ wide_image.src | resize(2000,1200)}} 1000w" alt="{{ block.image | alt}}">
+		<div class="caption-block">
+			{% if block.image_caption %}
+				<p class="sm caption">{{ block.image_caption }}</p>
+			{% endif %}
+			{% if block.image_credit %}
+				<p class="sm credit italic light-text-color">{{ block.image_credit }}</p>
+			{% endif %}
+		</div>
 	</div>
 </section>

@@ -21,6 +21,11 @@
 	}
 }
 
+.sidenote {
+	border-top: 1px solid $hr-color;
+	padding-top: .75rem;
+}
+
 .col-4 {
 	.journal-thumb {
 		display: block;

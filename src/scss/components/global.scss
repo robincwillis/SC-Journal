@@ -335,6 +335,11 @@ a {
 	min-height: 350px;
 	z-index: 11;
 	position: relative;
+	p,
+	h1,
+	h2 {
+		@include font-smooth();
+	}
 	&.clipped-section {
 		z-index: 14;
 		.clip {
@@ -379,6 +384,10 @@ a {
     object-fit: cover;
     object-position: center;
 	}
+}
+
+.space-after {
+	margin-bottom: 2rem;
 }
 
 section {
@@ -635,6 +644,18 @@ a.thumbnail {
 		*[class^="col-"],
 		.col {
 			margin-bottom: $mobile-margin;
+		}
+	}
+}
+
+.image-block {
+	@include respond($md) {
+		position: relative;
+		.caption-block {
+			position: absolute;
+			top: 100%;
+			left: 0;
+			right: 0;
 		}
 	}
 }

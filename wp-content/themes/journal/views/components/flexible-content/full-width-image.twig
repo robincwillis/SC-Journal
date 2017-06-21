@@ -4,10 +4,17 @@
 	<div class="clip">
 		{% include 'partials/header.twig' with { 'logo': 'false', 'style': 'inverted' } %}
 	</div>
+	<div class="image-block">
 	<img src="{{ full_width_image.src | resize(1000,600)}}" srcset="{{ full_width_image.src | resize(2000,1200)}} 1000w" alt="{{ block.image | alt}}">
 	<div class="container">
-		{% if full_width_image.post_excerpt %}
-			<p class="caption">{{ full_width_image.post_excerpt }}</p>
-		{% endif %}
+		<div class="caption-block">
+			{% if block.image_caption %}
+				<p class="sm caption">{{ block.image_caption }}</p>
+			{% endif %}
+			{% if block.image_credit %}
+				<p class="sm credit italic light-text-color">{{ block.image_credit }}</p>
+			{% endif %}
+		</div>
+	</div>
 	</div>
 </section>

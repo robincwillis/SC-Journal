@@ -9,13 +9,29 @@
 		<div class="recipe-block">
 			<div class="float-grid break-lg">
 				<div class="col-8 block-image right">
-					{% if video %}
+					{% for slide in post.get_field('recipe_slideshow') %}
+						<div class="ratio-wrap">
+							{% if slide.media == 1 %}
+								<video class="cover" data-object-fit="cover" autoplay loop muted playsinline>
+						      <source src="{{ slide.video }}" type="video/mp4">
+						    </video>
+					    {% else %}
+					    	<img class="cover" src="{{ TimberImage(slide.image).src | resize(1000, 600) }}" srcset="{{ TimberImage(slide.image).src | resize(2000,1200) }} 1000w">
+							{% endif %}
+						</div>
+						{% if slide.slide_caption %}
+							<div class="caption-block">
+								<p class="caption">{{ slide.slide_caption }}</p>
+							</div>
+						{% endif %}
+					{% endfor %}
+					<!-- {% if video %}
 				    <video class="cover" data-object-fit="cover" autoplay loop muted playsinline>
 				      <source src="{{ video_url }}" type="video/mp4">
 				    </video>
 			    {% else %}
 			    	<img src="{{ TimberImage(image).src | resize(1000, 600) }}" srcset="{{ TimberImage(image).src | resize(2000,1200) }} 1000w">
-			    {% endif %}
+			    {% endif %} -->
 				</div>
 				<div class="col-4 block-info left">
 					<div class="thumb-info">

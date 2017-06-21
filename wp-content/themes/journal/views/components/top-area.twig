@@ -9,14 +9,18 @@
 	<div class="container{% if overlayPosition == 'center-center' %} very-narrow{% endif %} flex-{% if overlayPosition %}{{ overlayPosition }}{% else %}center{% endif %}{% if white %} bg-color{% endif %}">
 		<div>
 			{% if smallText %}
-				<p class="small-caps">{{ smallText }}</p>
+				<h6 class="small-caps">{{ smallText }}</h6>
 			{% endif %}
 			{% if textOverlay %}
 				<h2 class="h1">{{ textOverlay }}</h2>
 			{% endif %}
 			
-			{% if author %}
-				<p><span class="italic">By</span> {{ author }}</p>
+			{% if post.author_name %}
+				<p><span class="italic">By</span> {{ post.author_name }} | {{ post.post_date|date('M. j, Y') }}</p>
+			{% elseif author %}
+				<p><span class="italic">By</span> {{ author }} | {{ post.post_date|date('M. j, Y') }}</p>
+			{% elseif date %}
+				<p>{{ post.post_date|date('M. j, Y') }}</p>
 			{% endif %}
 			{% if introText %}
 				<p>{{ introText }}</p>

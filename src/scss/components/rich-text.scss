@@ -3,6 +3,42 @@
   *:first-child {
     margin-top: 0;
   }
+  *:last-child {
+    margin-bottom: 0;
+  }
+
+  mark {
+    padding: .2em;
+    background: $main-color;
+    color: $bg-color;
+    @include font-smooth();
+  }
+
+  > * {
+    max-width: 100%;
+  }
+
+  .wp-caption {
+    position: relative;
+  }
+
+  img {
+    max-width: 100%;
+    height: auto;
+  }
+
+  @include respond($xlg) {
+    .alignleft {
+      position: absolute;
+      right: calc(100% + 2rem);
+      max-width: calc((100vw - (#{$margin} * 2) - 37rem)/2);
+    }
+    .alignright {
+      position: absolute;
+      left: calc(100% + 2rem);
+      max-width: calc((100vw - (#{$margin} * 2) - 37rem)/2);
+    }
+  }
 
   h1, 
   h2,
@@ -21,6 +57,7 @@
   pre {
     margin-top: 1rem;
     margin-bottom: 1rem;
+    position: relative;
   }
 
   blockquote {

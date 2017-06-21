@@ -111,12 +111,20 @@ p,
 	.small &,
 	&.sm,
 	&.small,
-	&.caption {
+	&.caption,
+	&.wp-caption-text {
 		font-size: .875rem;
 	}
-	&.caption {
-		max-width: 30em;
+	&.wp-caption-text {
 		color: $light-text-color;
+	}
+	&.caption {
+		max-width: auto;
+		margin-bottom: 0;
+	}
+	&.credit {
+		max-width: auto;
+		margin: 0;
 	}
 	.lg &,
 	.large &,
@@ -142,12 +150,16 @@ p,
 		letter-spacing: $base-letter-spacing * .75;
 	}
 	.light &,
+	.light-text-color &,
 	&.light-text-color {
 		color: $light-text-color;
 		a {
 			color: inherit;
+			color: $text-color;
+			border-bottom-color: darken($hr-color, 5%);
 			&:hover {
-				color: $main-color;
+				color: $text-color;
+				border-bottom-color: $main-color;
 			}
 		}
 	}

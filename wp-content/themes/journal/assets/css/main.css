@@ -2492,20 +2492,33 @@ p a:hover,
 p.sm,
 p.small,
 p.caption,
+p.wp-caption-text,
 .sm
   .p,
 .small
   .p,
 .p.sm,
 .p.small,
-.p.caption {
+.p.caption,
+.p.wp-caption-text {
   font-size: .875rem;
+}
+
+p.wp-caption-text,
+.p.wp-caption-text {
+  color: rgba(50, 60, 70, .4);
 }
 
 p.caption,
 .p.caption {
-  max-width: 30em;
-  color: rgba(50, 60, 70, .4);
+  max-width: auto;
+  margin-bottom: 0;
+}
+
+p.credit,
+.p.credit {
+  max-width: auto;
+  margin: 0;
 }
 
 .lg p,
@@ -2557,27 +2570,39 @@ p.medium,
 }
 
 .light p,
+.light-text-color p,
 p.light-text-color,
 .light
+  .p,
+.light-text-color
   .p,
 .p.light-text-color {
   color: rgba(50, 60, 70, .4);
 }
 
 .light p a,
+.light-text-color p a,
 p.light-text-color a,
 .light
     .p a,
+.light-text-color
+    .p a,
 .p.light-text-color a {
   color: inherit;
+  color: #323c46;
+  border-bottom-color: #dde2e7;
 }
 
 .light p a:hover,
+.light-text-color p a:hover,
 p.light-text-color a:hover,
 .light
       .p a:hover,
+.light-text-color
+      .p a:hover,
 .p.light-text-color a:hover {
-  color: #00abc7;
+  color: #323c46;
+  border-bottom-color: #00abc7;
 }
 
 strong,
@@ -3429,6 +3454,13 @@ a.thumb:not(.no-hover):hover {
   position: relative;
 }
 
+.top-area p,
+.top-area h1,
+.top-area h2 {
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
 .top-area.clipped-section {
   z-index: 14;
 }
@@ -3483,6 +3515,10 @@ a.thumb:not(.no-hover):hover {
   height: 100%;
   object-fit: cover;
   object-position: center;
+}
+
+.space-after {
+  margin-bottom: 2rem;
 }
 
 section {
@@ -3859,6 +3895,19 @@ a.thumbnail {
   .inline-grid *[class^="col-"],
   .inline-grid .col {
     margin-bottom: 7.5%;
+  }
+}
+
+@media only screen and (min-width: 600px) {
+  .image-block {
+    position: relative;
+  }
+
+  .image-block .caption-block {
+    position: absolute;
+    top: 100%;
+    left: 0;
+    right: 0;
   }
 }
 
@@ -4926,6 +4975,45 @@ input[type=submit].button[disabled="disabled"] {
   margin-top: 0;
 }
 
+.rich-text *:last-child {
+  margin-bottom: 0;
+}
+
+.rich-text mark {
+  padding: .2em;
+  background: #00abc7;
+  color: #fff;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+.rich-text > * {
+  max-width: 100%;
+}
+
+.rich-text .wp-caption {
+  position: relative;
+}
+
+.rich-text img {
+  max-width: 100%;
+  height: auto;
+}
+
+@media only screen and (min-width: 1050px) {
+  .rich-text .alignleft {
+    position: absolute;
+    right: calc(100% + 2rem);
+    max-width: calc((100vw - 12.5rem - 37rem)/2);
+  }
+
+  .rich-text .alignright {
+    position: absolute;
+    left: calc(100% + 2rem);
+    max-width: calc((100vw - 12.5rem - 37rem)/2);
+  }
+}
+
 .rich-text h1,
 .rich-text h2,
 .rich-text h3,
@@ -4943,6 +5031,7 @@ input[type=submit].button[disabled="disabled"] {
 .rich-text pre {
   margin-top: 1rem;
   margin-bottom: 1rem;
+  position: relative;
 }
 
 .rich-text blockquote {
@@ -7991,6 +8080,11 @@ button.success-btn .spinner:after,
   margin-left: auto;
   margin-right: auto;
   margin-bottom: 0;
+}
+
+.sidenote {
+  border-top: 1px solid #eceff1;
+  padding-top: .75rem;
 }
 
 .col-4 .journal-thumb {

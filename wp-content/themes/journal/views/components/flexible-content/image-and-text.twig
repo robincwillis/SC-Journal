@@ -1,0 +1,41 @@
+<section class="margined">
+	<div class="container">
+		<div class="inline-grid {{ block.text_alignment }}">
+			{% if block.arrangement == 1 %}
+				<div class="{% if block.text_style == 'caption' %}col-8{% else %}col-6{% endif %}">
+					<div class="image-block">
+						<img src="{{ TimberImage(block.image).src | resize(1000,666)}}" alt="{{ block.image | alt}}">
+						<div class="caption-block">
+							{% if block.image_caption %}
+								<p class="sm caption">{{ block.image_caption }}</p>
+							{% endif %}
+							{% if block.image_credit %}
+								<p class="sm credit italic light-text-color">{{ block.image_credit }}</p>
+							{% endif %}
+						</div>
+					</div>
+				</div>
+			{% endif %}
+			<div class="{% if block.text_style == 'caption' %}col-4{% else %}col-6{% endif %}{% if block.image_caption %} space-after{% endif %}">
+				<div class="rich-text {{ block.text_style }}{% if block.text_style == 'caption' %} light-text-color sm sidenote{% endif %}">
+					{{ block.text }}
+				</div>
+			</div>
+			{% if block.arrangement == 0 %}
+				<div class="{% if block.text_style == 'caption' %}col-8{% else %}col-6{% endif %}">
+					<div class="image-block{% if block.image_caption %} space-after{% endif %}">
+						<img src="{{ TimberImage(block.image).src | resize(1000,666)}}" alt="{{ block.image | alt}}">
+						<div class="caption-block">
+							{% if block.image_caption %}
+								<p class="sm caption">{{ block.image_caption }}</p>
+							{% endif %}
+							{% if block.image_credit %}
+								<p class="sm credit italic light-text-color">{{ block.image_credit }}</p>
+							{% endif %}
+						</div>
+					</div>
+				</div>
+			{% endif %}
+		</div>
+	</div>
+</section>

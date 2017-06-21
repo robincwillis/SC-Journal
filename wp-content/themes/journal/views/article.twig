@@ -12,6 +12,7 @@
 			'textOverlay' : post.title,
 			'smallText' : post.categories.0.name,
 			'overlayPosition' : post.splash_text_position ~ '-center',
+			'date' : post.post_date|date('F j, Y'),
 			'author' : post.author.name,
 			'introText' : post.post_excerpt,
 			'splash Layout' : post.splash_layout,
@@ -48,6 +49,9 @@
 
 	{% elseif block.acf_fc_layout == 'two_up_images' %}
 		{% include 'components/flexible-content/two-up-images.twig' %}
+
+	{% elseif block.acf_fc_layout == 'image_and_text' %}
+		{% include 'components/flexible-content/image-and-text.twig' %}
 
 	{% elseif block.acf_fc_layout == 'right_text' %}
 		{% include 'components/flexible-content/two-up-text.twig' %}
