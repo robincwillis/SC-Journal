@@ -1,0 +1,105 @@
+.slideshow {
+	.slick-list,
+	.slick-track {
+		height: 100%;
+	}
+	a {
+		color: $main-color;
+		padding: .25em .4em .2em;
+		&:hover {
+			color: $main-color;
+			background: $bg-color;
+		}
+	}
+	.slick-dots {
+		display: block;
+		height: 50px;
+		text-align: center;
+		li {
+			display: inline-block;
+			margin-right: 12px;
+			line-height: 30px;
+			padding-top: 20px;
+			flex-grow: 1;
+			&:last-child {
+				margin-right: 0;
+			}
+			&.slick-active {
+				button {
+					border: none;
+					background: $text-color;
+					transform: scale(.8);
+					&:hover {
+						border: none;
+						background: $text-color;
+						transform: scale(.8);
+					}
+				}
+			}
+			button {
+				display: block;
+				text-indent: -1000px;
+				overflow: hidden;
+				padding: 0;
+				border: none;
+				background: transparent;
+				width: 10px;
+				height: 10px;
+				transform: scale(.5);
+				min-width: 0px;
+				border-radius: 50%;
+				background: rgba($text-color, .2);
+				transition: background $md-speed $ease, border $md-speed $ease, opactiy $md-speed $ease, transform $md-speed $ease;
+				&:hover {
+					transform: scale(.8);
+					border: none;
+					background: rgba($text-color, .35);
+				}
+			}
+		}
+	}
+	.slick-arrow {
+		position: absolute;
+		z-index: 3;
+		top: 50%;
+		height: 60px;
+		width: 50px;
+		display: block;
+		background: transparent;
+		border: none;
+		text-indent: -1000px;
+		overflow: hidden;
+		margin-top: -30px;
+		background-position: center;
+		background-repeat: no-repeat;
+		background-size: 50px 42px;
+		transition: transform $fast-speed $ease;
+		display: none !important;
+		@include respond($md) {
+			display: block !important;
+		}
+		&:active {
+			transform: scale(.85);
+		}
+		&.slick-prev {
+			left: $margin;
+		}
+		&.slick-next {
+			right: $margin;
+		}
+	}
+	.slide {
+		position: relative;
+		.bg-image {
+			position: absolute;
+			top: 0;
+			right: 0;
+			bottom: 0;
+			left: 0;
+			z-index: 1;
+		}
+		.container {
+			z-index: 2;
+		}
+	}
+}

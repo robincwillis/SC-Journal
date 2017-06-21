@@ -585,57 +585,65 @@ a.thumbnail {
 		width: 28rem;
 		max-width: 100%;
 	}
+	@include respond-smaller-than($lg) {
+		height: 100%;
+		display: flex;
+		align-items: center;
+		justify-content: center;
+		text-align: center;
+	}
 }
+@include respond($lg) {
+	.flex-center-center,
+	.flex-center {
+		height: 100%;
+		display: flex;
+		align-items: center;
+		justify-content: center;
+		text-align: center;
+	}
 
-.flex-center-center,
-.flex-center {
-	height: 100%;
-	display: flex;
-	align-items: center;
-	justify-content: center;
-	text-align: center;
-}
+	.flex-left-center {
+		height: 100%;
+		display: flex;
+		align-items: center;
+		justify-content: flex-start;
+		text-align: left;
+	}
 
-.flex-left-center {
-	height: 100%;
-	display: flex;
-	align-items: center;
-	justify-content: flex-start;
-	text-align: left;
-}
+	.flex-right-center {
+		height: 100%;
+		display: flex;
+		align-items: center;
+		justify-content: flex-end;
+		text-align: right;
+		text-align: center;
+	}
 
-.flex-right-center {
-	height: 100%;
-	display: flex;
-	align-items: center;
-	justify-content: flex-end;
-	text-align: right;
-	text-align: center;
-}
+	.flex-center-bottom {
+		height: 100%;
+		display: flex;
+		align-items: flex-end;
+		justify-content: center;
+		text-align: center;
+		text-align: center;
+	}
 
-.flex-center-bottom {
-	height: 100%;
-	display: flex;
-	align-items: flex-end;
-	justify-content: center;
-	text-align: center;
-	text-align: center;
-}
+	.flex-left-bottom {
+		height: 100%;
+		display: flex;
+		align-items: flex-end;
+		justify-content: flex-start;
+		text-align: left;
+	}
 
-.flex-left-bottom {
-	height: 100%;
-	display: flex;
-	align-items: flex-end;
-	justify-content: flex-start;
-	text-align: left;
-}
-
-.flex-right-bottom {
-	height: 100%;
-	display: flex;
-	align-items: flex-end;
-	justify-content: flex-end;
-	text-align: center;
+	.flex-right-bottom {
+		height: 100%;
+		display: flex;
+		align-items: flex-end;
+		justify-content: flex-end;
+		text-align: center;
+	}
 }
 
 // Grid Adjustment
@@ -671,5 +679,63 @@ a.thumbnail {
 	p {
 		margin-top: 0;
 		margin-bottom: 1.5rem;
+	}
+}
+
+.newsletter-popup {
+	position: fixed;
+	padding: 1.5rem;
+	background: #000;
+	bottom: 0;
+	right: 0;
+	left: 0;
+	z-index: 9999;
+	max-width: 100%;
+	p {
+		color: rgba(white, .5);
+		@include font-smooth();
+	}
+	.h4 {
+		color: white;
+		@include font-smooth();
+	}
+	@include respond($md) {
+		bottom: 1.5rem;
+		right: 1.5rem;
+		left: auto;
+	}
+	form {
+		padding-top: 1rem;
+	}
+	button {
+		border-color: $main-color;
+		color: $main-color;
+		min-width: 0;
+		&.close-popup {
+	    position: absolute;
+	    top: 2.1em;
+	    right: 1.25rem;
+			&.transparent {
+				opacity: 1;
+				color: rgba(white, .6);
+				&:not(.disabled):not(.loading):hover {
+					color: white;
+				}
+			}
+		}
+		.mobile-hide {
+			@include respond-smaller-than($sm) {
+				display: none;
+			}
+		}
+		.mobile-show {
+			@include respond($sm) {
+				display: none;
+			}
+		}
+		&:not(.disabled):not(.loading):hover {
+			border-color: white;
+			color: white;
+		}
 	}
 }

@@ -46,6 +46,10 @@ input[type=submit].button {
     }
   }
 
+  > .icon {
+    margin-top: -2px;
+  }
+
   &:focus {
     outline: none;
   }
