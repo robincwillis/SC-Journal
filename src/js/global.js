@@ -38,6 +38,7 @@ var global = {
     $('.newsletter-popup .close-popup').click(function() {
       $('.newsletter-popup').hide();
       localStorage.setItem( "dismissedPopup", new Date() );
+      
     });
   },
 
