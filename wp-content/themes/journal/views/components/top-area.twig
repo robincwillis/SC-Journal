@@ -28,6 +28,9 @@
 			{% if linkText and linkUrl %}
 				<a href="{{ linkUrl }}" class="underlined-link">{{ linkText }}</a>
 			{% endif %}
+			{% if descriptionText %}
+				<p>{{ descriptionText }}</p>
+			{% endif %}
 			{% if shareLinks == true %}
 				<div class="share-wrap">
 					<div class="underlined-link">Share</div>

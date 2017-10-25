@@ -4,7 +4,7 @@
 			{% if block.arrangement == 1 %}
 				<div class="{% if block.text_style == 'caption' %}col-8{% else %}col-6{% endif %}">
 					<div class="image-block">
-						<img src="{{ TimberImage(block.image).src | resize(1000,666)}}" alt="{{ block.image | alt}}">
+						<img src="{{ TimberImage(block.image).src | resize(1000)}}" alt="{{ block.image | alt}}">
 						<div class="caption-block">
 							{% if block.image_caption %}
 								<p class="sm caption">{{ block.image_caption }}</p>
@@ -24,7 +24,7 @@
 			{% if block.arrangement == 0 %}
 				<div class="{% if block.text_style == 'caption' %}col-8{% else %}col-6{% endif %}">
 					<div class="image-block{% if block.image_caption %} space-after{% endif %}">
-						<img src="{{ TimberImage(block.image).src | resize(1000,666)}}" alt="{{ block.image | alt}}">
+						<img src="{{ TimberImage(block.image).src | resize(1000)}}" alt="{{ block.image | alt}}">
 						<div class="caption-block">
 							{% if block.image_caption %}
 								<p class="sm caption">{{ block.image_caption }}</p>

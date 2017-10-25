@@ -691,6 +691,7 @@ a.thumbnail {
 	left: 0;
 	z-index: 9999;
 	max-width: 100%;
+	display: none;
 	p {
 		color: rgba(white, .5);
 		@include font-smooth();

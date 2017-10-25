@@ -13,6 +13,7 @@ var global = {
     this.pageTransitions();
     this.slideshow();
     this.mailchimpSignup.init(this.mailchimpSignup);
+    this.hideNewsletter();
   },
   
   resize:function(){
@@ -20,6 +21,23 @@ var global = {
   
   scroll: function(){
     this.mobileHeader();
+  },
+
+  hideNewsletter : function () {
+    if (localStorage.getItem("dismissedPopup")) {
+      var dismissedDate = new Date (localStorage.getItem("dismissedPopup"));
+      var todaysDate = new Date();
+
+      if (dismissedDate.setHours(0,0,0,0) != todaysDate.setHours(0,0,0,0)) {
+        $('.newsletter-popup').show();
+      }
+    } else {
+      $('.newsletter-popup').show();
+    }
+
+    $('.newsletter-popup .close-popup').click(function() {
+      $('.newsletter-popup').hide();
+    });
   },
 
   slideshow : function() {

@@ -1,0 +1,23 @@
+<div class="newsletter-popup">
+	<div class="flex-grid no-break">
+		<div class="col grow">
+			<p class="h4 no-spacing">Stay Updated</p>
+			<p class="light-text-color no-spacing">Get updates on trips and exclusive events</p>
+		</div>
+		<div class="col no-grow align-right">
+			<button class="close-popup circle tiny transparent"><span class="icon">{% include 'icons/close.svg' %}</span></button>
+		</div>
+	</div>
+	<form id="newsletterSignup" class="newsletter-form" data-td={{ td }}>
+		<div class="flex-grid no-break">
+			<div class="col grow">
+				<input type="text" name="email" placeholder="Enter Email" />
+			</div>
+			<div class="col no-grow">
+				<button for="email">
+					<span class="mobile-hide">Subscribe</span>
+					<span class="icon mobile-show">{% include 'icons/check.svg' %}</span></button>
+			</div>
+		</div>
+	</form>
+</div>
