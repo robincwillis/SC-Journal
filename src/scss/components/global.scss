@@ -331,38 +331,6 @@ a {
   }
 }
 
-.top-area {
-	min-height: 350px;
-	z-index: 11;
-	position: relative;
-	p,
-	h1,
-	h2 {
-		@include font-smooth();
-	}
-	&.clipped-section {
-		z-index: 14;
-		.clip {
-			display: block;
-		}
-	}
-	@include respond($md) {
-		min-height: 500px;
-	}
-	&.full-height {
-		height: 100vh;
-	}
-	.small-caps {
-		margin-bottom: 1.5rem;
-	}
-	p {
-		max-width: none;
-	}
-	> .container {
-		padding-top: $header-height / 2.5;
-	}
-}
-
 .cover-area {
 	position: absolute;
 	top: 0;

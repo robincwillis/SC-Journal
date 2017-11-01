@@ -1,0 +1,78 @@
+.header-placeholder {
+	height: 60px;
+	opacity: 0;
+	display: none;
+	width: 100%;
+	@include respond($lg) {
+		display: block;
+		height: $header-height;
+	}
+}
+
+.top-area {
+	min-height: 350px;
+	z-index: 11;
+	position: relative;
+	p,
+	h1,
+	h2 {
+		@include font-smooth();
+	}
+	&.clipped-section {
+		z-index: 14;
+		.clip {
+			display: block;
+		}
+	}
+	@include respond($md) {
+		min-height: 500px;
+	}
+	&.full-height {
+		height: 100vh;
+	}
+	.small-caps {
+		margin-bottom: 1.5rem;
+	}
+	p {
+		max-width: none;
+	}
+	> .container {
+		padding-top: $header-height / 2.5;
+	}
+	&.splitscreen {
+		@include respond($lg) {
+			&.dark_bg {
+				background: darken($text-color, 10%);
+				> .container {
+					color: $white;
+					.author {
+						color: rgab($white, .4);
+					}
+				}
+			}
+			background: $light-grey;
+			.cover-area {
+				right: 50%;
+				background: transparent;
+				img, video {
+					opacity: 1;
+				}
+			}
+			> .container {
+				width: 50%;
+				margin: 0 0 0 50%;
+				max-width: 50%;
+				padding-left: $margin;
+				padding-right: $margin;
+				color: $text-color;
+				padding-top: 0;
+				.small-caps {
+					color: $main-color;
+				}
+				.author {
+					color: rgab($text-color, .4);
+				}
+			}
+		}
+	}
+}

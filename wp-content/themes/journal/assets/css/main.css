@@ -2836,6 +2836,84 @@ svg * {
   }
 }
 
+@-webkit-keyframes transition-in {
+  100% {
+    opacity: 1;
+    -webkit-transform: none;
+            transform: none;
+    visibility: visible;
+  }
+}
+
+@keyframes transition-in {
+  100% {
+    opacity: 1;
+    -webkit-transform: none;
+            transform: none;
+    visibility: visible;
+  }
+}
+
+.stagger-in-items > * {
+  opacity: 0;
+  -webkit-transform: translate3d(0, 1.5rem, 0);
+          transform: translate3d(0, 1.5rem, 0);
+  -webkit-animation: transition-in .75s ease forwards;
+          animation: transition-in .75s ease forwards;
+  -webkit-animation-delay: 0.3s;
+          animation-delay: 0.3s;
+}
+
+.stagger-in-items > *:nth-child(2) {
+  -webkit-animation-delay: 0.4s;
+          animation-delay: 0.4s;
+}
+
+.stagger-in-items > *:nth-child(2) {
+  -webkit-animation-delay: 0.5s;
+          animation-delay: 0.5s;
+}
+
+.stagger-in-items > *:nth-child(3) {
+  -webkit-animation-delay: 0.6s;
+          animation-delay: 0.6s;
+}
+
+.stagger-in-items > *:nth-child(4) {
+  -webkit-animation-delay: 0.7s;
+          animation-delay: 0.7s;
+}
+
+.stagger-in-items > *:nth-child(5) {
+  -webkit-animation-delay: 0.8s;
+          animation-delay: 0.8s;
+}
+
+.stagger-in-items > *:nth-child(6) {
+  -webkit-animation-delay: 0.9s;
+          animation-delay: 0.9s;
+}
+
+.stagger-in-items > *:nth-child(7) {
+  -webkit-animation-delay: 1s;
+          animation-delay: 1s;
+}
+
+.stagger-in-items > *:nth-child(8) {
+  -webkit-animation-delay: 1.1s;
+          animation-delay: 1.1s;
+}
+
+.stagger-in-items > *:nth-child(9) {
+  -webkit-animation-delay: 1.2s;
+          animation-delay: 1.2s;
+}
+
+.stagger-in-items > *:nth-child(10) {
+  -webkit-animation-delay: 1.3s;
+          animation-delay: 1.3s;
+}
+
 *[data-tooltip-text] {
   overflow: visible;
   /* Position Tooltip Left */
@@ -3448,49 +3526,6 @@ a.thumb:not(.no-hover):hover {
   }
 }
 
-.top-area {
-  min-height: 350px;
-  z-index: 11;
-  position: relative;
-}
-
-.top-area p,
-.top-area h1,
-.top-area h2 {
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-}
-
-.top-area.clipped-section {
-  z-index: 14;
-}
-
-.top-area.clipped-section .clip {
-  display: block;
-}
-
-@media only screen and (min-width: 600px) {
-  .top-area {
-    min-height: 500px;
-  }
-}
-
-.top-area.full-height {
-  height: 100vh;
-}
-
-.top-area .small-caps {
-  margin-bottom: 1.5rem;
-}
-
-.top-area p {
-  max-width: none;
-}
-
-.top-area > .container {
-  padding-top: 3.75rem;
-}
-
 .cover-area {
   position: absolute;
   top: 0;
@@ -4021,6 +4056,109 @@ a.thumbnail {
 .newsletter-popup button:not(.disabled):not(.loading):hover {
   border-color: white;
   color: white;
+}
+
+.header-placeholder {
+  height: 60px;
+  opacity: 0;
+  display: none;
+  width: 100%;
+}
+
+@media only screen and (min-width: 850px) {
+  .header-placeholder {
+    display: block;
+    height: 9.375rem;
+  }
+}
+
+.top-area {
+  min-height: 350px;
+  z-index: 11;
+  position: relative;
+}
+
+.top-area p,
+.top-area h1,
+.top-area h2 {
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+.top-area.clipped-section {
+  z-index: 14;
+}
+
+.top-area.clipped-section .clip {
+  display: block;
+}
+
+@media only screen and (min-width: 600px) {
+  .top-area {
+    min-height: 500px;
+  }
+}
+
+.top-area.full-height {
+  height: 100vh;
+}
+
+.top-area .small-caps {
+  margin-bottom: 1.5rem;
+}
+
+.top-area p {
+  max-width: none;
+}
+
+.top-area > .container {
+  padding-top: 3.75rem;
+}
+
+@media only screen and (min-width: 850px) {
+  .top-area.splitscreen {
+    background: #f8f9fa;
+  }
+
+  .top-area.splitscreen.dark_bg {
+    background: #1d2328;
+  }
+
+  .top-area.splitscreen.dark_bg > .container {
+    color: #fff;
+  }
+
+  .top-area.splitscreen.dark_bg > .container .author {
+    color: rgab(#fff, 0.4);
+  }
+
+  .top-area.splitscreen .cover-area {
+    right: 50%;
+    background: transparent;
+  }
+
+  .top-area.splitscreen .cover-area img,
+  .top-area.splitscreen .cover-area video {
+    opacity: 1;
+  }
+
+  .top-area.splitscreen > .container {
+    width: 50%;
+    margin: 0 0 0 50%;
+    max-width: 50%;
+    padding-left: 6.25rem;
+    padding-right: 6.25rem;
+    color: #323c46;
+    padding-top: 0;
+  }
+
+  .top-area.splitscreen > .container .small-caps {
+    color: #00abc7;
+  }
+
+  .top-area.splitscreen > .container .author {
+    color: rgab(#323c46, 0.4);
+  }
 }
 
 header {

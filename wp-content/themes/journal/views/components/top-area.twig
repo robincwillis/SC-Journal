@@ -1,13 +1,25 @@
-<section class="featured-content top-area full-width-block {% if fullHeight == true %}full-height{% else %}three-quarters-height{% endif %} mid-grey clipped-section {{ splash_layout }}">
+{% if (get_field('splash_layout') == "splitscreen") %}<span class="header-placeholder"></span>{% endif %}
+<section class="featured-content top-area full-width-block mid-grey clipped-section
+	{{ get_field('splash_layout') }}
+	{{ get_field('splitscreen_background') }}
+	{% if fullHeight == true %}full-height {% else %} three-quarters-height{% endif %}">
+	
+	{% if (get_field('splash_layout') == "splitscreen") %}
+		{% set hideHeaderLogo = 'false' %}
+	{% else %}
+		{% set hideHeaderLogo = 'true' %}
+	{% endif %}
+	
 	{% if white %}
 		<div class="clip">
-			{% include 'partials/header.twig' with { 'style': 'white' } %}
+			{% include 'partials/header.twig' with { 'style': 'white', 'logo' : hideHeaderLogo } %}
 		</div>
 	{% else %}
-		{% include 'partials/header.twig' with { 'style': 'dark' } %}
+		{% include 'partials/header.twig' with { 'style': 'dark', 'logo' : hideHeaderLogo } %}
 	{% endif %}
+
 	<div class="container{% if overlayPosition == 'center-center' %} very-narrow{% endif %} flex-{% if overlayPosition %}{{ overlayPosition }}{% else %}center{% endif %}{% if white %} bg-color{% endif %}">
-		<div>
+		<div class="stagger-in-items">
 			{% if smallText %}
 				<h6 class="small-caps">{{ smallText }}</h6>
 			{% endif %}
@@ -16,7 +28,7 @@
 			{% endif %}
 			
 			{% if post.author_name %}
-				<p><span class="italic">By</span> {{ post.author_name }} | {{ post.post_date|date('M. j, Y') }}</p>
+				<p class="author"><span class="italic">By</span> {{ post.author_name }} | {{ post.post_date|date('M. j, Y') }}</p>
 			{% elseif author %}
 				<p><span class="italic">By</span> {{ author }} | {{ post.post_date|date('M. j, Y') }}</p>
 			{% elseif date %}
