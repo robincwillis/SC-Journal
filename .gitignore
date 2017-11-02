@@ -5,4 +5,4 @@ npm-debug.log
 /frontend-flat/node_modules
 /node_modules
 /wp-content/uploads
-/wp-content/ai1wm-backups/
+/wp-content/ai1wm-backups/.htaccess
