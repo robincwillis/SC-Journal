@@ -1,7 +1,7 @@
 {% set wide_image =  TimberImage(block.image) %}
 <section class="margined">
 	<div class="container">
-		<img src="{{ wide_image.src | resize('sc-md')}}" srcset="{{ wide_image.src | resize('sc-xlg')}} 1000w" alt="{{ block.image | alt}}">
+		<img src="{{ wide_image.src('sc-md')}}" srcset="{{ wide_image.src('sc-xlg')}} 1000w" alt="{{ block.image | alt}}">
 		<div class="caption-block">
 			{% if block.image_caption %}
 				<p class="sm caption">{{ block.image_caption }}</p>

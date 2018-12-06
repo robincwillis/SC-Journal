@@ -3,7 +3,7 @@
 		<div class="inline-grid">
 		
 			<div class="col-6">
-				<img src="{{ TimberImage(block.image_1).src | resize('sc-sm')}}" alt="{{ block.image_1 | alt}}">
+				<img src="{{ TimberImage(block.image_1).src('sc-sm')}}" alt="{{ block.image_1 | alt}}">
 				<div class="caption-block">
 					{% if block.image_1_caption %}
 						<p class="sm caption">{{ block.image_1_caption }}</p>
@@ -15,7 +15,7 @@
 			</div>
 
 			<div class="col-6">
-				<img src="{{ TimberImage(block.image_2).src | resize('sc-sm')}}" alt="{{ block.image_2 | alt}}">
+				<img src="{{ TimberImage(block.image_2).src('sc-sm')}}" alt="{{ block.image_2 | alt}}">
 				<div class="caption-block">
 					{% if block.image_2_caption %}
 						<p class="sm caption">{{ block.image_2_caption }}</p>

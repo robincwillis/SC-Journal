@@ -23,7 +23,7 @@
 	      <source src="{{ video_url }}" type="video/mp4">
 	    </video>
     {% else %}
-    	<img class="cover" data-object-fit="cover" src="{{ TimberImage(image).src | resize('sc-5-3-md') }}" srcset="{{ TimberImage(image).src | resize('sc-5-3-xlg') }} 1000w">
+    	<img class="cover" data-object-fit="cover" src="{{ TimberImage(image).src('sc-5-3-md') }}" srcset="{{ TimberImage(image).src('sc-5-3-xlg') }} 1000w">
     {% endif %}
 	</div>
 </section>
