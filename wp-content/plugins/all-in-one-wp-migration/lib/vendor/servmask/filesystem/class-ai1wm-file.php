@@ -1,6 +1,6 @@
 <?php
 /**
- * Copyright (C) 2014-2017 ServMask Inc.
+ * Copyright (C) 2014-2018 ServMask Inc.
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -26,23 +26,46 @@
 class Ai1wm_File {
 
 	/**
-	 * Create a file with contents
+	 * Create a file with content
 	 *
-	 * The method will only create the file if it doesn't already exist.
-	 *
-	 * @param string $path     Path to the file
-	 * @param string $contents Contents of the file
-	 *
-	 * @return boolean|null
+	 * @param  string $path    Path to the file
+	 * @param  string $content Content of the file
+	 * @return boolean
 	 */
-	public static function create( $path, $contents ) {
-		if ( ! is_file( $path ) ) {
-			$handle = ai1wm_open( $path, 'w' );
-			if ( false === $handle ) {
+	public static function create( $path, $content ) {
+		if ( ! @file_exists( $path ) ) {
+			if ( ! @is_writable( dirname( $path ) ) ) {
 				return false;
 			}
-			ai1wm_write( $handle, $contents );
-			ai1wm_close( $handle );
+
+			if ( ! @touch( $path ) ) {
+				return false;
+			}
+		} elseif ( ! @is_writable( $path ) ) {
+			return false;
 		}
+
+		$is_written = false;
+		if ( ( $handle = @fopen( $path, 'w' ) ) !== false ) {
+			if ( @fwrite( $handle, $content ) !== false ) {
+				$is_written = true;
+			}
+
+			@fclose( $handle );
+		}
+
+		return $is_written;
+	}
+
+	/**
+	 * Create a file with marker and content
+	 *
+	 * @param  string $path    Path to the file
+	 * @param  string $marker  Name of the marker
+	 * @param  string $content Content of the file
+	 * @return boolean
+	 */
+	public static function create_with_markers( $path, $marker, $content ) {
+		return @insert_with_markers( $path, $marker, $content );
 	}
 }

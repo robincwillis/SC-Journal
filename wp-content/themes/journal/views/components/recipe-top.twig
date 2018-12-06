@@ -18,7 +18,7 @@
 							      <source src="{{ slide.video }}" type="video/mp4">
 							    </video>
 						    {% else %}
-						    	<img class="cover" src="{{ TimberImage(slide.image).src | resize(1000, 600) }}" srcset="{{ TimberImage(slide.image).src | resize(2000,1200) }} 1000w">
+						    	<img class="cover" src="{{ TimberImage(slide.image).src | resize('sc-5-3-md') }}" srcset="{{ TimberImage(slide.image).src | resize('sc-5-3-xlg') }} 1000w">
 								{% endif %}
 							</div>
 							{% if slide.slide_caption %}

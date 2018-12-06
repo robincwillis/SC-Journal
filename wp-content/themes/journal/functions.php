@@ -17,6 +17,13 @@ class Colvard extends TimberSite
   {
     add_theme_support('post-thumbnails');
     add_theme_support('thumbnail');
+      add_image_size( 'sc-3-2-sm', 800, 533, true );
+      add_image_size( 'sc-sm', 800 );
+      add_image_size( 'sc-md', 1000 );
+      add_image_size( 'sc-5-3-md', 1000, 600, true );
+      add_image_size( 'sc-3-2-lg', 1200, 800, true );
+      add_image_size( 'sc-5-3-xlg', 2000, 1200, true );
+      add_image_size( 'sc-xlg', 2000 );
     add_filter('timber_context', array($this, 'add_to_context'));
     add_filter('get_twig', array($this, 'add_to_twig'));
     parent::__construct();

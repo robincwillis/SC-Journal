@@ -5,7 +5,7 @@
 		{% include 'partials/header.twig' with { 'logo': 'false', 'style': 'inverted' } %}
 	</div>
 	<div class="image-block">
-	<img src="{{ full_width_image.src | resize(1000)}}" srcset="{{ full_width_image.src | resize(2000)}} 1000w" alt="{{ block.image | alt}}">
+	<img src="{{ full_width_image.src | resize('sc-md')}}" srcset="{{ full_width_image.src | resize('sc-xlg')}} 1000w" alt="{{ block.image | alt}}">
 	<div class="container">
 		<div class="caption-block">
 			{% if block.image_caption %}

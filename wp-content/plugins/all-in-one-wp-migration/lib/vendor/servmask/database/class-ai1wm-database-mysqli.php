@@ -1,6 +1,6 @@
 <?php
 /**
- * Copyright (C) 2014-2017 ServMask Inc.
+ * Copyright (C) 2014-2018 ServMask Inc.
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -32,7 +32,7 @@ class Ai1wm_Database_Mysqli extends Ai1wm_Database {
 	 * @return resource
 	 */
 	public function query( $input ) {
-		return mysqli_query( $this->wpdb->dbh, $input, MYSQLI_USE_RESULT );
+		return mysqli_query( $this->wpdb->dbh, $input, MYSQLI_STORE_RESULT );
 	}
 
 	/**
@@ -46,16 +46,16 @@ class Ai1wm_Database_Mysqli extends Ai1wm_Database {
 	}
 
 	/**
-	 * Returns the error code for the most recent function call
+	 * Return the error code for the most recent function call
 	 *
-	 * @return int
+	 * @return integer
 	 */
 	public function errno() {
 		return mysqli_errno( $this->wpdb->dbh );
 	}
 
 	/**
-	 * Returns a string description of the last error
+	 * Return a string description of the last error
 	 *
 	 * @return string
 	 */
@@ -93,10 +93,20 @@ class Ai1wm_Database_Mysqli extends Ai1wm_Database {
 	}
 
 	/**
+	 * Return the number for rows from MySQL results
+	 *
+	 * @param  resource $result MySQL resource
+	 * @return integer
+	 */
+	public function num_rows( $result ) {
+		return mysqli_num_rows( $result );
+	}
+
+	/**
 	 * Free MySQL result memory
 	 *
 	 * @param  resource $result MySQL resource
-	 * @return bool
+	 * @return boolean
 	 */
 	public function free_result( $result ) {
 		return mysqli_free_result( $result );

@@ -1,6 +1,6 @@
 <?php
 /**
- * Copyright (C) 2014-2017 ServMask Inc.
+ * Copyright (C) 2014-2018 ServMask Inc.
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -27,32 +27,32 @@ class Ai1wm_Export_Content {
 
 	public static function execute( $params ) {
 
-		// Set current filesize
-		if ( isset( $params['current_filesize'] ) ) {
-			$current_filesize = (int) $params['current_filesize'];
+		// Set archive bytes offset
+		if ( isset( $params['archive_bytes_offset'] ) ) {
+			$archive_bytes_offset = (int) $params['archive_bytes_offset'];
 		} else {
-			$current_filesize = 0;
+			$archive_bytes_offset = ai1wm_archive_bytes( $params );
 		}
 
-		// Set content offset
-		if ( isset( $params['content_offset'] ) ) {
-			$content_offset = (int) $params['content_offset'];
+		// Set file bytes offset
+		if ( isset( $params['file_bytes_offset'] ) ) {
+			$file_bytes_offset = (int) $params['file_bytes_offset'];
 		} else {
-			$content_offset = 0;
+			$file_bytes_offset = 0;
 		}
 
-		// Set filemap offset
-		if ( isset( $params['filemap_offset'] ) ) {
-			$filemap_offset = (int) $params['filemap_offset'];
+		// Set filemap bytes offset
+		if ( isset( $params['filemap_bytes_offset'] ) ) {
+			$filemap_bytes_offset = (int) $params['filemap_bytes_offset'];
 		} else {
-			$filemap_offset = 0;
+			$filemap_bytes_offset = 0;
 		}
 
-		// Get total files count
-		if ( isset( $params['total_files_count'] ) ) {
-			$total_files_count = (int) $params['total_files_count'];
+		// Get processed files size
+		if ( isset( $params['processed_files_size'] ) ) {
+			$processed_files_size = (int) $params['processed_files_size'];
 		} else {
-			$total_files_count = 1;
+			$processed_files_size = 0;
 		}
 
 		// Get total files size
@@ -62,20 +62,21 @@ class Ai1wm_Export_Content {
 			$total_files_size = 1;
 		}
 
-		// Get processed files
-		if ( isset( $params['processed'] ) ) {
-			$processed = (int) $params['processed'];
+		// Get total files count
+		if ( isset( $params['total_files_count'] ) ) {
+			$total_files_count = (int) $params['total_files_count'];
 		} else {
-			$processed = 0;
+			$total_files_count = 1;
 		}
 
 		// What percent of files have we processed?
-		$progress = (int) ( ( $processed / $total_files_size ) * 100 );
+		$progress = (int) min( ( $processed_files_size / $total_files_size ) * 100, 100 );
 
 		// Set progress
-		if ( empty( $content_offset ) ) {
-			Ai1wm_Status::info( sprintf( __( 'Archiving %d files...<br />%d%% complete', AI1WM_PLUGIN_NAME ), $total_files_count, $progress ) );
-		}
+		Ai1wm_Status::info( sprintf( __( 'Archiving %d files...<br />%d%% complete', AI1WM_PLUGIN_NAME ), $total_files_count, $progress ) );
+
+		// Flag to hold if file data has been processed
+		$completed = true;
 
 		// Start time
 		$start = microtime( true );
@@ -84,59 +85,49 @@ class Ai1wm_Export_Content {
 		$filemap = ai1wm_open( ai1wm_filemap_path( $params ), 'r' );
 
 		// Set filemap pointer at the current index
-		if ( fseek( $filemap, $filemap_offset ) !== -1 ) {
+		if ( fseek( $filemap, $filemap_bytes_offset ) !== -1 ) {
 
-			// Get archive
+			// Open the archive file for writing
 			$archive = new Ai1wm_Compressor( ai1wm_archive_path( $params ) );
 
+			// Set the file pointer to the one that we have saved
+			$archive->set_file_pointer( $archive_bytes_offset );
+
+			// Loop over files
 			while ( $path = trim( fgets( $filemap ) ) ) {
-				try {
+				$file_bytes_written = 0;
 
-					// Add file to archive
-					if ( ( $current_offset = $archive->add_file( WP_CONTENT_DIR . DIRECTORY_SEPARATOR . $path, $path, $current_filesize, $content_offset, 10 ) ) ) {
+				// Add file to archive
+				if ( ( $completed = $archive->add_file( WP_CONTENT_DIR . DIRECTORY_SEPARATOR . $path, $path, $file_bytes_written, $file_bytes_offset ) ) ) {
+					$file_bytes_offset = 0;
 
-						// What percent of files have we processed?
-						if ( ( $processed += ( $current_offset - $content_offset ) ) ) {
-							$progress = (int) ( ( $processed / $total_files_size ) * 100 );
-						}
-
-						// Set progress
-						Ai1wm_Status::info( sprintf( __( 'Archiving %d files...<br />%d%% complete', AI1WM_PLUGIN_NAME ), $total_files_count, $progress ) );
-
-						// Set current filesize
-						$current_filesize = $archive->get_current_filesize();
-
-						// Set content offset
-						$content_offset = $current_offset;
-
-						break;
-					}
-
-					// Increment processed files
-					if ( empty( $content_offset ) ) {
-						$processed += $archive->get_current_filesize();
-					}
-
-					// Set current filesize
-					$current_filesize = 0;
-
-					// Set content offset
-					$content_offset = 0;
-
-					// Set filemap offset
-					$filemap_offset = ftell( $filemap );
-
-				} catch ( Ai1wm_Quota_Exceeded_Exception $e ) {
-					throw new Exception( 'Out of disk space.' );
-				} catch ( Exception $e ) {
-					// Skip bad file permissions
+					// Get filemap bytes offset
+					$filemap_bytes_offset = ftell( $filemap );
 				}
+
+				// Increment processed files size
+				$processed_files_size += $file_bytes_written;
+
+				// What percent of files have we processed?
+				$progress = (int) min( ( $processed_files_size / $total_files_size ) * 100, 100 );
+
+				// Set progress
+				Ai1wm_Status::info( sprintf( __( 'Archiving %d files...<br />%d%% complete', AI1WM_PLUGIN_NAME ), $total_files_count, $progress ) );
 
 				// More than 10 seconds have passed, break and do another request
-				if ( ( microtime( true ) - $start ) > 10 ) {
-					break;
+				if ( ( $timeout = apply_filters( 'ai1wm_completed_timeout', 10 ) ) ) {
+					if ( ( microtime( true ) - $start ) > $timeout ) {
+						$completed = false;
+						break;
+					}
 				}
 			}
+
+			// Get archive bytes offset
+			$archive_bytes_offset = $archive->get_file_pointer();
+
+			// Truncate the archive file
+			$archive->truncate();
 
 			// Close the archive file
 			$archive->close();
@@ -145,37 +136,49 @@ class Ai1wm_Export_Content {
 		// End of the filemap?
 		if ( feof( $filemap ) ) {
 
-			// Unset current filesize
-			unset( $params['current_filesize'] );
+			// Unset archive bytes offset
+			unset( $params['archive_bytes_offset'] );
 
-			// Unset content offset
-			unset( $params['content_offset'] );
+			// Unset file bytes offset
+			unset( $params['file_bytes_offset'] );
 
-			// Unset filemap offset
-			unset( $params['filemap_offset'] );
+			// Unset filemap bytes offset
+			unset( $params['filemap_bytes_offset'] );
 
-			// Unset processed files
-			unset( $params['processed'] );
+			// Unset processed files size
+			unset( $params['processed_files_size'] );
+
+			// Unset total files size
+			unset( $params['total_files_size'] );
+
+			// Unset total files count
+			unset( $params['total_files_count'] );
 
 			// Unset completed flag
 			unset( $params['completed'] );
 
 		} else {
 
-			// Set current filesize
-			$params['current_filesize'] = $current_filesize;
+			// Set archive bytes offset
+			$params['archive_bytes_offset'] = $archive_bytes_offset;
 
-			// Set content offset
-			$params['content_offset'] = $content_offset;
+			// Set file bytes offset
+			$params['file_bytes_offset'] = $file_bytes_offset;
 
-			// Set filemap offset
-			$params['filemap_offset'] = $filemap_offset;
+			// Set filemap bytes offset
+			$params['filemap_bytes_offset'] = $filemap_bytes_offset;
 
-			// Set processed files
-			$params['processed'] = $processed;
+			// Set processed files size
+			$params['processed_files_size'] = $processed_files_size;
+
+			// Set total files size
+			$params['total_files_size'] = $total_files_size;
+
+			// Set total files count
+			$params['total_files_count'] = $total_files_count;
 
 			// Set completed flag
-			$params['completed'] = false;
+			$params['completed'] = $completed;
 		}
 
 		// Close the filemap file

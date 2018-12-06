@@ -69,6 +69,11 @@ class Post extends Core implements CoreInterface {
 	public $object_type = 'post';
 
 	/**
+	 * @var array $custom stores custom meta data
+	 */
+	public $custom = array();
+
+	/**
 	 * @var string $representation what does this class represent in WordPress terms?
 	 */
 	public static $representation = 'post';
@@ -95,14 +100,13 @@ class Post extends Core implements CoreInterface {
 	protected $_prev = array();
 
 	/**
-	 * @api
 	 * @var string $class stores the CSS classes for the post (ex: "post post-type-book post-123")
 	 */
-	public $class;
+	protected $_css_class;
 
 	/**
 	 * @api
-	 * @var string $id the numeric WordPress id of a post
+	 * @var int $id the numeric WordPress id of a post
 	 */
 	public $id;
 
@@ -179,6 +183,45 @@ class Post extends Core implements CoreInterface {
 	}
 
 	/**
+	 * This is helpful for twig to return properties and methods see: https://github.com/fabpot/Twig/issues/2
+	 * This is also here to ensure that {{ post.class }} remains usable
+	 * @return mixed
+	 */
+	public function __get( $field ) {
+		if ( 'class' === $field ) {
+			return $this->css_class();
+		}
+		return parent::__get($field);
+	}
+
+	/**
+	 * This is helpful for twig to return properties and methods see: https://github.com/fabpot/Twig/issues/2
+	 * This is also here to ensure that {{ post.class }} remains usable
+	 * @return mixed
+	 */
+	public function __call( $field, $args ) {
+		if ( 'class' === $field ) {
+			$class = isset($args[0]) ? $args[0] : '';
+			return $this->css_class($class);
+		}
+
+		return parent::__call($field, $args);
+	}
+
+	/**
+	 * Determined whether or not an admin/editor is looking at the post in "preview mode" via the
+	 * WordPress admin
+	 * @internal
+	 * @return bool
+	 */
+	protected static function is_previewing() {
+		global $wp_query;
+		if ( isset($_GET['preview']) && isset($_GET['preview_nonce']) && wp_verify_nonce($_GET['preview_nonce'], 'post_preview_'.$wp_query->queried_object_id) ) {
+			return true;
+		}
+	}
+
+	/**
 	 * tries to figure out what post you want to get if not explictly defined (or if it is, allows it to be passed through)
 	 * @internal
 	 * @param mixed a value to test against
@@ -192,12 +235,8 @@ class Post extends Core implements CoreInterface {
 			&& isset($wp_query->queried_object)
 			&& is_object($wp_query->queried_object)
 			&& get_class($wp_query->queried_object) == 'WP_Post'
-			) {
-				if ( isset($_GET['preview']) && isset($_GET['preview_nonce']) && wp_verify_nonce($_GET['preview_nonce'], 'post_preview_'.$wp_query->queried_object_id) ) {
-					$pid = $this->get_post_preview_id($wp_query);
-				} else if ( !$pid ) {
-					$pid = $wp_query->queried_object_id;
-				}
+		) {
+			$pid = $wp_query->queried_object_id;
 		} else if ( $pid === null && $wp_query->is_home && isset($wp_query->queried_object_id) && $wp_query->queried_object_id ) {
 			//hack for static page as home page
 			$pid = $wp_query->queried_object_id;
@@ -231,25 +270,33 @@ class Post extends Core implements CoreInterface {
 		return $this->title();
 	}
 
+	protected function get_post_preview_object() {
+		global $wp_query;
+		if ( $this->is_previewing() ) {
+			$revision_id = $this->get_post_preview_id( $wp_query );
+			return new $this->PostClass( $revision_id );
+		}
+	}
+
 	protected function get_post_preview_id( $query ) {
 		$can = array(
-	 		'edit_'.$query->queried_object->post_type.'s',
-	 	);
+			get_post_type_object($query->queried_object->post_type)->cap->edit_post,
+		);
 
-	 	if ( $query->queried_object->author_id !== get_current_user_id() ) {
-	 		$can[] = 'edit_others_'.$query->queried_object->post_type.'s';
-	 	}
+		if ( $query->queried_object->author_id !== get_current_user_id() ) {
+			$can[] = get_post_type_object($query->queried_object->post_type)->cap->edit_others_posts;
+		}
 
-	 	$can_preview = array();
+		$can_preview = array();
 
 		foreach ( $can as $type ) {
-			 if ( current_user_can($type) ) {
+			if ( current_user_can($type, $query->queried_object_id) ) {
 				$can_preview[] = true;
-			 }
+			}
 		}
 
 		if ( count($can_preview) !== count($can) ) {
-			 return;
+			return;
 		}
 
 		$revisions = wp_get_post_revisions($query->queried_object_id);
@@ -276,9 +323,6 @@ class Post extends Core implements CoreInterface {
 		}
 		$post_info = $this->get_info($pid);
 		$this->import($post_info);
-		//cant have a function, so gots to do it this way
-		$post_class = $this->post_class();
-		$this->class = $post_class;
 	}
 
 	/**
@@ -338,7 +382,7 @@ class Post extends Core implements CoreInterface {
 			return $pid;
 		}
 		if ( !is_numeric($pid) && is_string($pid) ) {
-			$pid = self::get_post_id_by_name($pid);
+			$pid = PostGetter::get_post_id_by_name($pid);
 			return $pid;
 		}
 		if ( !$pid ) {
@@ -351,17 +395,12 @@ class Post extends Core implements CoreInterface {
 	/**
 	 * get_post_id_by_name($post_name)
 	 * @internal
+	 * @deprecated since 1.5.0
 	 * @param string $post_name
 	 * @return int
 	 */
 	public static function get_post_id_by_name( $post_name ) {
-		global $wpdb;
-		$query = $wpdb->prepare("SELECT ID FROM $wpdb->posts WHERE post_name = %s LIMIT 1", $post_name);
-		$result = $wpdb->get_row($query);
-		if ( !$result ) {
-			return null;
-		}
-		return $result->ID;
+		return PostGetter::get_post_id_by_name($post_name);
 	}
 
 	/**
@@ -375,7 +414,7 @@ class Post extends Core implements CoreInterface {
 	 * get a preview of your post, if you have an excerpt it will use that,
 	 * otherwise it will pull from the post_content.
 	 * If there's a <!-- more --> tag it will use that to mark where to pull through.
-	 * @api
+	 * @deprecated since 1.3.1, use {{ post.preview }} instead
 	 * @example
 	 * ```twig
 	 * <p>{{post.get_preview(50)}}</p>
@@ -410,7 +449,9 @@ class Post extends Core implements CoreInterface {
 			$text = do_shortcode($text);
 		}
 		if ( !strlen($text) ) {
-			$text = TextHelper::trim_words($this->get_content(), $len, false);
+			$text = $this->content();
+			$text = TextHelper::remove_tags($text, array('script', 'style'));
+			$text = TextHelper::trim_words($text, $len, false);
 			$trimmed = true;
 		}
 		if ( !strlen(trim($text)) ) {
@@ -513,6 +554,11 @@ class Post extends Core implements CoreInterface {
 		$post->id = $post->ID;
 		$post->slug = $post->post_name;
 		$customs = $this->get_post_custom($post->ID);
+		if ( $this->is_previewing() ) {
+			global $wp_query;
+			$rev_id = $this->get_post_preview_id($wp_query);
+			$customs = $this->get_post_custom($rev_id);
+		}
 		$post->custom = $customs;
 		$post = (object) array_merge((array) $customs, (array) $post);
 		return $post;
@@ -521,96 +567,174 @@ class Post extends Core implements CoreInterface {
 	/**
 	 *
 	 * Gets the comment form for use on a single article page
-	 * @param array   $args this $args thing is a fucking mess, [fix at some point](http://codex.wordpress.org/Function_Reference/comment_form)
+	 * @param array This $args array thing is a mess, [fix at some point](http://codex.wordpress.org/Function_Reference/comment_form)
 	 * @return string of HTML for the form
 	 */
 	public function comment_form( $args = array() ) {
 		return Helper::get_comment_form($this->ID, $args);
 	}
 
-
 	/**
-	 * Get the terms associated with the post
-	 * This goes across all taxonomies by default
+	 * Gets the terms associated with the post.
+	 *
 	 * @api
+	 * @todo Remove deprecated parameters in 2.x
 	 * @example
 	 * ```twig
 	 * <section id="job-feed">
 	 * {% for post in job %}
-	 * <div class="job">
-	 *   <h2>{{ post.title }}</h2> 
-	 *    <p>{{ post.terms('category') | join(', ') }}
-	 *  </div>
-	 * {% endfor %}    
+	 *     <div class="job">
+	 *         <h2>{{ post.title }}</h2>
+	 *         <p>{{ post.terms('category')|join(', ') }}</p>
+	 *     </div>
+	 * {% endfor %}
 	 * </section>
 	 * ```
 	 * ```html
 	 * <section id="job-feed">
-	 *   <div class="job">
-	 * 	   <h2>Cheese Maker</h2>
-	 *     <p>Food, Cheese, Fromage</p>
-	 *   </div>
-	 *   <div class="job">
-	 * 	   <h2>Mime</h2>
-	 *     <p>Performance, Silence</p>
-	 *   </div>
+	 *     <div class="job">
+	 *         <h2>Cheese Maker</h2>
+	 *         <p>Food, Cheese, Fromage</p>
+	 *     </div>
+	 *     <div class="job">
+	 *         <h2>Mime</h2>
+	 *         <p>Performance, Silence</p>
+	 *     </div>
 	 * </section>
 	 * ```
-	 * @param string|array $tax What taxonom(y|ies) to pull from. Defaults to all registered taxonomies for the post type. You can use custom ones, or built-in WordPress taxonomies (category, tag). Timber plays nice and figures out that tag/tags/post_tag are all the same (and categories/category), for custom taxonomies you're on your own.
-	 * @param bool $merge Should the resulting array be one big one (true)? Or should it be an array of sub-arrays for each taxonomy (false)?
-	 * @return array
+	 * ```php
+	 * // Get all terms of a taxonomy.
+	 * $terms = $post->terms( 'category' );
+	 *
+	 * // Get terms of multiple taxonomies.
+	 * $terms = $post->terms( array( 'books', 'movies' ) );
+	 *
+	 * // Use custom arguments for taxonomy query and options.
+	 * $terms = $post->terms( array(
+     *     'query' => [
+     *         'taxonomy' => 'custom_tax',
+     *         'orderby'  => 'count',
+     *     ],
+     *     'merge'      => false,
+     *     'term_class' => 'My_Term_Class'
+     * ) );
+	 * ```
+	 *
+	 * @param string|array $args {
+	 *     Optional. Name of the taxonomy or array of arguments.
+	 *
+	 *     @type array $query       Any array of term query parameters for getting the terms. See
+	 *                              `WP_Term_Query::__construct()` for supported arguments. Use the
+	 *                              `taxonomy` argument to choose which taxonomies to get. Defaults
+	 *                              to querying all registered taxonomies for the post type. You can
+	 *                              use custom or built-in WordPress taxonomies (category, tag).
+	 *                              Timber plays nice and figures out that `tag`, `tags` or
+	 *                              `post_tag` are all the same (also for `categories` or
+	 *                              `category`). For custom taxonomies you need to define the
+	 *                              proper name.
+	 *     @type bool $merge        Whether the resulting array should be one big one (`true`) or
+	 *                              whether it should be an array of sub-arrays for each taxonomy
+	 *                              (`false`). Default `true`.
+	 *     @type string $term_class The Timber term class to use for the term objects.
+	 * }
+	 * @param bool   $merge      Deprecated. Optional. See `$merge` argument in `$args` parameter.
+	 * @param string $term_class Deprecated. Optional. See `$term_class` argument in `$args`
+	 *                           parameter.
+	 * @return array An array of taxonomies.
 	 */
-	public function terms( $tax = '', $merge = true, $TermClass = '' ) {
-		$taxonomies = array();
-		$TermClass = $TermClass ?: $this->TermClass;
+	public function terms( $args = array(), $merge = true, $term_class = '' ) {
+		// Ensure backwards compatibility.
+		if ( ! is_array( $args ) || isset( $args[0] ) ) {
+			$args = array(
+				'query' => array(
+					'taxonomy' => $args,
+				),
+				'merge' => $merge,
+				'term_class' => $term_class,
+			);
 
+			if ( empty( $args['term_class']) ) {
+				$args['term_class'] = $this->TermClass;
+			}
+		}
+
+		// Defaults.
+		$args = wp_parse_args( $args, array(
+			'query' => array(
+				'taxonomy' => 'all',
+			),
+			'merge' => true,
+			'term_class' => $this->TermClass,
+		) );
+
+		$tax        = $args['query']['taxonomy'];
+		$merge      = $args['merge'];
+		$term_class = $args['term_class'];
+
+		$taxonomies = array();
+
+		// @todo: Remove in 2.x
 		if ( is_string($merge) && class_exists($merge) ) {
-			$TermClass = $merge;
+			$term_class = $merge;
 		}
-		if ( is_array($tax) ) {
+
+		// Build an array of taxonomies.
+		if ( is_array( $tax ) ) {
 			$taxonomies = $tax;
-		}
-		if ( is_string($tax) ) {
-			if ( in_array($tax, array('all', 'any', '')) ) {
+		} elseif ( is_string( $tax ) ) {
+			if ( in_array( $tax, array( 'all', 'any', '' ) ) ) {
 				$taxonomies = get_object_taxonomies($this->post_type);
 			} else {
 				$taxonomies = array($tax);
 			}
 		}
 
-		$term_class_objects = array();
-
-		foreach ( $taxonomies as $taxonomy ) {
-			if ( in_array($taxonomy, array('tag', 'tags')) ) {
+		// @todo Remove in 2.x
+		$taxonomies = array_map( function( $taxonomy ) {
+			if ( in_array( $taxonomy, array( 'tag', 'tags' ), true ) ) {
 				$taxonomy = 'post_tag';
-			}
-			if ( $taxonomy == 'categories' ) {
+			} elseif ( 'categories' === $taxonomy ) {
 				$taxonomy = 'category';
 			}
 
-			$terms = wp_get_post_terms($this->ID, $taxonomy);
+			return $taxonomy;
+		}, $taxonomies );
 
-			if ( is_wp_error($terms) ) {
-				/* @var $terms WP_Error */
-				Helper::error_log("Error retrieving terms for taxonomy '$taxonomy' on a post in timber-post.php");
-				Helper::error_log('tax = '.print_r($tax, true));
-				Helper::error_log('WP_Error: '.$terms->get_error_message());
+		$terms = wp_get_post_terms( $this->ID, $taxonomies, $args['query'] );
 
-				return $term_class_objects;
-			}
+		if ( is_wp_error( $terms ) ) {
+			/**
+			 * @var $terms \WP_Error
+			 */
+			Helper::error_log( "Error retrieving terms for taxonomies on a post in timber-post.php" );
+			Helper::error_log( 'tax = ' . print_r( $tax, true ) );
+			Helper::error_log( 'WP_Error: ' . $terms->get_error_message() );
 
-			// map over array of wordpress terms, and transform them into instances of the TermClass
-			$terms = array_map(function( $term ) use ($TermClass, $taxonomy) {
-				return call_user_func(array($TermClass, 'from'), $term->term_id, $taxonomy);
-			}, $terms);
-
-			if ( $merge && is_array($terms) ) {
-				$term_class_objects = array_merge($term_class_objects, $terms);
-			} else if ( count($terms) ) {
-				$term_class_objects[$taxonomy] = $terms;
-			}
+			return $terms;
 		}
-		return $term_class_objects;
+
+		// Map over array of WordPress terms and transform them into instances of the chosen term class.
+		$terms = array_map( function( $term ) use ( $term_class ) {
+			return call_user_func( array( $term_class, 'from' ), $term->term_id, $term->taxonomy );
+		}, $terms );
+
+		if ( ! $merge ) {
+			$terms_sorted = array();
+
+			// Initialize sub-arrays.
+			foreach ( $taxonomies as $taxonomy ) {
+				$terms_sorted[ $taxonomy ] = array();
+			}
+
+			// Fill terms into arrays.
+			foreach ( $terms as $term ) {
+				$terms_sorted[ $term->taxonomy ][] = $term;
+			}
+
+			return $terms_sorted;
+		}
+
+		return $terms;
 	}
 
 	/**
@@ -677,12 +801,28 @@ class Post extends Core implements CoreInterface {
 		return (!$this->get_field($field_name)) ? false : true;
 	}
 
+	/**
+	 * Gets the field object data from Advanced Custom Fields.
+	 * This includes metadata on the field like whether it's conditional or not.
+	 *
+	 * @since 1.6.0
+	 * @param string $field_name of the field you want to lookup.
+	 * @return mixed
+	 */
+	public function field_object( $field_name ) {
+		$value = apply_filters('timber/post/meta_object_field', null, $this->ID, $field_name, $this);
+		$value = $this->convert($value, __CLASS__);
+		return $value;
+	}
 
 	/**
 	 * @param string $field_name
 	 * @return mixed
 	 */
 	public function get_field( $field_name ) {
+		if ( $rd = $this->get_revised_data_from_method('get_field', $field_name) ) {
+			return $rd;
+		}
 		$value = apply_filters('timber_post_get_meta_field_pre', null, $this->ID, $field_name, $this);
 		if ( $value === null ) {
 			$value = get_post_meta($this->ID, $field_name);
@@ -706,13 +846,12 @@ class Post extends Core implements CoreInterface {
 	}
 
 	/**
-	 * Get the CSS classes for a post. For usage you should use `{{post.class}}` instead of `{{post.post_class}}`
+	 * Get the CSS classes for a post without cache. For usage you should use `{{post.class}}`
 	 * @internal
 	 * @param string $class additional classes you want to add
-	 * @see Timber\Post::$class
 	 * @example
 	 * ```twig
-	 * <article class="{{ post.class }}">
+	 * <article class="{{ post.post_class }}">
 	 *    {# Some stuff here #}
 	 * </article>
 	 * ```
@@ -729,11 +868,36 @@ class Post extends Core implements CoreInterface {
 		$old_global_post = $post;
 		$post = $this;
 		$class_array = get_post_class($class, $this->ID);
+		if ( $this->is_previewing() ) {
+			$class_array = get_post_class($class, $this->post_parent);
+		}
 		$post = $old_global_post;
 		if ( is_array($class_array) ) {
 			return implode(' ', $class_array);
 		}
 		return $class_array;
+	}
+
+	/**
+	 * Get the CSS classes for a post, but with caching css post classes. For usage you should use `{{ post.class }}` instead of `{{post.css_class}}` or `{{post.post_class}}`
+	 * @internal
+	 * @param string $class additional classes you want to add
+	 * @see Timber\Post::$_css_class
+	 * @example
+	 * ```twig
+	 * <article class="{{ post.class }}">
+	 *    {# Some stuff here #}
+	 * </article>
+	 * ```
+	 *
+	 * @return string a space-seperated list of classes
+	 */
+	public function css_class( $class = '' ) {
+		if ( !$this->_css_class ) {
+			$this->_css_class = $this->post_class();
+		}
+
+		return trim(sprintf('%s %s', $this->_css_class, $class));
 	}
 
 	// Docs
@@ -809,7 +973,7 @@ class Post extends Core implements CoreInterface {
 	 * @return array of TimberTerms
 	 */
 	public function categories() {
-		return $this->get_terms('category');
+		return $this->terms('category');
 	}
 
 	/**
@@ -830,7 +994,7 @@ class Post extends Core implements CoreInterface {
 	 * ```twig
 	 * {% if post.children %}
 	 *     Here are the child pages:
-	 *     {% for child in page.children %}
+	 *     {% for child in post.children %}
 	 *         <a href="{{ child.link }}">{{ child.title }}</a>
 	 *     {% endfor %}
 	 * {% endif %}
@@ -889,7 +1053,7 @@ class Post extends Core implements CoreInterface {
 		$commenter = wp_get_current_commenter();
 		$comment_author_email = $commenter['comment_author_email'];
 
-		$args = array('status' => $status, 'order' => $order);
+		$args = array('status' => $status, 'order' => $order, 'type' => $type);
 		if ( $count > 0 ) {
 			$args['number'] = $count;
 		}
@@ -902,21 +1066,36 @@ class Post extends Core implements CoreInterface {
 		} elseif ( !empty($comment_author_email) ) {
 			$args['include_unapproved'] = array($comment_author_email);
 		}
-
-		return new CommentThread($this->ID, $args);
+		$ct = new CommentThread($this->ID, false);
+		$ct->CommentClass = $CommentClass;
+		$ct->init($args);
+		return $ct;
 	}
 
 	/**
 	 * If the Password form is to be shown, show it!
 	 * @return string|void
 	 */
-	protected function maybe_show_password_form(){
+	protected function maybe_show_password_form() {
 		if ( $this->password_required() ) {
 			$show_pw = false;
 			$show_pw = apply_filters('timber/post/content/show_password_form_for_protected', $show_pw);
-			if ($show_pw) {
+			if ( $show_pw ) {
 				return apply_filters('timber/post/content/password_form', get_the_password_form($this->ID), $this);
 			}
+		}
+	}
+
+	/**
+	 *
+	 */
+	protected function get_revised_data_from_method( $method, $args = false ) {
+		if ( ! is_array($args) ) {
+			$args = array($args);
+		}
+		$rev = $this->get_post_preview_object();
+		if ( $rev && $this->ID == $rev->post_parent && $this->ID != $rev->ID ) {
+			return call_user_func_array( array($rev, $method), $args );
 		}
 	}
 
@@ -934,6 +1113,9 @@ class Post extends Core implements CoreInterface {
 	 * @return string
 	 */
 	public function content( $page = 0, $len = -1 ) {
+		if ( $rd = $this->get_revised_data_from_method('content', array($page, $len) ) ) {
+			return $rd;
+		}
 		if ( $form = $this->maybe_show_password_form() ) {
 			return $form;
 		}
@@ -973,7 +1155,7 @@ class Post extends Core implements CoreInterface {
 	 * ```twig
 	 * Published on {{ post.date }} // Uses WP's formatting set in Admin
 	 * OR
-	 * Published on {{ post.date | date('F jS') }} // Jan 12th
+	 * Published on {{ post.date('F jS') }} // Jan 12th
 	 * ```
 	 *
 	 * ```html
@@ -1010,8 +1192,8 @@ class Post extends Core implements CoreInterface {
 	 */
 	public function time( $time_format = '' ) {
 		$tf = $time_format ? $time_format : get_option('time_format');
-	 	$the_time = (string) mysql2date($tf, $this->post_date);
-	 	return apply_filters('get_the_time', $the_time, $tf);
+		$the_time = (string) mysql2date($tf, $this->post_date);
+		return apply_filters('get_the_time', $the_time, $tf);
 	}
 
 
@@ -1057,7 +1239,7 @@ class Post extends Core implements CoreInterface {
 	public function format() {
 		return get_post_format($this->ID);
 	}
-	
+
 	/**
 	 * whether post requires password and correct password has been provided
 	 * @api
@@ -1182,11 +1364,13 @@ class Post extends Core implements CoreInterface {
 
 	/**
 	 * Finds any WP_Post objects and converts them to Timber\Posts
-	 * @param array $data
+	 * @param array|WP_Post $data
 	 * @param string $class
 	 */
-	public function convert( $data, $class ) {
-		if ( is_array($data) ) {
+	public function convert( $data, $class = '\Timber\Post' ) {
+		if ( $data instanceof WP_Post ) {
+			$data = new $class($data);
+		} else if ( is_array($data) ) {
 			$func = __FUNCTION__;
 			foreach ( $data as &$ele ) {
 				if ( gettype($ele) === 'array' ) {
@@ -1198,7 +1382,6 @@ class Post extends Core implements CoreInterface {
 				}
 			}
 		}
-
 		return $data;
 	}
 
@@ -1275,20 +1458,20 @@ class Post extends Core implements CoreInterface {
 	}
 
 	/**
-	 * get the featured image as a TimberImage
+	 * get the featured image as a Timber/Image
 	 * @api
 	 * @example
 	 * ```twig
-	 * <img src="{{post.thumbnail.src}}" />
+	 * <img src="{{ post.thumbnail.src }}" />
 	 * ```
-	 * @return TimberImage|null of your thumbnail
+	 * @return Timber\Image|null of your thumbnail
 	 */
 	public function thumbnail() {
 		$tid = get_post_thumbnail_id($this->ID);
 		if ( $tid ) {
 			//return new Image($tid);
 			return new $this->ImageClass($tid);
-		}	
+		}
 	}
 
 
@@ -1302,7 +1485,75 @@ class Post extends Core implements CoreInterface {
 	 * @return string
 	 */
 	public function title() {
+		if ( $rd = $this->get_revised_data_from_method('title') ) {
+			return $rd;
+		}
 		return apply_filters('the_title', $this->post_title, $this->ID);
+	}
+
+	/**
+	 * Returns the gallery
+	 * @api
+	 * @example
+	 * ```twig
+	 * {{ post.gallery }}
+	 * ```
+	 * @return html
+	 */
+	public function gallery( $html = true ) {
+		if ( isset($this->custom['gallery']) ) {
+			return $this->custom['gallery'];
+		}
+		$galleries = get_post_galleries($this->ID, $html);
+		$gallery = reset($galleries);
+
+		return apply_filters('get_post_gallery', $gallery, $this->ID, $galleries);
+	}
+
+	/**
+	 * Returns the audio
+	 * @api
+	 * @example
+	 * ```twig
+	 * {{ post.audio }}
+	 * ```
+	 * @return html
+	 */
+	public function audio() {
+		if ( isset($this->custom['audio']) ) {
+			return $this->custom['audio'];
+		}
+		$audio = false;
+
+		// Only get audio from the content if a playlist isn't present.
+		if ( false === strpos($this->get_content(), 'wp-playlist-script') ) {
+			$audio = get_media_embedded_in_content($this->get_content(), array('audio'));
+		}
+
+		return $audio;
+	}
+
+	/**
+	 * Returns the video
+	 * @api
+	 * @example
+	 * ```twig
+	 * {{ post.video }}
+	 * ```
+	 * @return html
+	 */
+	public function video() {
+		if ( isset($this->custom['video']) ) {
+			return $this->custom['video'];
+		}
+		$video = false;
+
+		// Only get video from the content if a playlist isn't present.
+		if ( false === strpos($this->get_content(), 'wp-playlist-script') ) {
+			$video = get_media_embedded_in_content($this->get_content(), array('video', 'object', 'embed', 'iframe'));
+		}
+
+		return $video;
 	}
 
 
@@ -1323,7 +1574,7 @@ class Post extends Core implements CoreInterface {
 	 * @return array of TimberTerms
 	 */
 	public function get_categories() {
-		return $this->get_terms('category');
+		return $this->terms('category');
 	}
 
 	/**
@@ -1364,7 +1615,7 @@ class Post extends Core implements CoreInterface {
 	 * @return array
 	 */
 	public function get_tags() {
-		return $this->get_terms('post_tag');
+		return $this->terms('post_tag');
 	}
 
 	/**
@@ -1385,19 +1636,19 @@ class Post extends Core implements CoreInterface {
 		return $this->title();
 	}
 
-		/**
-		 * Displays the content of the post with filters, shortcodes and wpautop applied
-		 * @example
-		 * ```twig
-		 * <div class="article-text">{{post.get_content}}</div>
-		 * ```
-		 * ```html
-		 * <div class="article-text"><p>Blah blah blah</p><p>More blah blah blah.</p></div>
-		 * ```
-		 * @param int $len
-		 * @param int $page
-		 * @return string
-		 */
+	/**
+	 * Displays the content of the post with filters, shortcodes and wpautop applied
+	 * @example
+	 * ```twig
+	 * <div class="article-text">{{post.get_content}}</div>
+	 * ```
+	 * ```html
+	 * <div class="article-text"><p>Blah blah blah</p><p>More blah blah blah.</p></div>
+	 * ```
+	 * @param int $len
+	 * @param int $page
+	 * @return string
+	 */
 	public function get_content( $len = -1, $page = 0 ) {
 		if ( $len === 0 ) {
 			$len = -1;
@@ -1438,14 +1689,14 @@ class Post extends Core implements CoreInterface {
 		return $this->link();
 	}
 
-		/**
-		 * @internal
-		 * @see Timber\Post::date
-		 * @deprecated since 1.0
-		 * @codeCoverageIgnore
-		 * @param  string $date_format
-		 * @return string
-		 */
+	/**
+	 * @internal
+	 * @see Timber\Post::date
+	 * @deprecated since 1.0
+	 * @codeCoverageIgnore
+	 * @param  string $date_format
+	 * @return string
+	 */
 	public function get_date( $date_format = '' ) {
 		return $this->date($date_format);
 	}
@@ -1486,15 +1737,15 @@ class Post extends Core implements CoreInterface {
 		return $this->children($post_type, $childPostClass);
 	}
 
-		/**
-		 * Get the permalink for a post, but as a relative path
-		 * For example, where {{post.link}} would return "http://example.org/2015/07/04/my-cool-post"
-		 * this will return the relative version: "/2015/07/04/my-cool-post"
-		 * @internal
-		 * @deprecated since 1.0
-		 * @codeCoverageIgnore
-		 * @return string
-		 */
+	/**
+	 * Get the permalink for a post, but as a relative path
+	 * For example, where {{post.link}} would return "http://example.org/2015/07/04/my-cool-post"
+	 * this will return the relative version: "/2015/07/04/my-cool-post"
+	 * @internal
+	 * @deprecated since 1.0
+	 * @codeCoverageIgnore
+	 * @return string
+	 */
 	public function get_path() {
 		return $this->path();
 	}

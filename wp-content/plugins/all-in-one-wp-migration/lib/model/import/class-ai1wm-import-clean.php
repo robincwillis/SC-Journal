@@ -1,6 +1,6 @@
 <?php
 /**
- * Copyright (C) 2014-2017 ServMask Inc.
+ * Copyright (C) 2014-2018 ServMask Inc.
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -26,25 +26,7 @@
 class Ai1wm_Import_Clean {
 
 	public static function execute( $params ) {
-
-		// Iterate over storage directory
-		$iterator = new Ai1wm_Recursive_Directory_Iterator( ai1wm_storage_path( $params ) );
-
-		// Recursively iterate over storage directory
-		$iterator = new RecursiveIteratorIterator( $iterator, RecursiveIteratorIterator::CHILD_FIRST, RecursiveIteratorIterator::CATCH_GET_CHILD );
-
-		// Remove files and directories
-		foreach ( $iterator as $item ) {
-			if ( $item->isDir() ) {
-				@rmdir( $item->getPathname() );
-			} else {
-				@unlink( $item->getPathname() );
-			}
-		}
-
-		// Remove storage path
-		@rmdir( ai1wm_storage_path( $params ) );
-
+		Ai1wm_Directory::delete( ai1wm_storage_path( $params ) );
 		exit;
 	}
 }

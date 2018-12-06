@@ -1,6 +1,6 @@
 <?php
 /**
- * Copyright (C) 2014-2017 ServMask Inc.
+ * Copyright (C) 2014-2018 ServMask Inc.
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -26,12 +26,12 @@
 class Ai1wm_Feedback {
 
 	/**
-	 * Submit customer feedback to ServMask.com
+	 * Submit customer feedback to servmask.com
 	 *
-	 * @param  string  $type    Feedback Type
-	 * @param  string  $email   User E-mail
-	 * @param  string  $message User Message
-	 * @param  integer $terms   User Accept Terms
+	 * @param  string  $type    Feedback type
+	 * @param  string  $email   User e-mail
+	 * @param  string  $message User message
+	 * @param  integer $terms   User accept terms
 	 *
 	 * @return array
 	 */
@@ -40,18 +40,19 @@ class Ai1wm_Feedback {
 
 		// Submit feedback to ServMask
 		if ( empty( $type ) ) {
-			$errors[] = __( 'Feedback type is invalid.', AI1WM_PLUGIN_NAME );
-		} else if ( ! filter_var( $email, FILTER_VALIDATE_EMAIL ) ) {
+			$errors[] = __( 'Feedback type is not valid.', AI1WM_PLUGIN_NAME );
+		} elseif ( ! filter_var( $email, FILTER_VALIDATE_EMAIL ) ) {
 			$errors[] = __( 'Your email is not valid.', AI1WM_PLUGIN_NAME );
-		} else if ( empty( $message ) ) {
+		} elseif ( empty( $message ) ) {
 			$errors[] = __( 'Please enter comments in the text area.', AI1WM_PLUGIN_NAME );
-		} else if ( empty( $terms ) ) {
+		} elseif ( empty( $terms ) ) {
 			$errors[] = __( 'Please accept feedback term conditions.', AI1WM_PLUGIN_NAME );
 		} else {
 			$response = wp_remote_post(
 				AI1WM_FEEDBACK_URL,
 				array(
-					'body' => array(
+					'timeout' => 15,
+					'body'    => array(
 						'type'    => $type,
 						'email'   => $email,
 						'message' => $message,
@@ -64,6 +65,6 @@ class Ai1wm_Feedback {
 			}
 		}
 
-		return array( 'errors' => $errors );
+		return $errors;
 	}
 }

@@ -219,7 +219,7 @@ class Image extends Post implements CoreInterface {
 	public function init( $iid = false ) {
 		//Make sure we actually have something to work with
 		if ( !$iid ) { Helper::error_log('Initalized TimberImage without providing first parameter.'); return; }
-		
+
 		//If passed TimberImage, grab the ID and continue
 		if ( $iid instanceof self ) {
 			$iid = (int) $iid->ID;
@@ -231,7 +231,7 @@ class Image extends Post implements CoreInterface {
 		}
 
 		if ( !is_numeric($iid) && is_string($iid) ) {
-			if ( strstr($iid, '://') ) {
+			if ( strpos($iid, '//') === 0 || strstr($iid, '://') ) {
 				$this->init_with_url($iid);
 				return;
 			}
@@ -258,7 +258,7 @@ class Image extends Post implements CoreInterface {
 			/**
 			 * This will catch TimberPost and any post classes that extend TimberPost,
 			 * see http://php.net/manual/en/internals2.opcodes.instanceof.php#109108
-			 * and https://github.com/timber/timber/wiki/Extending-Timber
+			 * and https://timber.github.io/docs/guides/extending-timber/
 			 */
 			$iid = (int) $iid->_thumbnail_id;
 		}
@@ -441,11 +441,64 @@ class Image extends Post implements CoreInterface {
 			return $this->_maybe_secure_url($this->abs_url);
 		}
 
+		if (!$this->is_image()) {
+			return wp_get_attachment_url($this->ID);
+		}
+
 		$src = wp_get_attachment_image_src($this->ID, $size);
 		$src = $src[0];
 		$src = apply_filters('timber/image/src', $src, $this->ID);
 		$src = apply_filters('timber_image_src', $src, $this->ID);
 		return $src;
+	}
+
+	/**
+	 * @param string $size a size known to WordPress (like "medium")
+	 * @api
+	 * @example
+	 * ```twig
+	 * <h1>{{ post.title }}</h1>
+	 * <img src="{{ post.thumbnail.src }}" srcset="{{ post.thumnbail.srcset }}" />
+	 * ```
+	 * ```html
+	 * <img src="http://example.org/wp-content/uploads/2018/10/pic.jpg" srcset="http://example.org/wp-content/uploads/2018/10/pic.jpg 1024w, http://example.org/wp-content/uploads/2018/10/pic-600x338.jpg 600w, http://example.org/wp-content/uploads/2018/10/pic-300x169.jpg 300w" />
+	 * ```
+	 *	@return bool|string
+	 */
+	public function srcset( $size = "full" ) {
+		if( $this->is_image() ){
+			return wp_get_attachment_image_srcset($this->ID, $size);
+		}
+	}
+	
+	/**
+	 * @param string $size a size known to WordPress (like "medium")
+	 * @api
+	 * @example
+	 * ```twig
+	 * <h1>{{ post.title }}</h1>
+	 * <img src="{{ post.thumbnail.src }}" srcset="{{ post.thumnbail.srcset }}" sizes="{{ post.thumbnail.sizes }}" />
+	 * ```
+	 * ```html
+	 * <img src="http://example.org/wp-content/uploads/2018/10/pic.jpg" srcset="http://example.org/wp-content/uploads/2018/10/pic.jpg 1024w, http://example.org/wp-content/uploads/2018/10/pic-600x338.jpg 600w, http://example.org/wp-content/uploads/2018/10/pic-300x169.jpg 300w sizes="(max-width: 1024px) 100vw, 102" />
+	 * ```
+	 *	@return bool|string
+	 */
+	public function img_sizes( $size = "full" ) {
+		if( $this->is_image() ){
+			return wp_get_attachment_image_sizes($this->ID, $size);
+		}
+	}
+	
+	/**
+	 * @internal
+	 * @return bool true if media is an image
+	 */
+	protected function is_image() {
+		$src = wp_get_attachment_url($this->ID);
+		$image_exts = array( 'jpg', 'jpeg', 'jpe', 'gif', 'png' );
+		$check = wp_check_filetype(basename($src), null);
+		return in_array($check['ext'], $image_exts);
 	}
 
 	/**
@@ -465,6 +518,7 @@ class Image extends Post implements CoreInterface {
 
 	/**
 	 * @deprecated 0.21.9 use TimberImage::src
+	 * @codeCoverageIgnore
 	 * @internal
 	 * @param string $size
 	 * @return bool|string
@@ -477,6 +531,7 @@ class Image extends Post implements CoreInterface {
 
 	/**
 	 * @deprecated since 0.21.9 use src() instead
+	 * @codeCoverageIgnore
 	 * @return string
 	 */
 	public function url( $size = '' ) {
@@ -487,6 +542,7 @@ class Image extends Post implements CoreInterface {
 
 	/**
 	 * @deprecated since 0.21.9 use src() instead
+	 * @codeCoverageIgnore
 	 * @return string
 	 */
 	public function get_url( $size = '' ) {
