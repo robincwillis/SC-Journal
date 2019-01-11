@@ -38,8 +38,8 @@
 						{% if recipeServings %}
 						  <p class="light-text-color">{{ recipeServings }}</p>
 						{% endif %}
-						<p>{% for term in post.terms('tags') %}
-							<a href="{{term.link}}">{{term.name}}</a>
+						<p class="tags"><strong>Tags</strong> — {% for term in post.terms('tags') %}
+							<a href="{{term.link}}">{{term.name}}</a>{% if not loop.last %}, {% endif %}
 						{% endfor %}
 					</p>
 					</div>

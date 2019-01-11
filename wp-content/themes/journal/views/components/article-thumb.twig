@@ -8,20 +8,24 @@
 
 <a class="thumb transition-link" href="{{ item.link }}">
   {% if video %}
-  	<div class="ratio-wrap">
-	    <video class="cover" autoplay loop muted playsinline>
-	      <source src="{{ video_url }}" type="video/mp4">
-	    </video>
+  	<div class="lazy-wrap lazyload">
+	  	<div class="ratio-wrap">
+		    <video class="cover" autoplay loop muted playsinline>
+		      <source src="{{ video_url }}" type="video/mp4">
+		    </video>
+	    </div>
     </div>
   {% else %}
-  	<div class="ratio-wrap">
-	    <img class="cover" src="{{ TimberImage(item.thumbnail).src('sc-3-2-sm') }}" srcset="{{ TimberImage(item.thumbnail).src('sc-3-2-lg') }} 1000w">
+  	<div class="lazy-wrap lazyload">
+	  	<div class="ratio-wrap">
+		    <img class="cover" src="{{ TimberImage(item.thumbnail).src('sc-3-2-sm') }}" srcset="{{ TimberImage(item.thumbnail).src('sc-3-2-lg') }} 1000w">
+	    </div>
     </div>
   {% endif %}
 	<div class="thumb-info">
 		<h6>{{ category }}</h6>
 		<h3 class="thumb-title h3">{{ title }}</h3>
-		<p class="author smalll italic light-text-color">By {{ author }}</p>
+		<p class="author smalll italic light-text-color">By {% if item.author_name %}{{ item.author_name }}{% else %}{{ author }}{% endif %}</p>
 		{% if desc %}
 		  <p class="smalll description">{{ desc }}</p>
 		{% endif %}

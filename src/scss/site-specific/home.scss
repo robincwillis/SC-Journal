@@ -16,17 +16,59 @@
 					width: 100%;
 				}
 				@include respond($lg) {
-					width: 66.666%;
+					width: 100%/12 * 8;
 					float: left;
+					position: relative;
+					.ratio-wrap {
+						position: absolute;
+						padding-bottom: auto;
+				    height: 100%;
+				    width: 100%;
+				    position: absolute;
+					}
+					a {
+						height: 100%;
+						display: flex;
+						flex-direction: column;
+						.lazy-wrap {
+							padding: 0;
+							flex-grow: 1;
+						}
+						.thumb-info {
+							flex-grow: 0;
+							flex-shrink: 0;
+						}
+					}
 				}
 			}
 			&.small-thumb {
+				width: 100%;
 				@include respond($md) {
-					width: 50%;
 				}
 				@include respond($lg) {
-					width: 33.333%;
-					float: right;
+					width: 100%/12 * 4;
+				}
+				.small-articles {
+					.thumb {
+						margin-bottom: $mobile-margin;
+					}
+					@include respond($md) {
+						display: flex;
+						justify-content: space-between;
+						.thumb {
+							margin-bottom: $gutter;
+							width: calc(50% - #{$gutter}/2);
+						}
+					}
+					@include respond($lg) {
+						display: block;
+						.thumb {
+							width: 100%;
+							&:last-child {
+								margin-bottom: 0;
+							}
+						}
+					}
 				}
 			}
 		}

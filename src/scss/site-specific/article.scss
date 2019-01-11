@@ -21,6 +21,14 @@
 	}
 }
 
+.block-wide-image {
+	.container {
+		&.narrow {
+			max-width: 35rem;
+		}
+	}
+}
+
 .sidenote {
 	border-top: 1px solid $hr-color;
 	padding-top: .75rem;
@@ -115,6 +123,20 @@ section.share {
 	@include respond-smaller-than($lg) {
 		.col-8 {
 			margin-bottom: 1.5rem;
+		}
+	}
+	.tags {
+		color: $light-text-color;
+		strong {
+			color: $text-color;
+		}
+		a {
+			color: $light-text-color;
+			border-bottom: 1px solid transparent;
+			&:hover {
+				color: $text-color;
+				border-color: $main-color;
+			}
 		}
 	}
 }

@@ -3,6 +3,7 @@
 var $ = require('jquery');
 var animsition = require('animsition');
 var slick = require('slick-carousel');
+var lazysizes = require('lazysizes');
 
 var global = {
   init: function(){
@@ -12,8 +13,12 @@ var global = {
   ready: function(){
     this.pageTransitions();
     this.slideshow();
+    lazySizes.init();
     this.mailchimpSignup.init(this.mailchimpSignup);
     this.hideNewsletter();
+    window.lazySizesConfig = {
+      addClasses: true
+    };
   },
   
   resize:function(){

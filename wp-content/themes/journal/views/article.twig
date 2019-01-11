@@ -14,8 +14,8 @@
 			'overlayPosition' : post.splash_text_position ~ '-center',
 			'date' : post.post_date|date('F j, Y'),
 			'author' : post.author.name,
-			'introText' : post.post_excerpt,
-			'splash Layout' : post.splash_layout,
+			'introText' : post.splash_text,
+			'splashLayout' : post.splash_layout,
 			'recipeServings' : post.servings_time,
 			'shareLinks' : post.shareable
 	} %}
@@ -31,7 +31,7 @@
 			'overlayPosition' : post.splash_text_position ~ '-center',
 			'author' : post.author.name,
 			'introText' : post.post_excerpt,
-			'splash Layout' : post.splash_layout,
+			'splashLayout' : post.splash_layout,
 			'shareLinks' : post.shareable
 	} %}
 {% endif %}	
@@ -42,10 +42,10 @@
 
 	{% elseif block.acf_fc_layout == 'large_image' %}
 		
-		{% if block.full_width %}
+		{% if block.width == 'fullWidth' %}
 			{% include 'components/flexible-content/full-width-image.twig' %}
 		{% else %}
-			{% include 'components/flexible-content/wide-image.twig' %}
+			{% include 'components/flexible-content/wide-image.twig' with { width : block.width } %}
 		{% endif %}
 
 	{% elseif block.acf_fc_layout == 'two_up_images' %}

@@ -1,0 +1,40 @@
+.lazy-wrap {
+	position: relative;
+	display: inline-block;
+	vertical-align: top;
+	background: $light-grey;
+	width: 100%;
+	img,
+	video {
+		position: relative;
+		opacity: 0;
+		transition: opacity .5s $ease;
+		z-index: 1;
+		display: block;
+		width: 100%;
+	}
+	&:after {
+		content: '';
+		display: block;
+		position: absolute;
+		top: 50%;
+		left: 50%;
+		margin: -12px 0 0 -1px;
+		width: 2px;
+		height: 24px;
+		background: $light-text-color;
+		animation: rotate 1s $ease infinite;
+		z-index: 0;
+		transition: opacity 0s 1s $ease;
+	}
+	&.lazyload {
+	}
+	&.lazyloaded {
+		img, video {
+			opacity: 1;
+		}
+		&:after {
+			opacity: 0;
+		}
+	}
+}

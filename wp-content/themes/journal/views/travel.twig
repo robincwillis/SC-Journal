@@ -1,6 +1,8 @@
 {% extends "base.twig" %}
 {% set body_class = 'push-down travel-page' %}
 {% set footer = 'false' %}
+{% set nextLink = random(side_links) %}
+{% set prevLink = random(side_links) %}
 
 {% block content %}
 
@@ -9,33 +11,58 @@
 			<div class="container">
 				<div class="flex-grid baseline">
 					<div class="col-3 align-left">
-						<a class="prev-link" href="#">Previous Cat</a>
+						<a class="prev-link" href="{{ prevLink.link }}">Previous Cat</a>
 					</div>
 					<div class="col-6">
 						<h1 class="h3 large-title">{{ title }}</h1>
 					</div>
 					<div class="col-3 align-right">
-						<a class="next-link" href="#">Next Cat</a>
+						<a class="next-link" href="{{ nextLink.link }}">Next Cat</a>
 					</div>
 				</div>
 			</div>
 		</div>
 		<div class="container no-bottom-space">
-			<div class="inline-grid project-grid">
-				{% for item in posts | slice(0, 4) %}
-					<div class="col-6 right">
-						{% include 'components/article-thumb.twig' %}
-					</div>
-				{% endfor %}
+			{% if title == 'Photo Essays' %}
+				<div class="inline-grid project-grid">
+					{% for item in posts %}
+						<div class="col-4 right">
+							{% include 'components/article-list-thumb.twig' %}
+						</div>
+					{% endfor %}
+				</div>
+			{% elseif title == 'Food' %}
+				<div class="inline-grid recipe-list project-grid">
+					{% for item in posts | slice(0, 4) %}
+						<div class="col-12 right">
+							{% include 'components/recipe-thumb.twig' %}
+						</div>
+					{% endfor %}
+				</div>
+				<div class="inline-grid project-grid">
+					{% for item in posts | slice(4, 100) %}
+						<div class="col-4 right">
+							{% include 'components/article-thumb.twig' %}
+						</div>
+					{% endfor %}
+				</div>
+			{% else %}
+				<div class="inline-grid project-grid">
+					{% for item in posts | slice(0, 4) %}
+						<div class="col-6 right">
+							{% include 'components/article-thumb.twig' %}
+						</div>
+					{% endfor %}
 
-				{% for item in posts | slice(4, 10) %}
-					<div class="col-4 right">
-						{% include 'components/article-thumb.twig' %}
-					</div>
-				{% endfor %}
-			</div>
+					{% for item in posts | slice(4, 100) %}
+						<div class="col-4 right">
+							{% include 'components/article-thumb.twig' %}
+						</div>
+					{% endfor %}
+				</div>
+			{% endif %}
 
-			{% set remaining_posts = posts | slice(4, 10) %}
+			{#% set remaining_posts = posts | slice(4, 100) %}
 			{% if remaining_posts.length %}
 				<div class="more-cta">
 					<div class="container">
@@ -48,7 +75,20 @@
 						%}
 					</div>
 				</div>
-			{% endif %}
+			{% endif %#}
+
+			<div class="more-cta after-list">
+				{#<div class="container">
+					{% include 'components/button.twig' 
+						with {
+							'buttonClass': 'large transition-link',
+							'buttonText': 'More Photo Essays',
+							'buttonLink': globals.path ~ '/#'
+						} only
+					%}
+				</div>#}
+			</div>
+
 		</div>
 	</section>
 

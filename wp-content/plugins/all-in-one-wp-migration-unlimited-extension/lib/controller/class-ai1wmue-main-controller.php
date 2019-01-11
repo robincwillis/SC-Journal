@@ -130,7 +130,7 @@ class Ai1wmue_Main_Controller {
 	 */
 	public function wp_cli() {
 		if ( defined( 'WP_CLI' ) ) {
-			WP_CLI::add_command( 'ai1wm', 'Ai1wmue_WP_CLI_Command', array( 'shortdesc' => __( 'All-in-One WP Migration Command', AI1WMUE_PLUGIN_NAME ) ) );
+			WP_CLI::add_command( 'ai1wm', 'Ai1wm_Backup_WP_CLI_Command', array( 'shortdesc' => __( 'All-in-One WP Migration Command', AI1WMUE_PLUGIN_NAME ) ) );
 		}
 	}
 
